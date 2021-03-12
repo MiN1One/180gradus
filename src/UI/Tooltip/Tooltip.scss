@@ -1,0 +1,36 @@
+.Tooltip {
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    background: #f1c40f;
+    padding: 1.5rem 2rem;
+    color: #464646;
+    z-index: 10;
+    border-radius: .5rem;
+    width: max-content;
+    opacity: 0;
+    transform: translateY(1rem) translateX(-50%);
+    transition: all .3s ease;
+    box-shadow: 0 0 15px rgba(#000, .07);
+    visibility: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: .7rem;
+        border-style: solid;
+        border-color: transparent transparent #f1c40f transparent;
+    }
+
+    &--bottom {
+        bottom: 95%;
+        transform: translateY(-1rem) translateX(-50%);
+
+        &::after {
+            top: 100%;
+        }
+    }
+}

@@ -1,0 +1,59 @@
+@use './index' as *;
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  
+  animation: fadeIn .45s ease;
+  animation-fill-mode: backwards;
+}
+
+html { font-size: 62.5%; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: $bg;
+}
+
+input,
+textarea {
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+
+  &:focus { outline: none; }
+}
+
+ul { list-style: none; }
+
+svg {
+  display: flex;
+  fill: #fff;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+[tabIndex="0"]:focus { outline: none; }
+
+a {
+  color: #c4c4c4;
+  text-decoration: none;
+}
+
+#wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}

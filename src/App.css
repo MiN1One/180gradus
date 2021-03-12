@@ -1,0 +1,63 @@
+
+.back,
+.top {
+  position: relative;
+  width: 100vw;
+  /* background-color: burlywood; */
+  background-position: right;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.back {
+  overflow: hidden;
+  height: 100vh;
+  z-index: 50;
+  /* background-color: #888; */
+  background-image: url('./noback-s20-dgrey.png');
+}
+
+.back-2 {
+  /* background-color: darkcyan; */
+}
+
+.back-3 {
+  /* background-color: rgb(113, 0, 206); */
+}
+
+.top {
+  bottom: 0;
+  position: absolute;
+  z-index: 55;
+  background-image: url('./template_s20_1920x1080.png');
+  /* clip-path: polygon(100% 0, 100% 100%, 0 0); */
+}
+
+.top-2 {
+  /* background-color: crimson; */
+  /* clip-path: polygon(0 50%, 100% 100%, 100% 0); */
+  background-image: url('./template_s20_1920x1080-blue.png');
+}
+
+.top-3 {
+  /* background-color: rgb(7, 255, 48); */
+  background-image: url('./template_s20_1920x1080-yellow.png');
+  /* background-image: url('./black-back-texts20.jpg'); */
+  /* clip-path: polygon(0 100%, 100% 0, 0 0); */
+}
+
+.render {
+  color: transparent;
+  animation: blink .3s ease;
+}
+
+@keyframes blink {
+  0% {
+    color: #fff;
+  }
+
+  100% {
+    color: transparent;
+  } 
+}
+

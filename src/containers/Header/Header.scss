@@ -1,0 +1,180 @@
+@use '../../assets/sass' as *;
+
+.Header {
+    position: relative;
+    z-index: 95;
+    
+    &__section {
+        display: flex;
+        position: relative;
+        
+        &:first-child { z-index: 105; }
+        
+        &:nth-child(2) { z-index: 104; }
+        
+        &:last-child { z-index: 103; }
+        
+        &:not(:first-child) { justify-content: flex-end; }
+    }
+    
+    &__jumbotron {
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        z-index: 1;
+        transition: all .7s ease;
+        
+
+        &--slideBack {
+            width: 15vw;
+            background-image: none;
+        }
+    }
+
+    &__hero {
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        transition: all .65s ease;
+        z-index: 10;
+        padding: 2rem 10rem 2rem 0;
+        border-radius: 3px;
+    }
+    
+    &__bg {
+        @include gradienty;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transition: all .3s ease;
+
+        &::after {
+            animation-delay: .6s;
+            background: linear-gradient(130deg, $bg 80%, rgba($yellow, .35));
+            z-index: -1;
+        }
+
+        &::before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            animation-delay: 1s;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: right;
+            background-image: url('../../assets/images/Project\ 1.png');
+        }
+    }
+
+    &__logobox {
+        transform: translateX(7rem) rotate(-90deg);
+        width: max-content;
+        transition: all .4s ease;
+    }
+    
+    &__fig {
+        width: 13rem;
+        height: auto;
+        filter: saturate(5rem);
+    }
+
+    &__sl {
+        transition: all .65s ease;
+        transform: translateY(-4.5rem);
+    }
+
+    &__poppercase {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        width: 0;
+        position: relative;
+        transition: all .7s ease;
+        background: #dfdfdf;
+        z-index: 2;
+        box-shadow: -1rem 0 7rem rgba(#000, .1);
+        background: rgba(#161616, .7);
+        
+        font-size: 3rem;
+        color: #fff;
+
+        &--expand { width: 85vw; }
+    }
+
+    &__popper {
+        height: 100%;
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+        transition: height .15s ease;
+        position: relative;
+        z-index: 9;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    
+    &__popperbg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        z-index: 10;
+        background-color: #3c7ff3;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    &__img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &__heading {
+        font-size: 6rem;
+        letter-spacing: .05px;
+        margin-bottom: 2rem;
+        width: 70rem;
+        font-weight: 400;
+        color: transparent;
+        background-image: linear-gradient(120deg, #8035e4 13%, #5c54ec 27%,  $yellow 54%, #3c7ff3, 75%, #2c94f4 90%, #15a8fb);
+        background-clip: text;
+    }
+
+    &__jumbotron--slideBack &__bg::after,
+    &__jumbotron--slideBack &__bg::before { content: none; }
+
+    &__jumbotron--slideBack &__hero {
+        background: none;
+        backdrop-filter: blur(0);
+        padding: 0;
+        left: 0;
+        transform: translateY(-50%) translateX(0);
+    }
+
+    &__jumbotron--slideBack &__logobox {
+        transform: translate(0) rotate(0) translateY(3.5rem);
+        padding-left: 3.5rem;
+    }
+
+    &__jumbotron--slideBack &__sl {
+        transform: translateY(3.5rem);
+        opacity: 0;
+        visibility: hidden;
+    }
+}

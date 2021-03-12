@@ -1,0 +1,136 @@
+.dropslide {
+    width: 100vw;
+    height: 50rem;
+    position: fixed;
+    top: 7.5rem;
+    background: rgba(#363636, .8);
+    transition: opacity .3s;
+    opacity: 1;
+    z-index: 98;
+    backdrop-filter: blur(2px);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    transform: translate3d(0,0,0);
+    transform: translateZ(0);
+    animation: fadeInDown .5s ease;
+    
+    &--hide {
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    &__wrapper {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        padding: 5rem 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__group {
+        width: 75%;
+    }
+
+    &__cat {
+        display: flex;
+        justify-content: space-between;
+
+        &--top {
+            align-items: flex-end;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 4rem;
+        }
+    }
+
+    &__section {
+        
+    }
+
+    &__imagebox {
+        height: 100%;
+        width: 20rem;
+        background-image: url('../../assets/images/template_s20_1920x1080-blue-crop.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-right: 5rem;
+        filter: saturate(1.5);
+    }
+
+    &__heading {
+        font-size: 2rem;
+        color: #cecece;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+
+        &--primary {
+            color: #f1c40f;
+        }
+    }
+
+    &__list {
+
+    }
+
+    &__item {
+        font-size: 1.3rem;
+        color: #c4c4c4;
+        font-weight: lighter;
+        padding: 1rem 0;
+    }
+    
+    &__link {
+        position: relative;
+        height: 100%;
+
+        &:hover::before {
+            transform: translateX(-135%) translateY(-.3rem);
+            opacity: 1;
+        }
+
+        &::before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1.7rem;
+            height: 1.8rem;
+            transform: translateX(-135%) translateY(-80%);
+            opacity: 0;
+            background-repeat: no-repeat;
+            background: #f1c40f;
+            mask-image: url(../../assets/keyboard_arrow_right.svg);
+            background-size: cover;
+            transition: all .1s ease;
+        }
+    }
+
+    &__icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        fill: #c4c4c4;
+    }
+
+    &__btn {
+        border: 1.5px solid #c4c4c4;
+        border-radius: 50%;
+        padding: .3rem;
+        position: absolute;
+        bottom: 5rem;
+        left: 100%;
+        transform: translateX(-100%);
+        box-shadow: none;
+
+        &:hover {
+            box-shadow: 0 0 1rem rgba(#000, .2);
+            transform: translateX(-100%);
+        }
+    }
+}

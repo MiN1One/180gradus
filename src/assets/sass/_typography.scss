@@ -1,0 +1,34 @@
+@use '../../assets/sass' as *;
+
+.heading {
+    font-weight: 500;
+    color: $light;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(#000, .25);
+    text-transform: capitalize;
+    display: inline-block;
+    transition: all .3s ease-in-out;
+
+    &--1 {
+        font-size: 5rem;
+        font-weight: 300;
+    }
+
+    &--main {
+        font-weight: 400;
+        font-size: 3rem;
+    }
+
+    &--black { color: $black; }
+
+    &--sm {
+        font-size: 1.8rem;
+        color: $black;
+        font-weight: 600;
+    }
+
+    &--sub {
+        color: $grey-dark;
+        font-size: 1.4rem;
+    }
+}

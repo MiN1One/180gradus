@@ -1,0 +1,67 @@
+@use './variables' as *;
+
+.container {
+    max-width: $row-width;
+    margin: 0 auto;
+}
+
+.flex { display: flex !important; }
+.jcc { justify-content: center !important; }
+.jcsb { justify-content: space-between; }
+.jcs { justify-content: flex-start !important; }
+.jce { justify-content: flex-end !important; }
+.aic { align-items: center !important; }
+.aie { align-items: flex-end !important; }
+.ais { align-items: flex-start !important; }
+.fdc { flex-direction: column; }
+
+.wh-auto {
+    width: auto !important;
+    height: auto !important;
+}
+
+.w-100 { width: 100% !important; }
+.h-100 { height: 100% !important; }
+
+.wh-100 {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.wh-50 {
+    width: 50% !important;
+    height: 50% !important;
+}
+
+.pos-rel { position: relative !important; }
+
+.m-0 { margin: 0 !important; }
+.mt-1 { margin-top: 1rem !important; }
+.mb-1 { margin-bottom: 1rem !important; }
+.ml-1 { margin-left: 1rem !important; }
+.mr-1 { margin-right: 1rem !important; }
+
+.mb-15 { margin-bottom: 1.5rem !important; }
+.mt-15 { margin-top: 1.5rem !important; }
+.mr-15 { margin-right: 1.5rem !important; }
+.ml-15 { margin-left: 1.5rem !important; }
+
+.mb-2 { margin-bottom: 2rem !important; }
+.mt-2 { margin-top: 2rem !important; }
+.mr-2 { margin-right: 2rem !important; }
+.ml-2 { margin-left: 2rem !important; }
+
+.mb-3 { margin-bottom: 3rem !important; }
+.mt-3 { margin-top: 3rem !important; }
+.mr-3 { margin-right: 3rem !important; }
+.ml-3 { margin-left: 3rem !important; }
+
+.mb-5 { margin-bottom: .5rem !important; }
+.mt-5 { margin-top: .5rem !important; }
+.mr-5 { margin-right: .5rem !important; }
+.ml-5 { margin-left: .5rem !important; }
+
+.tc { text-align: center; }
+
+.c-light { color: $light; }
+.c-white { color: $white; }
