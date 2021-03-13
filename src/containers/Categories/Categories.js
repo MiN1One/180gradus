@@ -25,8 +25,8 @@ const Categories = () => {
     return (
         <header className="Categories">
             <div className="container">
-                <div className="Categories__head">
-                    <h2 className="heading heading--main">{t(`nav.${params.category}`)}</h2>
+                <div className="Categories__head Categories__head--main">
+                    <h1 className="heading heading--1">{t('nav.skins')}</h1>
                     <form className="Categories__form" onSubmit={(e) => e.preventDefault()}>
                         <input 
                             className="input input--searchbar" 
@@ -41,96 +41,6 @@ const Categories = () => {
                     </form>
                 </div>
                 <div className="Categories__body">
-                    <section className="Categories__group">
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                    </section>
                     <div className="Categories__head" id="popular">
                         <h2 className="heading heading--main">{t('nav.popular')}</h2>
                     </div>
@@ -147,21 +57,12 @@ const Categories = () => {
                             </div>
                         </Link>
                     </section>
-                    <div className="Categories__head" id="favorites">
-                        <h2 className="heading heading--main">{t('nav.favorites')}</h2>
+                    <div className="Categories__head" id="popular">
+                        <h2 className="heading heading--main mr-1">{t('nav.phones')}</h2>
+                        <span className="mr-1 bull--main">&bull;</span>
+                        <span className="heading heading--sm c-grey">Samsung</span>
                     </div>
                     <section className="Categories__group">
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
                         <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
                             <div className="Categories__card-head">
                                 <figure className="Categories__card-figure">

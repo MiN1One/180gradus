@@ -1,0 +1,7 @@
+@use '../../assets/sass' as *;
+
+.Info {
+    @include moveDown;
+    height: 70rem;
+
+}

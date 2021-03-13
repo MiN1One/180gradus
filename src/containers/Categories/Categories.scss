@@ -3,12 +3,19 @@
 .Categories {
     @include moveDown;
     @include gradienty;
+    padding-bottom: 5rem;
 
     &__head {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        padding: 3rem 0;
+        padding-top: 3rem;
+        margin-bottom: 1rem;
+        
+        &--main {
+            padding-top: 6.5rem;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
     }
 
     &__body {
@@ -18,12 +25,13 @@
     }
     
     &__group {
-        padding: 3.5rem 0;
+        padding-top: 3.5rem;
+        padding-bottom: 6rem;
         width: 100%;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        column-gap: 6rem;
-        row-gap: 5rem;
+        column-gap: 5rem;
+        row-gap: 4.5rem;
     }
 
     &__form {
@@ -68,7 +76,8 @@
             transition: all .45s ease;
         }
 
-        &:hover {
+        &:hover,
+        &:focus {
             // transform: scale(1.05);
 
             &::after { background: rgba($yellow, .9); }

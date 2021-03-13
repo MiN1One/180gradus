@@ -35,6 +35,8 @@
 
     &--dark { fill: $black; }
 
+    &--grey { fill: $light; }
+
     &--sm {
         width: 1.7rem;
         height: 1.7rem;
@@ -51,3 +53,20 @@
     }
 }
 
+.text {
+    text-transform: capitalize;
+    letter-spacing: -.15px;
+
+    &--mid { 
+        font-size: 1.7rem;
+        font-weight: 300;
+    }
+}
+
+.bull {
+
+    &--main {
+        font-size: 1.75rem;
+        color: $grey-dark;
+    }
+}

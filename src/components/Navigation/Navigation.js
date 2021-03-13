@@ -60,7 +60,7 @@ const Navigation = (props) => {
                                 </li>                                    
                                 <li className="Navigation__item">
                                     <Link 
-                                        to="/categories/about"
+                                        to="/180degrees/about"
                                         className="Navigation__link link link__main">
                                         {t('nav.about')}
                                     </Link>

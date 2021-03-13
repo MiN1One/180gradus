@@ -63,5 +63,7 @@
 
 .tc { text-align: center; }
 
-.c-light { color: $light; }
-.c-white { color: $white; }
+.c-light { color: $light !important; }
+.c-white { color: $white !important; }
+.c-grey { color: $grey-dark !important; }
+.c-grey-l { color: $grey-light !important; }
