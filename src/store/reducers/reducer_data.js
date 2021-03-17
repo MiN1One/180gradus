@@ -1,6 +1,7 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    // favorites: localStorage.getItem('favorites') || []
     favorites: localStorage.getItem('favorites') || []
 };
 

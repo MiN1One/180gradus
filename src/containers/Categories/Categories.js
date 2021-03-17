@@ -23,7 +23,7 @@ const Categories = () => {
     }, [history.location.hash]);
 
     return (
-        <header className="Categories">
+        <section className="Categories">
             <div className="container">
                 <div className="Categories__head Categories__head--main">
                     <h1 className="heading heading--1">{t('nav.skins')}</h1>
@@ -71,7 +71,7 @@ const Categories = () => {
                             </div>
                             <div className="Categories__card-body">
                                 <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
+                                <span className="heading heading--sub mt-1 tc">{t('nav.skins')}</span>
                             </div>
                         </Link>
                     </section>
@@ -80,7 +80,7 @@ const Categories = () => {
 
                 </div>
             </div>
-        </header>
+        </section>
     );
 };
 

@@ -25,7 +25,7 @@ const Main = () => {
 
     return (
         <header className="Main">
-            <div className="Main__head">
+            <div className="main-head">
                 <div className="container">
                     <div className="flex aic">
                         <button className="btn btn__square mr-2" onClick={() => history.push(`/categories/${params.category}`)}>
@@ -55,10 +55,10 @@ const Main = () => {
                             <div className="Main__left">
                                 <div className="Main__sets">
                                     <div className="wh-100 pos-rel">
-                                        <button className="Main__btn-control Main__btn-control--prev">
+                                        <button className="btn__control btn__control--prev">
                                             <BiChevronLeft className="icon--sm" />
                                         </button>
-                                        <button className="Main__btn-control Main__btn-control--next">
+                                        <button className="btn__control btn__control--next">
                                             <BiChevronRight className="icon--sm" />
                                         </button>
                                         <div className="flex aic mb-3">
@@ -70,9 +70,9 @@ const Main = () => {
                                             slidesPerView={1}
                                             className="Main__sets-body"
                                             navigation={{
-                                                    prevEl: '.Main__btn-control--prev', 
-                                                    nextEl: '.Main__btn-control--next', 
-                                                    disabledClass: 'Main__btn-control--disabled'
+                                                    prevEl: '.btn__control--prev', 
+                                                    nextEl: '.btn__control--next', 
+                                                    disabledClass: 'btn__control--disabled'
                                                 }}
                                             spaceBetween={30}>
                                                 <SwiperSlide className="Main__sets-wrapper">
@@ -157,7 +157,7 @@ const Main = () => {
                                     <div className="Main__summary">
                                         <div className="Main__price">$5.99</div>
                                         <button className="Main__btn">
-                                            {t('main.buy')}
+                                            {t('main.to cart')}
                                             <BiCartAlt className="icon--mid ml-5" />
                                         </button>
                                     </div>

@@ -22,14 +22,38 @@ const Footer = (props) => {
         ru: 'Русский',
         uz: 'O\'zbekcha'
     };
-    
+
+    const languages = [];
+    for (let key in languageList) {
+        console.log(key)
+        languages.push((
+            <div 
+                tabIndex="0" 
+                className="Footer__drop-item" 
+                key={key}
+                onMouseDown={() => {i18n.changeLanguage(key); console.log(key)}}>
+                    {languageList[key]}
+            </div>
+        ))
+    }
+
     const popularArr = ['Iphone 12', 'OnePlus 8', 'Lenovo Thinkpad', 'MacBook 2019', 'Galaxy S21', 'Redmi Note 8'];
+    const sectionsArr = ['Privacy Policy', 'How to buy', 'About us', 'Feedback']
 
     const isHome = location.pathname === '/';
 
     const popular = popularArr.map((el, i) => (
         <li className="Footer__item" key={i}>
             <Link to={`/categories/phones/${el}`} className="Footer__link">
+                <BiChevronRight className="icon--sm mr-5" />
+                {el}
+            </Link>
+        </li>
+    ));
+
+    const sections = sectionsArr.map((el, i) => (
+        <li className="Footer__item" key={i}>
+            <Link to={`/180degrees/${el}`} className="Footer__link">
                 <BiChevronRight className="icon--sm mr-5" />
                 {el}
             </Link>
@@ -68,10 +92,13 @@ const Footer = (props) => {
                                 </>
                             }
                         </div>
-                        <div className="Footer__language btn btn__ghost btn__ghost--active">
-                            <div className="Footer__lang-drop flex aic">
+                        <div className="pos-rel">
+                            <button className="Footer__language btn btn__ghost btn__ghost--active">
                                 <BiGlobe className="icon--grey icon mr-5" />
                                 {languageList[i18n.language]}
+                            </button>
+                            <div className="Footer__lang-drop">
+                                {languages}
                             </div>
                         </div>
                     </div>
@@ -100,9 +127,9 @@ const Footer = (props) => {
                         </Link>
                     </div>
                     <div className="Footer__body">
-                        <div className="">
+                        {/* <div className="">
                             <span className="Footer__title mb-15">
-                                {t('nav.popular')}:
+                                {t('nav.More')}:
                             </span>
                             <ul className="Footer__list">{popular}</ul>
                         </div>
@@ -110,20 +137,9 @@ const Footer = (props) => {
                             <span className="Footer__title mb-15">
                                 {t('nav.popular')}:
                             </span>
-                            <ul className="Footer__list">{popular}</ul>
-                        </div>
-                        <div className="">
-                            <span className="Footer__title mb-15">
-                                {t('nav.popular')}:
-                            </span>
-                            <ul className="Footer__list">{popular}</ul>
-                        </div>
-                        <div className="">
-                            <span className="Footer__title mb-15">
-                                {t('nav.popular')}:
-                            </span>
-                            <ul className="Footer__list">{popular}</ul>
-                        </div>
+                            <ul className="Footer__list">{sections}</ul>
+                        </div> */}
+                        
                     </div>
                     <div className="Footer__text">
                         &copy;180Gradus {year}. {t('main.reserved')}

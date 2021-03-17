@@ -4,7 +4,6 @@ import Navigation from "../../components/Navigation/Navigation";
 
 const Layout = (props) => {
 
-
     return (
         <>
             <Navigation />

@@ -5,11 +5,6 @@
     @include gradienty;
     width: 100%;
 
-    &__head {
-        background: $light;
-        padding: 3rem 0;
-    }
-
     &__body {
         position: relative;
         width: 100%;
@@ -176,56 +171,6 @@
         &:hover { background: rgba(#fff, .15); }
     }
 
-    &__btn-control {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 1;
-        transition: transform .25s ease-in-out;
-        transform-origin: left center;
-        
-        &::after {
-            content: "";
-            border-width: 1.5rem;
-            border-style: solid;
-            border-color: transparent;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: -1;
-        }
-
-        &--prev {
-            left: -4rem;
-
-            &::after {
-                border-right-color: $black;
-                left: -100%;
-            }
-        }
-
-        &--next {
-            right: -4rem;
-
-            &::after { 
-                border-left-color: $black;
-                right: -100%;
-            }
-        }
-
-        &--disabled { display: none; }
-
-        svg {
-            position: relative;
-            z-index: 1;
-        }
-
-        &:hover { transform: scale(1.25) translateY(-50%); }
-    }
-
     &__tooltip {
         display: flex;
         align-items: center;
@@ -280,7 +225,7 @@
         align-items: center;
         height: 5rem;
         font-size: 1.75rem;
-        padding: 3.25rem 3.55rem;
+        padding: 3rem;
         font-weight: 300;
         border-radius: .55rem 0 0 .55rem;
         background: $black;
@@ -297,9 +242,10 @@
         justify-content: center;
         text-transform: uppercase;
         color: $white;
-        padding: 2rem 2.75rem;
+        padding: 2rem;
         border-radius: .55rem;
-        font-size: 1.95rem;
+        font-size: 1.7rem;
+        width: max-content;
         box-shadow: 0 0 1rem rgba(#000, .5);
 
         svg { transition: transform .25s ease-in-out; }

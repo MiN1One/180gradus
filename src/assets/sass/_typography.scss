@@ -33,3 +33,24 @@
         font-size: 1.4rem;
     }
 }
+
+.text {
+    color: $light;
+    letter-spacing: -.15px;
+    line-height: 1.5;
+    
+    &--main {
+        font-size: 1.5rem;
+        letter-spacing: .25px;
+        font-weight: 300;
+    }
+    
+    &--mid {
+        font-size: 1.75rem;
+        text-transform: capitalize;
+        color: $grey-light;
+        font-weight: 300;
+    }
+
+    &--sm { font-size: 1.3rem; }
+}

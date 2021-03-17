@@ -26,12 +26,44 @@
     }
 
     &:placeholder-shown ~ &--searchbar-btn { display: none; }
+
+    &--main {
+        background: $grey-light;
+        font-size: 1.35rem;
+        padding: 1rem 2.25rem;
+        border-radius: .55rem;
+        transition: background .25s ease;
+        font-weight: 500;
+        color: $black;
+        border: 2px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &:invalid { border-color: $red; }
+        
+        &:hover,
+        &:focus { background: $light; }
+        
+        &:focus {
+            border-color: $primary;
+            color: $pitch;
+        }
+    }
+
+    &--label {
+        font-size: 1.4rem;
+        text-transform: capitalize;
+        color: $light;
+        margin-bottom: 1rem;
+    }
 }
 
 .icon {
     width: 2rem;
     height: 2rem;
     fill: $white;
+    transition: all .2s ease;
 
     &--dark { fill: $black; }
 
@@ -53,20 +85,43 @@
     }
 }
 
-.text {
-    text-transform: capitalize;
-    letter-spacing: -.15px;
-
-    &--mid { 
-        font-size: 1.7rem;
-        font-weight: 300;
-    }
-}
-
 .bull {
 
     &--main {
         font-size: 1.75rem;
         color: $grey-dark;
+    }
+}
+
+.main-head {
+    background: $light;
+    padding: 3rem 0;
+}
+
+.section-body {
+    padding: 4rem 0;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.price-tag {
+    background: $bg;
+    padding: 1rem 2rem;
+    border-radius: .55rem;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: $white;
+    box-shadow: 0 0 .7rem rgba($pitch, .3);
+}
+
+.link {
+    &--outline {
+        border-bottom: 1px solid rgba($yellow, .8);
+
+        &:hover { color: $yellow; }
     }
 }

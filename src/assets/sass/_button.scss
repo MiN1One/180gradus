@@ -1,11 +1,12 @@
 @use './variables' as *;
 
 .btn {
-    font-weight: 600;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--text-light);
     font-size: 1.4rem;
-
+    
     &::after {
         transition: all .4s ease;
         border-radius: 3rem;
@@ -18,9 +19,10 @@
         z-index: -1;
         transform-origin: center;
     }
-
+    
     &__primary {
         background-image: $gradient-main;
+        font-weight: 600;
         padding: 1.5rem 5rem;
         position: relative;
         border-radius: 3.5rem;
@@ -41,25 +43,26 @@
                 opacity: 0;
             }
         }
-
+        
         &--noanim {
             text-transform: capitalize;
             transition: none;
-
+            
             &:hover,
             &:focus {
                 transform: scale(1);
             }
-
+            
             &::after {
                 content: none;
                 display: none;
             }
         }
     }
-
+    
     &__secondary {
         border: 2px solid $yellow;
+        font-weight: 600;
         padding: 1.5rem 3.5rem;
         transition: all .5s ease;
         color: $yellow;
@@ -118,9 +121,6 @@
         width: 7rem;
         height: 7rem;
         background: $white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         border-radius: .7rem;
 
         &:hover,
@@ -151,7 +151,108 @@
             svg { fill: $white; }
 
             &:hover,
-            &:focus { background: $grey-dark; }
+            &:focus {
+                background: $grey-dark;
+
+                &:disabled { background: rgba($grey-dark, .7); }
+            }
         }
+    }
+
+    &__circle {
+        width: 2.75rem;
+        height: 2.75rem;
+        background: $pitch;
+        border-radius: 50%;
+        border: 1px solid rgba($grey-dark, .6);
+    }
+
+    &:disabled {
+        opacity: .7;
+        cursor: default;
+    }
+
+    &__pill {
+        border: 1px solid rgba($primary, .5);
+        padding: .55rem 1.85rem;
+        border-radius: 3rem;
+        color: $light;
+        font-weight: 300;
+        font-size: 1.35rem;
+
+        &:not(.btn__pill--yellow):hover,
+        &:not(.btn__pill--yellow):focus {
+            background: $primary;
+            border-color: transparent;
+            color: $white;
+        }
+
+        &--red {
+            border-color: rgba($red, .5);
+
+            &:hover,
+            &:focus { background: $red !important; }
+        }
+
+        &--yellow {
+            border-color: rgba($yellow, .5);
+
+            &:hover,
+            &:focus {
+                background: $black;
+                color: $yellow;
+            }
+        }
+    }
+
+    &__control {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-170%);
+        z-index: 1;
+        transition: transform .25s ease-in-out;
+        transform-origin: top center;
+        
+        &::after {
+            content: "";
+            border-width: 1.5rem;
+            border-style: solid;
+            border-color: transparent;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+
+        &--prev {
+            left: -4rem;
+
+            &::after {
+                border-right-color: $black;
+                left: -100%;
+            }
+        }
+
+        &--next {
+            right: -4rem;
+
+            &::after { 
+                border-left-color: $black;
+                right: -100%;
+            }
+        }
+
+        &--disabled { display: none; }
+
+        svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        &:hover,
+        &:focus { transform: scale(1.25) translateY(-170%); }
     }
 }

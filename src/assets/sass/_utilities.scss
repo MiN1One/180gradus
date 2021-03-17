@@ -61,9 +61,17 @@
 .mr-5 { margin-right: .5rem !important; }
 .ml-5 { margin-left: .5rem !important; }
 
+.mb-lg { margin-bottom: 5rem !important; }
+.mt-lg { margin-top: 5rem !important; }
+.mr-lg { margin-right: 5rem !important; }
+.ml-lg { margin-left: 5rem !important; }
+
 .tc { text-align: center; }
 
 .c-light { color: $light !important; }
 .c-white { color: $white !important; }
 .c-grey { color: $grey-dark !important; }
+.c-red { color: $red !important; }
 .c-grey-l { color: $grey-light !important; }
+
+.px-15 { padding: 0 1.5rem !important; }

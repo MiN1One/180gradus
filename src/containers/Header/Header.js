@@ -138,8 +138,8 @@ const Header = () => {
                                         Recreate your phone
                                     </h1>
                                     <div className="flex">
-                                        <Link to="/categories" className="btn btn__primary mr-15">Customize</Link>
-                                        <Link to="/categories" href="/" className="btn btn__secondary btn__secondary--fill">Sign Up</Link>
+                                        <Link to="/categories" className="btn btn__primary mr-15">{t('main.customize')}</Link>
+                                        <Link to="/categories" href="/" className="btn btn__secondary btn__secondary--fill">{t('main.order')}</Link>
                                     </div>
                                 </div>
                             </div>

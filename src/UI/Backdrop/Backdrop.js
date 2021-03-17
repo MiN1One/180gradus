@@ -1,16 +1,7 @@
+import './Backdrop.scss';
 
-const Backdrop = (props) => {
-    const style = {
-        zIndex: props.z,
-        position: 'fixed',
-        width: '100vw',
-        height: '100vh',
-        background: 'rgba(255,255,255, 0)'
-    }
-
-    return (
-        <div style={style} onClick={() => props.close()}></div>
-    );
-};
+const Backdrop = ({ z, close }) => (
+    <div className="Backdrop" style={{ zIndex: z }} onClick={() => close()}></div>
+);
 
 export default Backdrop;
