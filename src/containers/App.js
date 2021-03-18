@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+import axiosInstance from '../axios';
 
+import * as actions from '../store/actions';
+import Er from './Error/Error';
 import Header from './Header/Header';
 import Layout from './Layout/Layout';
 
@@ -10,7 +14,7 @@ const AsyncCategories = React.lazy(() => import('./Categories/Categories'));
 const AsyncInfo = React.lazy(() => import('./Info/Info'));
 const AsyncSummary = React.lazy(() => import('./Summary/Summary'));
 
-function App() {
+function App({ error, onError }) {
     const { i18n } = useTranslation();
 
     useEffect(() => {
@@ -31,6 +35,30 @@ function App() {
         }
         document.getElementsByTagName('head')[0].appendChild(link);
     }, [i18n.language]);
+    
+    useEffect(() => {
+        const requestInterceptor = axiosInstance.interceptors.request.use(
+            (req) => req,
+            (er) => {
+                console.log('req error' + er);
+                onError(er.message);
+                Promise.reject(er);
+            }
+        );
+    
+        const responseInterceptor = axiosInstance.interceptors.response.use(
+            (res) => res,
+            (er) => {
+                console.log('res error' + er);
+                onError(er.message);
+                Promise.reject(er);
+            }
+        );
+        return () => {
+            axiosInstance.interceptors.request.eject(requestInterceptor);
+            axiosInstance.interceptors.response.eject(responseInterceptor);
+        }
+    }, [onError]);
 
     const main = (
         <Layout>
@@ -52,28 +80,30 @@ function App() {
 
     const summary = (
         <Layout>
-            <AsyncSummary />
+            <AsyncSummary er={error} />
         </Layout>
     );
 
-    // const Success = (
-        
-    // );
-
     return (
         <React.Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-                <Route path="/summary" exact>{summary}</Route>
-                <Route path="/categories/:category/:id" exact>{main}</Route>
-                <Route path="/categories/:category" exact>{categories}</Route>
-                <Route path="/180degrees/:category" exact>{info}</Route>
-                <Route path="/" exact><Header /></Route>
-                <Route>
-                    <div>404 not found</div>
-                </Route>
-            </Switch>
+            {error
+                ? <Er er={error} clean={() => onError(null)} />
+                : <Switch>
+                    <Route path="/summary" exact>{summary}</Route>
+                    <Route path="/categories/:category/:id" exact>{main}</Route>
+                    <Route path="/categories/:category" exact>{categories}</Route>
+                    <Route path="/180degrees/:category" exact>{info}</Route>
+                    <Route path="/" exact><Header /></Route>
+                    <Route>
+                        <div>404 not found</div>
+                    </Route>
+                </Switch>
+            }
         </React.Suspense>
     );
 }
 
-export default App;
+const state = state => ({ error: state.error });
+const dispatch = dispatch => ({ onError: (er) => dispatch(actions.error(er)) })
+
+export default connect(state, dispatch)(App);

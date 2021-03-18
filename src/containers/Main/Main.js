@@ -55,10 +55,10 @@ const Main = () => {
                             <div className="Main__left">
                                 <div className="Main__sets">
                                     <div className="wh-100 pos-rel">
-                                        <button className="btn__control btn__control--prev">
+                                        <button className="btn__control btn__control--prev Main__btn-control">
                                             <BiChevronLeft className="icon--sm" />
                                         </button>
-                                        <button className="btn__control btn__control--next">
+                                        <button className="btn__control btn__control--next Main__btn-control">
                                             <BiChevronRight className="icon--sm" />
                                         </button>
                                         <div className="flex aic mb-3">
@@ -77,11 +77,9 @@ const Main = () => {
                                             spaceBetween={30}>
                                                 <SwiperSlide className="Main__sets-wrapper">
                                                     <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="wh-100">
+                                                            
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
                                                         <div className="Main__tooltip">
                                                             Black flowers
                                                         </div>
@@ -132,8 +130,6 @@ const Main = () => {
                                                         <div className="Main__tooltip">
                                                             Black flowers
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
                                                     </div>
                                                     <div className="Main__sets-item">
                                                     </div>

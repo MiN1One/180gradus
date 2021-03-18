@@ -1,0 +1,14 @@
+@use '../../assets/sass' as *;
+
+.Er {
+    @include moveDown;
+    @include gradienty;
+    height: calc(100vh - 7.5rem);
+
+    &__body { padding: 5rem 0; }
+
+    &__text {
+        font-size: 1.75rem;
+        color: $light;
+    }
+}

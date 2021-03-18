@@ -9,6 +9,8 @@ import logo from '../../assets/logo.png';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 
+import s10 from '../../assets/images/Samsung+Galaxy+S10+5G+stock.png';
+
 const Header = () => {
     const [transformUp, setTransformUp] = useState(0);
     const [viewOne, setViewOne] = useState(0);

@@ -3,15 +3,17 @@
 .Categories {
     @include moveDown;
     @include gradienty;
-    padding-bottom: 5rem;
+    padding: 11.5rem 0;
+    padding-top: 8.5rem;
 
     &__head {
         display: flex;
-        align-items: center;
-        margin-bottom: 2.5rem;
+        align-items: flex-end;
+        margin-bottom: 3.5rem;
+        position: relative;
+        z-index: 2;
         
         &--main {
-            padding-top: 6.5rem;
             justify-content: space-between;
             margin-bottom: 4rem;
         }
@@ -24,13 +26,12 @@
     }
     
     &__group {
-        // padding-top: 2.5rem;
-        // padding-bottom: 6rem;
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        column-gap: 5rem;
-        row-gap: 4.5rem;
+        justify-content: space-between;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 19rem));
+        column-gap: 3rem;
+        row-gap: 6rem;
         
         &:not(:last-child) { margin-bottom: 5rem; }
     }
@@ -46,76 +47,5 @@
         right: 1.7rem;
         transform: translateY(-50%);
         z-index: 1;
-    }
-
-    &__card {
-        padding: 1.5rem 2rem;
-        background: $grey-light;
-        box-shadow: 1.5rem .75rem 1.5rem rgba(#000, .075);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 26rem;
-        border-radius: 1rem;
-        position: relative;
-        animation-delay: .3s;
-        
-        &::after {
-            content: "";
-            display: inline-block;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 104%;
-            height: 104%;
-            background: $gradient-grace-yellow;
-            border-radius: 1rem;
-            z-index: -1;
-            animation-delay: 1s;
-            transition: all .45s ease;
-        }
-
-        &:hover,
-        &:focus {
-            // transform: scale(1.05);
-
-            &::after { background: rgba($yellow, .9); }
-        }
-    }
-
-    [data-premium=true] {
-        background: $gradient-grace-exclusive;
-        &:hover { background: $secondary; }
-    }
-
-    [data-favorite=true] {
-        background: $gradient-grace-primary;
-        &:hover { background: $primary; }
-    }
-
-    [data-popular=true] { background: $gradient-grace-mixed; }
-
-    &__card-head {
-        width: 100%;
-        margin-bottom: 2rem;
-    }
-
-    &__card-body {
-        display: flex;
-        flex-direction: column;
-        margin-top: 1rem;
-    }
-
-    &__card-figure {
-        width: 100%;
-        height: 12.5rem;
-    }
-
-    &__card-img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
     }
 }

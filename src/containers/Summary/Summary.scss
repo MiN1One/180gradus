@@ -9,7 +9,7 @@
         position: relative;
         z-index: 2;
         padding: 3rem 0;
-        height: 95rem;
+        height: 85rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -55,14 +55,14 @@
 
     &__btn-control {
         
-        &:first-of-type { left: 0; }
+        &:first-of-type { left: 1.5rem; }
 
-        &:last-of-type { right: -10rem; }
+        &:last-of-type { right: 1.5rem; }
     }
 
     &__wrapper {
         width: 100% !important;
-        height: 35rem !important;
+        height: 25rem !important;
         border-radius: .55rem;
         overflow: hidden;
     }
@@ -149,7 +149,8 @@
         font-size: 1.5rem;
         text-transform: uppercase;
 
-        &:hover { background: $gradient-light; }
+        &:hover,
+        &:focus { background: $gradient-light; }
     }
     
     &__price-tag {

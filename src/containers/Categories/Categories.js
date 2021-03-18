@@ -1,41 +1,97 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiSearch, BiX } from 'react-icons/bi';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import x50 from '../../assets/images/Vivo X50.png';
+import Card from '../../components/Card/Card';
+import axiosInstance from '../../axios';
 import './Categories.scss';
+import SubSpinner from '../../UI/SubSpinner/SubSpinner';
 
 const Categories = () => {
     const { t } = useTranslation();
     const params = useParams();
-    const history = useHistory();
+
+    const [searchInput, setSearchInput] = useState('');
+    const [searchResults, setSearchResults] = useState(null);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-        if (history.location.hash) {
-            const element = document.getElementById(history.location.hash.substr(1));
-            if (element) {
-                element.scrollIntoView();
-                element.scrollTop -= 75;
-                // Array.from(document.querySelectorAll('.Categories__group'))[2].scrollTop -= 75;
-            }
+
+    });
+    
+    useEffect(() => {
+        if (searchInput === '') {
+            axiosInstance(`/skins/${params.category}`)
+                .then((res) => {
+                    console.log(res.data);
+                    setData(res);
+                });
         }
-    }, [history.location.hash]);
+    }, [params.category, searchInput]);
+
+    const onInputSearch = (search, e) => {
+        setSearchLoading(true)
+        if (e) e.preventDefault();
+        setSearchInput(search);
+        setTimeout(() => {
+            if (search !== '') {
+                axiosInstance(`/skins/${params.category}?search=${search}`)
+                    .then((res) => {
+                        console.log(res.data);
+                        setSearchResults(res);
+                        setSearchLoading(false);
+                    });
+            }
+        }, 850);
+    };
+
+    const skin = {
+        source: x50,
+        title: 'Vivo X50',
+        category: params.category
+    };
 
     return (
         <section className="Categories">
             <div className="container">
                 <div className="Categories__head Categories__head--main">
-                    <h1 className="heading heading--1">{t('nav.skins')}</h1>
-                    <form className="Categories__form" onSubmit={(e) => e.preventDefault()}>
+                    <h1 className="heading heading--1">{t(`nav.${params.category}`)}</h1>
+                    <form className="Categories__form" onSubmit={(e) => onInputSearch(searchInput, e)}>
                         <input 
                             className="input input--searchbar" 
                             type="text"
-                            placeholder={t('main.search')} />
-                        <button className="Categories__search-btn">
+                            value={searchInput}
+                            placeholder={t('main.search')}
+                            onChange={(e) => onInputSearch(e.target.value)} />
+                        <button type="submit" className="Categories__search-btn">
                             <BiSearch className="icon icon--dark" />
                         </button>
-                        <button className="input--searchbar-btn">
+                        <div className="input__dropdown">
+                            {searchLoading 
+                                ? <SubSpinner className="loading--sm" />
+                                : <>
+                                    <div className="input__drop-item">
+                                        <figure className="input__figure">
+                                            <img className="img" src={x50} alt="vivo" />
+                                        </figure>
+                                        <div className="flex fdc">
+                                            <span className="text--sm c-black">Vivo X50</span>
+                                            <span className="text--xs c-grey">{t('nav.skins')}</span>
+                                        </div>
+                                    </div>
+                                </>
+                            }
+                        </div>
+                        <button 
+                            className="input--clear-btn" 
+                            type="button"
+                            onClick={() => {
+                                setSearchInput('');
+                                setSearchResults(null);
+                            }}>
                             <BiX className="icon icon--dark" />
                         </button>
                     </form>
@@ -45,35 +101,14 @@ const Categories = () => {
                         <h2 className="heading heading--main">{t('nav.popular')}</h2>
                     </div>
                     <section className="Categories__group">
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">Skins</span>
-                            </div>
-                        </Link>
-                    </section>
-                    <div className="Categories__head" id="popular">
-                        <h2 className="heading heading--main mr-1">{t('nav.phones')}</h2>
-                        <span className="mr-1 bull--main">&bull;</span>
-                        <span className="heading heading--sm c-grey">Samsung</span>
-                    </div>
-                    <section className="Categories__group">
-                        <Link to={`/categories/${params.category}/Vivo-x50`} className="Categories__card">
-                            <div className="Categories__card-head">
-                                <figure className="Categories__card-figure">
-                                    <img className="Categories__card-img" src={x50} alt="x50" />
-                                </figure>
-                            </div>
-                            <div className="Categories__card-body">
-                                <span className="heading heading--sm tc">Vivo X50</span>
-                                <span className="heading heading--sub mt-1 tc">{t('nav.skins')}</span>
-                            </div>
-                        </Link>
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
                     </section>
                 </div>
                 <div className="Categories__footer">

@@ -112,13 +112,13 @@
     &__popper {
         height: 100%;
         width: 100%;
-        background-size: cover;
-        background-position: center;
         overflow: hidden;
         transition: height .15s ease;
         position: relative;
         z-index: 9;
-        background-size: cover;
+        background: url('../../assets/images/Samsung+Galaxy+S10+5G+stock.png');
+        background-position: right;
+        background-size: contain;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
@@ -130,19 +130,12 @@
         width: 100%;
         position: absolute;
         z-index: 10;
-        background-color: #3c7ff3;
-        background-size: cover;
+        // background-color: #3c7ff3;
+        background: url('../../assets/images/Samsung_galaxya51_black_back\ stock.png');
+        background-position: right;
+        background-size: contain;
         background-repeat: no-repeat;
         background-attachment: fixed;
-    }
-
-    &__img {
-        width: 100%;
-        height: 100vh;
-        object-fit: cover;
-        position: absolute;
-        top: 0;
-        left: 0;
     }
 
     &__heading {

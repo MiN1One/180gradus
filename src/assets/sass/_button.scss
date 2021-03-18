@@ -211,7 +211,7 @@
         align-items: center;
         position: absolute;
         top: 50%;
-        transform: translateY(-170%);
+        transform: translateY(-50%);
         z-index: 1;
         transition: transform .25s ease-in-out;
         transform-origin: top center;
@@ -253,6 +253,6 @@
         }
 
         &:hover,
-        &:focus { transform: scale(1.25) translateY(-170%); }
+        &:focus { transform: scale(1.25) translateY(-50%); }
     }
 }

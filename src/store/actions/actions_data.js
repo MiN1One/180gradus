@@ -5,3 +5,8 @@ export const addToFavorites = (skinId) => ({
     skinId
 });
 
+export const error = (er) => ({
+    type: actionTypes.ON_ERROR,
+    error: er
+});
+

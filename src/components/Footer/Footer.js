@@ -108,7 +108,7 @@ const Footer = (props) => {
                 <div className="Footer__content">
                     <div className="flex jcsb w-100 aic mb-3">
                         <div className="flex aic">
-                            <span className="text text--mid flex mr-1 c-grey-l">{t('main.find us on')}:</span>
+                            <span className="text text--mid text--cap flex mr-1">{t('main.find us on')}:</span>
                             <Link to="/" className="btn btn__ghost mr-5">
                                 <FaInstagram className="icon--mid Footer__i" />
                             </Link>

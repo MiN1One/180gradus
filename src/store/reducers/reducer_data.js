@@ -2,7 +2,8 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     // favorites: localStorage.getItem('favorites') || []
-    favorites: localStorage.getItem('favorites') || []
+    favorites: localStorage.getItem('favorites') || [],
+    error: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,7 +17,10 @@ const reducer = (state = initialState, action) => {
             localStorage.setItem('favorites', JSON.stringify(newList));
 
             return { ...state, favorites: newList };
-        default:
+
+        case actionTypes.ON_ERROR: return { ...state, error: action.error };
+
+        default: return state;
     }
 };
 
