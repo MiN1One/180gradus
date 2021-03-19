@@ -1,0 +1,102 @@
+@use './index' as *;
+
+.loading {
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    border: .3rem solid rgba(255,255,255,.4);
+    border-radius: 50%;
+    border-top-color: $primary;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+
+    &--sm {
+        width: 4rem;
+        height: 4rem;
+        border-width: .25rem;
+    }
+}
+
+.loader {
+    @include gradienty;
+    background: $pitch;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 105;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__appdev {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        color: $grey-dark;
+        font-size: 1.55rem;
+    }
+    
+    &__wrapper {
+        width: 15rem;
+        height: 15rem;
+        position: relative;
+        margin-top: -8.5rem;
+    }
+    
+    &__logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-45%, -50%);
+        width: 7rem;
+        height: 7rem;
+        transform-origin: top left;
+        animation: animateCentered 3s linear infinite;
+    }
+
+    &__face {
+        position: absolute;
+        border: .5rem solid transparent;
+
+        &--1 {
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            border-left: .4rem solid $yellow;
+            border-top: .4rem solid $yellow;
+            animation: animate 2s linear infinite;
+        }
+
+        &--2 {
+            left: 1rem;
+            top: 1rem;
+            right: 1rem;
+            bottom: 1rem;
+            border-radius: 50%;
+            border-right: .4rem solid $primary;
+            border-bottom: .4rem solid $primary;
+            animation: animate 2s linear reverse infinite;
+        }
+    }
+
+    &__circle {
+        position: absolute;
+        top: calc(50% - .1rem);
+        left: 50%;
+        width: 50%;
+        height: .2rem;
+        transform-origin: left;
+        transform: rotate(-45deg);
+    }
+}
+
+.logo {
+    width: 7.5rem;
+    height: 6rem;
+    display: inline-block;
+}

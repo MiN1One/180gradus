@@ -12,7 +12,7 @@
         transition: width .3s ease-in-out;
 
         &:focus {
-            width: 30rem;
+            width: 32rem;
             box-shadow: 0 0 .75rem rgba($pitch, .5);
         }
     }
@@ -27,17 +27,25 @@
         align-items: center;
         width: 100%;
         padding: .5rem 0;
-        border-bottom: 1px solid rgba($pitch, .075);
+
+        &:hover,
+        &:focus {
+            background: $grey-light;
+            border-radius: .55rem;
+        }
+
+        &:not(:last-child) { border-bottom: 1px solid rgba($pitch, .075); }
     }
 
     &__dropdown {
         display: none;
         justify-content: center;
+        flex-direction: column;
         align-items: center;
         position: absolute;
         top: 110%;
         transition: all .15s ease;
-        padding: 0 2.5rem;
+        padding: 1.5rem 2.5rem;
         left: 0;
         min-height: 10rem;
         width: 100%;
@@ -91,6 +99,13 @@
     }
 }
 
+.tag {
+    padding: .75rem 2rem;
+    border-radius: 3rem;
+    background: $gradient-main;
+    font-size: 1.4rem;
+}
+
 .icon {
     width: 2rem;
     height: 2rem;
@@ -107,8 +122,8 @@
     }
 
     &--lg {
-        width: 4rem;
-        height: 4rem;
+        width: 3.5rem;
+        height: 3.5rem;
     }
 
     &--mid {

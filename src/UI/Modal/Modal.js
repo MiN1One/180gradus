@@ -26,21 +26,23 @@ const Modal = (props) => {
                     </div>
                 </Scrollbars>
                 <div className="Modal__footer">
-                    <div className="flex aic">
-                        {props.subClick && 
-                            <>
-                                <span className="price-tag mr-1">
-                                    {t('main.total')}: $5.99
-                                </span>
-                                <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.subClick()}>
-                                    {props.edit ? t('main.save') : t('main.edit')}
-                                </button>
-                            </>
-                        }
-                        <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.click()}>
-                            {props.actionTitle}
-                        </button>
-                    </div>
+                    {!props.loading &&
+                        <div className="flex aic">
+                            {props.subClick && 
+                                <>
+                                    <span className="price-tag mr-1">
+                                        {t('main.total')}: $5.99
+                                    </span>
+                                    <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.subClick()}>
+                                        {props.edit ? t('main.save') : t('main.edit')}
+                                    </button>
+                                </>
+                            }
+                            <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.click()}>
+                                {props.actionTitle}
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
         </>

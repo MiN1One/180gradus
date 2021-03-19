@@ -1,8 +1,8 @@
+import { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { BiChevronLeft, BiPaintRoll, BiCartAlt, BiChevronRight } from 'react-icons/bi';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { BiChevronLeft, BiCartAlt, BiChevronRight, BiX } from 'react-icons/bi';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 
@@ -10,18 +10,31 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/swiper.scss';
 
-import s20 from '../../assets/images/noback-s20-dgrey.png';
 import x50 from '../../assets/images/Vivo X50.png';
-
+import * as actions from '../../store/actions';
 import './Main.scss';
-import * as utils from '../../utilities/utilities';
+import { connect } from 'react-redux';
+import SubSpinner from '../../UI/SubSpinner/SubSpinner';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 SwiperCore.use([Navigation, Pagination]);
 
-const Main = () => {
+const Main = (props) => {
     const params = useParams();
     const history = useHistory();
     const { t } = useTranslation();
+
+    const [selectedSkin, setSelectedSkin] = useState(null);
+    const mounted = useRef();
+
+    useEffect(() => {
+        mounted.current = true;
+        
+
+        return () => mounted.current = false;
+    }, []);
+
+    const isFavorite = selectedSkin !== null && props.favorites.findIndex(el => el === selectedSkin) !== -1;
 
     return (
         <header className="Main">
@@ -49,8 +62,28 @@ const Main = () => {
                                         className="Main__img"
                                         width="100%"
                                         height="100%"
-                                        effect="opacity" />
+                                        placeholder={<SubSpinner />} />
                                 </figure>
+                                {selectedSkin !== null && 
+                                    <>
+                                        <h5 className="text text--mid Main__title">Black flowers</h5>
+                                        <div className="Main__right-panel">
+                                            <button 
+                                                className="btn btn__ghost btn__ghost--active mr-1"
+                                                onClick={() => setSelectedSkin(null)}>
+                                                    <BiX className="icon" />
+                                            </button>
+                                            <button 
+                                                className="btn btn__ghost btn__ghost--active"
+                                                onClick={() => props.onAddToFav(selectedSkin)}>
+                                                    {isFavorite
+                                                        ? <AiFillStar className="icon" />
+                                                        : <AiOutlineStar className="icon" />
+                                                    }
+                                            </button>
+                                        </div>
+                                    </>
+                                }
                             </div>
                             <div className="Main__left">
                                 <div className="Main__sets">
@@ -76,10 +109,7 @@ const Main = () => {
                                                 }}
                                             spaceBetween={30}>
                                                 <SwiperSlide className="Main__sets-wrapper">
-                                                    <div className="Main__sets-item">
-                                                        <div className="wh-100">
-                                                            
-                                                        </div>
+                                                    <div className={`Main__sets-item ${selectedSkin === 0 ? 'Main__sets-item--active' : ''}`} onClick={() => setSelectedSkin(0)}>
                                                         <div className="Main__tooltip">
                                                             Black flowers
                                                         </div>
@@ -151,10 +181,15 @@ const Main = () => {
                                         </Swiper>
                                     </div>
                                     <div className="Main__summary">
-                                        <div className="Main__price">$5.99</div>
-                                        <button className="Main__btn">
-                                            {t('main.to cart')}
-                                            <BiCartAlt className="icon--mid ml-5" />
+                                        {selectedSkin !== null && <div className="Main__price">$5.99</div>}
+                                        <button 
+                                            className="Main__btn" 
+                                            disabled={selectedSkin !== null ? false : true}
+                                            onClick={() => {
+                                                if (selectedSkin !== null) props.onAddToCart(selectedSkin);
+                                            }}>
+                                                {t('main.to cart')}
+                                                <BiCartAlt className="icon--mid ml-5" />
                                         </button>
                                     </div>
                                 </div>
@@ -170,4 +205,13 @@ const Main = () => {
     );
 };
 
-export default Main;
+const state = state => ({
+    favorites: state.favorites
+});
+
+const dispatch = dispatch => ({
+    onAddToCart: (id) => dispatch(actions.addToCart(id)),
+    onAddToFav: (id) => dispatch(actions.addToFavorites(id))
+});
+
+export default connect(state, dispatch)(Main);

@@ -10,20 +10,20 @@
     transition: all .3s ease-in-out;
 
     &--1 {
-        font-size: 4rem;
+        font-size: 3.25rem;
         font-weight: 300;
     }
 
     &--main {
-        font-weight: 2.75;
-        font-size: 2.5rem;
+        font-weight: 300;
+        font-size: 2.25rem;
         color: $grey-light;
     }
 
     &--black { color: $black; }
 
     &--sm {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         color: $black;
         font-weight: 600;
     }

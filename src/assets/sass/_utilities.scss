@@ -14,6 +14,7 @@
 .aie { align-items: flex-end !important; }
 .ais { align-items: flex-start !important; }
 .fdc { flex-direction: column; }
+.fwrap { flex-wrap: wrap !important; }
 
 .wh-auto {
     width: auto !important;
@@ -68,6 +69,7 @@
 
 .tc { text-align: center; }
 
+.c-black { color: $pitch !important; }
 .c-light { color: $light !important; }
 .c-white { color: $white !important; }
 .c-grey { color: $grey-dark !important; }

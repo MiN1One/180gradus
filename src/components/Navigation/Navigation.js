@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { BiCart, BiStar } from 'react-icons/bi';
-import { Link, useLocation } from 'react-router-dom';
+import { BiCart } from 'react-icons/bi';
+import { AiOutlineStar } from 'react-icons/ai';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import './Navigation.scss';
 import Tooltip from '../../UI/Tooltip/Tooltip';
 import Logo from '../../UI/Logo/Logo';
-
-const AsyncFavorites = React.lazy(() => import('../Favorites/Favorites'));
-const AsyncCart = React.lazy(() => import('../Cart/Cart'));
+import Cart from '../Cart/Cart';
+import Favorites from '../Favorites/Favorites';
 
 const Navigation = (props) => {
     const { t } = useTranslation();
@@ -24,57 +24,62 @@ const Navigation = (props) => {
             
     return (
         <>
-            {favView && <AsyncFavorites t={t} close={setFavView} />}
-            {cartView && <AsyncCart t={t} close={setCartView} />}
+            {favView && <Favorites t={t} close={setFavView} />}
+            {cartView && <Cart t={t} close={setCartView} />}
             <nav className={`Navigation ${props.class || ''}`}>
                 <div className="container">
                     <div className="Navigation__content">
                         <div className="Navigation__side">
-                            <div className="Navigation__logo">
-                                <Logo />
-                            </div>
+                            <Logo className="h-100 mr-1" />
                             <ul className="Navigation__list">
                                 <li className="Navigation__item">
-                                    <Link 
-                                        to="/categories/skins"
+                                    <NavLink
+                                        exact
+                                        activeClassName="Navigation__link--active"
+                                        to="/categories"
                                         className="Navigation__link">
                                         {t('nav.skins')}
-                                    </Link>
+                                    </NavLink>
                                 </li>                                    
                                 <li className="Navigation__item">
-                                    <Link 
+                                    <NavLink 
+                                        activeClassName="Navigation__link--active"
                                         to="/categories/phones"
                                         className="Navigation__link">
                                         {t('nav.phones')}
-                                    </Link>
+                                    </NavLink>
                                 </li>                                    
                                 <li className="Navigation__item">
-                                    <Link 
+                                    <NavLink 
+                                        activeClassName="Navigation__link--active"
                                         to="/categories/laptops"
                                         className="Navigation__link">
                                         {t('nav.laptops')}
-                                    </Link>
+                                    </NavLink>
                                 </li>                                    
                                 <li className="Navigation__item">
-                                    <Link 
+                                    <NavLink 
+                                        activeClassName="Navigation__link--active"
                                         to="/categories/consoles"
                                         className="Navigation__link">
                                         {t('nav.consoles')}
-                                    </Link>
+                                    </NavLink>
                                 </li>                                    
                                 <li className="Navigation__item">
-                                    <Link 
+                                    <NavLink 
+                                        activeClassName="Navigation__link--active"
                                         to="/categories/exclusive"
                                         className="Navigation__link">
                                         {t('nav.exclusive edition')}
-                                    </Link>
+                                    </NavLink>
                                 </li>                                    
                                 <li className="Navigation__item">
-                                    <Link 
+                                    <NavLink 
+                                        activeClassName="Navigation__link--active"
                                         to="/180degrees/about"
                                         className="Navigation__link">
                                         {t('nav.about')}
-                                    </Link>
+                                    </NavLink>
                                 </li>                                    
                             </ul>
                         </div>
@@ -92,7 +97,7 @@ const Navigation = (props) => {
                                     className="Navigation__link Navigation__link--pop" 
                                     onClick={() => setFavView(true)}>
                                         <span>2</span>
-                                        <BiStar className="Navigation__icon" />
+                                        <AiOutlineStar className="Navigation__icon" />
                                 </button>
                                 <Tooltip>{t('nav.favorites')}</Tooltip>
                             </div>

@@ -32,18 +32,6 @@
     &:hover::after,
     &:focus::after { background: rgba($yellow, .9); }
 
-    [data-premium=true] {
-        background: $gradient-grace-exclusive;
-        &:hover { background: $secondary; }
-    }
-
-    [data-favorite=true] {
-        background: $gradient-grace-primary;
-        &:hover { background: $primary; }
-    }
-
-    [data-popular=true] { background: $gradient-grace-mixed; }
-
     &__head {
         width: 100%;
         margin-bottom: 2rem;
@@ -66,4 +54,13 @@
         object-fit: contain;
     }
 
+}
+
+[data-premium=true] { background: $gradient-card-premium; }
+
+[data-favorite=true] {
+
+    &::after { background: $gradient-grace-primary; }
+
+    &:hover::after { background: $primary; }
 }

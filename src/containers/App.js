@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import axiosInstance from '../axios';
 
 import * as actions from '../store/actions';
+import Spinner from '../UI/Spinner/Spinner';
 import Er from './Error/Error';
 import Header from './Header/Header';
 import Layout from './Layout/Layout';
@@ -85,20 +86,20 @@ function App({ error, onError }) {
     );
 
     return (
-        <React.Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<Spinner />}>
             {error
                 ? <Er er={error} clean={() => onError(null)} />
                 : <Switch>
                     <Route path="/summary" exact>{summary}</Route>
                     <Route path="/categories/:category/:id" exact>{main}</Route>
+                    <Route path="/categories" exact>{categories}</Route>
                     <Route path="/categories/:category" exact>{categories}</Route>
                     <Route path="/180degrees/:category" exact>{info}</Route>
                     <Route path="/" exact><Header /></Route>
-                    <Route>
-                        <div>404 not found</div>
-                    </Route>
+                    <Route><Er notFound /></Route>
                 </Switch>
             }
+            {/* <Spinner /> */}
         </React.Suspense>
     );
 }

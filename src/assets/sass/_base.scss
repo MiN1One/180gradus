@@ -15,6 +15,7 @@ html { font-size: 62.5%; }
 
 body {
   font-family: 'Nunito', sans-serif;
+  text-rendering: optimizeLegibility;
   background: $bg;
 }
 
@@ -51,7 +52,8 @@ button {
 }
 
 a {
-  color: #c4c4c4;
+  color: inherit;
+  font-size: inherit;
   text-decoration: none;
 }
 

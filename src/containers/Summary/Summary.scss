@@ -22,7 +22,6 @@
         @include gradienty;
         display: grid;
         grid-template-rows: max-content 1fr max-content;
-        // justify-content: space-between;
     }
 
     &__head {
@@ -48,8 +47,9 @@
 
     &__form {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        column-gap: 4rem;
+        justify-content: space-between;
+        grid-template-columns: repeat(auto-fit, minmax(25rem, 29rem));
+        column-gap: 2.5rem;
         row-gap: 5.5rem;
     }
 

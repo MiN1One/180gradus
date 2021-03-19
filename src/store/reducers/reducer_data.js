@@ -1,8 +1,8 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    // favorites: localStorage.getItem('favorites') || []
-    favorites: localStorage.getItem('favorites') || [],
+    favorites: JSON.parse(localStorage.getItem('favorites')) || [],
+    cart: JSON.parse(sessionStorage.getItem('skins')) || [],
     error: null
 };
 
@@ -19,6 +19,13 @@ const reducer = (state = initialState, action) => {
             return { ...state, favorites: newList };
 
         case actionTypes.ON_ERROR: return { ...state, error: action.error };
+
+        case actionTypes.ON_ADD_TO_CART: 
+            const exists = state.cart.findIndex(el => el === action.skinId) !== -1;
+            if (exists) return { ...state };
+            const newArr = [...state.cart, action.skinId];
+            sessionStorage.setItem('skins', JSON.stringify(newArr));
+            return { ...state, cart: newArr };
 
         default: return state;
     }

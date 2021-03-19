@@ -1,4 +1,5 @@
 export {
     addToFavorites,
-    error
+    error,
+    addToCart
 } from './actions_data';

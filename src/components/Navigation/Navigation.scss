@@ -18,12 +18,6 @@
         justify-content: space-between;
     }
     
-    &__logo {
-        margin-right: 1.5rem;
-        width: 8rem;
-        height: auto;
-    }
-    
     &__list,
     &__side {
         display: flex;
@@ -36,6 +30,7 @@
         font-weight: 500;
         height: 100%;
         position: relative;
+        color: $grey-light;
     }
 
     &__link {
@@ -79,26 +74,19 @@
         &:hover {
             color: $yellow;
 
-            &::after {
-                transform: translateY(-100%) translateX(-50%) scale(1);
-            }
+            &::after { transform: translateY(-100%) translateX(-50%) scale(1); }
 
             span {
                 background-image: $gradient-main;
                 color: $light;
             }
 
-            .Navigation__icon {
-                fill: $yellow;
-            }
+            .Navigation__icon { fill: $yellow; }
         }
 
         &--pop {
 
-            &::after {
-                content: none;
-                display: none;
-            }
+            &::after { content: none; }
 
             &:hover + .Tooltip {
                 opacity: 1;
@@ -110,9 +98,7 @@
         &--active {
             color: $yellow;
 
-            &::after {
-                transform: translateY(-100%) translateX(-50%) scale(1);
-            }
+            &::after { transform: translateY(-100%) translateX(-50%) scale(1); }
         }
     }
 
@@ -123,7 +109,5 @@
         position: relative;
     }
 
-    &--hide {
-        transform: translateY(-7.5rem);
-    }
+    &--hide { transform: translateY(-7.5rem); }
 }

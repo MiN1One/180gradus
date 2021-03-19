@@ -10,3 +10,8 @@ export const error = (er) => ({
     error: er
 });
 
+export const addToCart = (skinId) => ({
+    type: actionTypes.ON_ADD_TO_CART,
+    skinId
+});
+

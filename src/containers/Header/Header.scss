@@ -23,7 +23,6 @@
         position: relative;
         z-index: 1;
         transition: all .7s ease;
-        
 
         &--slideBack {
             width: 15vw;
@@ -32,7 +31,6 @@
     }
 
     &__hero {
-        align-items: center;
         position: fixed;
         top: 50%;
         left: 50%;
@@ -80,12 +78,11 @@
     }
     
     &__fig {
-        width: 13rem;
+        width: 8.5vw;
         height: auto;
-        filter: saturate(5rem);
     }
 
-    &__sl {
+    &__textbox {
         transition: all .65s ease;
         transform: translateY(-4.5rem);
     }
@@ -116,22 +113,22 @@
         transition: height .15s ease;
         position: relative;
         z-index: 9;
-        background: url('../../assets/images/Samsung+Galaxy+S10+5G+stock.png');
-        background-position: right;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+        background-image: url('../../assets/images/Samsung+Galaxy+S10+5G+stock.png');
     }
+    
     
     &__popperbg {
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
-        position: absolute;
         z-index: 10;
         // background-color: #3c7ff3;
-        background: url('../../assets/images/Samsung_galaxya51_black_back\ stock.png');
+        background-image: url('../../assets/images/Samsung_galaxya51_black_back\ stock.png');
+    }
+    
+    &__popper,
+    &__popperbg {
         background-position: right;
         background-size: contain;
         background-repeat: no-repeat;
@@ -139,7 +136,7 @@
     }
 
     &__heading {
-        font-size: 6rem;
+        font-size: 5.5rem;
         letter-spacing: .05px;
         margin-bottom: 2rem;
         width: 70rem;
@@ -147,6 +144,13 @@
         color: transparent;
         background-image: linear-gradient(120deg, #8035e4 13%, #5c54ec 27%,  $yellow 54%, #3c7ff3, 75%, #2c94f4 90%, #15a8fb);
         background-clip: text;
+
+        &--sub {
+            font-size: 2rem;
+            line-height: .5;
+            font-weight: 300;
+            color: $grey-light;
+        }
     }
 
     &__jumbotron--slideBack &__bg::after,
@@ -161,12 +165,12 @@
     }
 
     &__jumbotron--slideBack &__logobox {
-        transform: translate(0) rotate(0) translateY(3.5rem);
-        padding-left: 3.5rem;
+        transform: rotate(0) translateX(0) translateY(12vh);
+        padding-left: 3.5vw;
     }
 
-    &__jumbotron--slideBack &__sl {
-        transform: translateY(3.5rem);
+    &__jumbotron--slideBack &__textbox {
+        transform: translateY(9vh);
         opacity: 0;
         visibility: hidden;
     }

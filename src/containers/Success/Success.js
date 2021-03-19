@@ -19,6 +19,7 @@ const Success = () => {
                             <BiChevronLeft className="icon icon--lg icon--dark" />
                         </button>
                         <p className="text text--mid Success__text">
+                            Thank you for choosing us.<br/>
                             Your order has been sent for processing and will be delivered within 2 hours<br/>
                             You can read more about delivery proccess <Link to="/180degrees/delivery" className="link link--outline">here.</Link>
                         </p>

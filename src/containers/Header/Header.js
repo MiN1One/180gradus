@@ -135,9 +135,10 @@ const Header = () => {
                                         <img src={logo} alt="180sub" width="100%" height="auto"/>
                                     </figure>
                                 </div>
-                                <div className="Header__sl">
-                                    <h1 className="Header__heading heading">
+                                <div className="Header__textbox">
+                                    <h1 className="Header__heading fdc flex">
                                         Recreate your phone
+                                        <span className="Header__heading--sub mb-15">Best choice for you and your device</span>
                                     </h1>
                                     <div className="flex">
                                         <Link to="/categories" className="btn btn__primary mr-15">{t('main.customize')}</Link>
