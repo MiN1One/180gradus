@@ -30,6 +30,14 @@
     align-items: center;
     justify-content: center;
 
+    &--relative {
+        position: relative;
+        background-color: transparent;
+        width: 100%;
+
+        &::after { content: none; }
+    }
+
     &__appdev {
         position: absolute;
         bottom: 5%;
@@ -45,6 +53,8 @@
         position: relative;
         margin-top: -8.5rem;
     }
+
+    &--relative &__wrapper { margin-top: -30rem; }
     
     &__logo {
         position: absolute;

@@ -1,7 +1,7 @@
 import logoSvg from '../../assets/180illustrator-1.svg';
 
-const Spinner = () => (
-    <div className="loader">
+const Spinner = ({ className }) => (
+    <div className={`loader ${className || ''}`}>
         <div className="loader__wrapper">
             <div className="loader__face loader__face--1">
                 <div className="loader__circle loader__circle--1"></div>

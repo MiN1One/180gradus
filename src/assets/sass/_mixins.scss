@@ -20,3 +20,47 @@
         z-index: -1;
     }
 }
+
+// xl, lg, row, mid, sm, xs, ss, ms 
+
+@mixin respond($bp) {
+    @if ($bp == xl) {
+        // 1600
+        @media screen and (min-width: 100em) { @content; }
+    }
+    
+    @if ($bp == lg) {
+        // 1141
+        @media screen and (min-width: 71.3125em) { @content; }
+    }
+
+    @if ($bp == row) {
+        // 1140
+        @media screen and (max-width: 71.25em) { @content; }
+    }
+
+    @if ($bp == mid) {
+        // 950
+        @media screen and (max-width: 59.375em) { @content; }
+    }
+    
+    @if ($bp == sm) {
+        // 768
+        @media screen and (max-width: 48em) { @content; }
+    }
+
+    @if ($bp == xs) {
+        // 568
+        @media screen and (max-width: 35.5em) { @content; }
+    }
+    
+    @if ($bp == ss) {
+        // 500
+        @media screen and (max-width: 31.25em) { @content; }
+    }
+    
+    @if ($bp == ms) {
+        // 400
+        @media screen and (max-width: 25em) { @content; }
+    }
+}

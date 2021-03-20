@@ -1,5 +1,6 @@
 export {
     addToFavorites,
     error,
-    addToCart
+    addToCart,
+    setMedia
 } from './actions_data';

@@ -9,9 +9,19 @@
   
   animation: fadeIn .45s ease;
   animation-fill-mode: backwards;
+
+  @media screen and (prefers-reduced-motion: reduce) {  
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
 
-html { font-size: 62.5%; }
+html {
+  font-size: 62.5%;
+
+  @include respond(mid) { font-size: 57.8125%; }
+}
 
 body {
   font-family: 'Nunito', sans-serif;

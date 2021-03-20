@@ -1,0 +1,74 @@
+@use '../../../assets/sass' as *;
+
+.m-header {
+    @include gradienty;
+
+    &__list {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    &__section {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: right;
+        }
+        
+        &:first-child::after {
+            background-position: bottom right;
+            background-attachment: fixed;
+            background-image: url('../../../assets/images/Project\ 1.png');
+        }
+
+        &:nth-child(2)::after {
+            background-image: url('../../../assets/images/Samsung+Galaxy+S10+5G+stock.png');
+        }
+
+        &:last-child::after {
+            background-image: url('../../../assets/images/Samsung_galaxya51_black_back\ stock.png')
+        }
+    }
+
+    &__jumbo {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__hero {
+        font-size: 2rem;
+        color: $white;
+    }
+
+    &__heading {
+        display: flex;
+        flex-direction: column;
+        font-size: 4rem;
+        background: $gradient-jumbo;
+        background-clip: text;
+        color: transparent;
+        font-weight: 400;
+
+        &--sub {
+            font-size: 1.75rem;
+            color: $grey-light;
+            font-weight: 300;
+            transform: translateY(-1rem);
+        }
+    }
+}

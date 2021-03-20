@@ -138,11 +138,11 @@ const Header = () => {
                                 <div className="Header__textbox">
                                     <h1 className="Header__heading fdc flex">
                                         Recreate your phone
-                                        <span className="Header__heading--sub mb-15">Best choice for you and your device</span>
+                                        <span className="Header__heading--sub">Best choice for you and your device</span>
                                     </h1>
                                     <div className="flex">
-                                        <Link to="/categories" className="btn btn__primary mr-15">{t('main.customize')}</Link>
-                                        <Link to="/categories" href="/" className="btn btn__secondary btn__secondary--fill">{t('main.order')}</Link>
+                                        <Link to="/categories" className="Header__btn btn btn__primary mr-15">{t('main.customize')}</Link>
+                                        <Link to="/categories" href="/" className="Header__btn btn btn__secondary btn__secondary--fill">{t('main.order')}</Link>
                                     </div>
                                 </div>
                             </div>

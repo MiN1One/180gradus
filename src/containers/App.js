@@ -1,22 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import axiosInstance from '../axios';
+import ErrorBoundary from '../hoc/ErrorBoundary';
 
 import * as actions from '../store/actions';
 import Spinner from '../UI/Spinner/Spinner';
 import Er from './Error/Error';
-import Header from './Header/Header';
 import Layout from './Layout/Layout';
 
 const AsyncMain = React.lazy(() => import('./Main/Main'));
 const AsyncCategories = React.lazy(() => import('./Categories/Categories'));
 const AsyncInfo = React.lazy(() => import('./Info/Info'));
 const AsyncSummary = React.lazy(() => import('./Summary/Summary'));
+const AsyncHeader = React.lazy(() => import('./Header/Header'));
+const AsyncHeaderMobile = React.lazy(() => import('../mobile/containers/Header/Header'));
 
-function App({ error, onError }) {
+function App({ error, onError, onSetMedia, media }) {
     const { i18n } = useTranslation();
+    const [mounted, setMounted] = useState(false);
+
+    const mediaMid = window.matchMedia('(max-width: 59.375em)');
+
+    const watchMedia = (media, bp) => {
+        if (media.matches) onSetMedia(bp, true);
+        else onSetMedia(bp, false);
+    };
+
+    if (!mounted) {
+        mediaMid.onchange = () => watchMedia(mediaMid, 'mid');
+
+        watchMedia(mediaMid, 'mid');
+    }
+
+    useEffect(() => setMounted(true), []);
 
     useEffect(() => {
         const link = document.createElement('link');
@@ -67,6 +85,12 @@ function App({ error, onError }) {
         </Layout>
     );
 
+    const mobileHeader = (
+        <Layout>
+            <AsyncHeaderMobile />
+        </Layout>
+    );
+
     const categories = (
         <Layout>
             <AsyncCategories />
@@ -87,24 +111,38 @@ function App({ error, onError }) {
 
     return (
         <React.Suspense fallback={<Spinner />}>
-            {error
-                ? <Er er={error} clean={() => onError(null)} />
-                : <Switch>
-                    <Route path="/summary" exact>{summary}</Route>
-                    <Route path="/categories/:category/:id" exact>{main}</Route>
-                    <Route path="/categories" exact>{categories}</Route>
-                    <Route path="/categories/:category" exact>{categories}</Route>
-                    <Route path="/180degrees/:category" exact>{info}</Route>
-                    <Route path="/" exact><Header /></Route>
-                    <Route><Er notFound /></Route>
-                </Switch>
-            }
-            {/* <Spinner /> */}
+            <ErrorBoundary onError={onError}>
+                {error
+                    ? <Er er={error} clean={() => onError(null)} />
+                    : <Switch>
+                        <Route path="/summary" exact>{summary}</Route>
+                        <Route path="/categories/:category/:id" exact>{main}</Route>
+                        <Route path="/categories" exact>{categories}</Route>
+                        <Route path="/categories/:category" exact>{categories}</Route>
+                        <Route path="/180degrees/:category" exact>{info}</Route>
+                        <Route path="/" exact>
+                            {!media.mid
+                                ? <AsyncHeader />
+                                : mobileHeader
+                            }
+                        </Route>
+                        <Route><Er notFound /></Route>
+                    </Switch>
+                }
+                {/* <Spinner /> */}
+            </ErrorBoundary>
         </React.Suspense>
     );
 }
 
-const state = state => ({ error: state.error });
-const dispatch = dispatch => ({ onError: (er) => dispatch(actions.error(er)) })
+const state = state => ({
+    error: state.error,
+    media: state.media
+});
+
+const dispatch = dispatch => ({
+    onError: (er) => dispatch(actions.error(er)),
+    onSetMedia: (bp, val) => dispatch(actions.setMedia(bp, val))
+});
 
 export default connect(state, dispatch)(App);

@@ -3,7 +3,10 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     favorites: JSON.parse(localStorage.getItem('favorites')) || [],
     cart: JSON.parse(sessionStorage.getItem('skins')) || [],
-    error: null
+    error: null,
+    media: {
+        mid: false
+    }
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +29,15 @@ const reducer = (state = initialState, action) => {
             const newArr = [...state.cart, action.skinId];
             sessionStorage.setItem('skins', JSON.stringify(newArr));
             return { ...state, cart: newArr };
+
+        case actionTypes.ON_SET_MEDIA: 
+            return { 
+                ...state, 
+                media: { 
+                    ...state.media,
+                    [action.bp]: action.value
+                }
+            } 
 
         default: return state;
     }

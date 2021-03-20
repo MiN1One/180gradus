@@ -15,3 +15,8 @@ export const addToCart = (skinId) => ({
     skinId
 });
 
+export const setMedia = (bp, value) => ({
+    type: actionTypes.ON_SET_MEDIA,
+    bp,
+    value
+});

@@ -1,0 +1,21 @@
+@use '../../../assets/sass' as *;
+
+.m-nav {
+    height: 5rem;
+    width: 100%;
+
+    &__menu {
+        padding: .35rem 1.25rem;
+        // background: $yellow;
+
+        &:hover,
+        &:focus {
+            // background: $yellow !important;
+        }
+    }
+
+    &__icon {
+        width: 2.15rem;
+        height: 2.15rem;
+    }
+}

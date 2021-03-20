@@ -1,5 +1,12 @@
 @use '../../assets/sass' as *;
 
+.container {
+    max-width: $row-width;
+    margin: 0 auto;
+
+    @include respond(row) { padding: 0 1.5rem; }
+}
+
 .input {
 
     &--searchbar {

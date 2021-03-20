@@ -33,12 +33,10 @@
     &__hero {
         position: fixed;
         top: 50%;
-        left: 50%;
+        left: 45%;
         transform: translateY(-50%) translateX(-50%);
         transition: all .65s ease;
         z-index: 10;
-        padding: 2rem 10rem 2rem 0;
-        border-radius: 3px;
     }
     
     &__bg {
@@ -72,7 +70,7 @@
     }
 
     &__logobox {
-        transform: translateX(7rem) rotate(-90deg);
+        transform: translateX(4.75vw) rotate(-90deg);
         width: max-content;
         transition: all .4s ease;
     }
@@ -84,7 +82,8 @@
 
     &__textbox {
         transition: all .65s ease;
-        transform: translateY(-4.5rem);
+        // transform: translateY(-6rem);
+        transform: translateY(-4.5vw);
     }
 
     &__poppercase {
@@ -97,7 +96,7 @@
         transition: all .7s ease;
         background: #dfdfdf;
         z-index: 2;
-        box-shadow: -1rem 0 7rem rgba(#000, .1);
+        box-shadow: -1rem 0 2.5rem rgba($pitch, .25);
         background: rgba(#161616, .7);
         
         font-size: 3rem;
@@ -135,18 +134,24 @@
         background-attachment: fixed;
     }
 
+    &__btn {
+        font-size: .95vw;
+        padding: .85vw 3.5vw;
+    }
+
     &__heading {
-        font-size: 5.5rem;
+        // font-size: 5.5rem;
+        font-size: 4vw;
+        margin-bottom: 2.5vw;
         letter-spacing: .05px;
-        margin-bottom: 2rem;
-        width: 70rem;
         font-weight: 400;
         color: transparent;
-        background-image: linear-gradient(120deg, #8035e4 13%, #5c54ec 27%,  $yellow 54%, #3c7ff3, 75%, #2c94f4 90%, #15a8fb);
+        background-image: $gradient-jumbo;
         background-clip: text;
 
         &--sub {
-            font-size: 2rem;
+            // font-size: 2rem;
+            font-size: 1.5vw;
             line-height: .5;
             font-weight: 300;
             color: $grey-light;

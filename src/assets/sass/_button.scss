@@ -1,4 +1,4 @@
-@use './variables' as *;
+@use './index' as *;
 
 .btn {
     display: flex;
@@ -81,8 +81,9 @@
 
     &__primary,
     &__secondary {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 1.3rem;
+        text-transform: uppercase;
         padding: 1.25rem 4rem;
         border-radius: 3.5rem;
         position: relative;
@@ -101,6 +102,11 @@
             height: 100%;
             z-index: -1;
             transform-origin: center;
+        }
+
+        @include respond(mid) {
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
         }
     }
 

@@ -9,6 +9,7 @@ import Card from '../../components/Card/Card';
 import axiosInstance from '../../axios';
 import './Categories.scss';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
+import Spinner from '../../UI/Spinner/Spinner';
 
 const Categories = () => {
     const { t } = useTranslation();
@@ -17,6 +18,7 @@ const Categories = () => {
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState(null);
     const [searchLoading, setSearchLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
     
     const category = params.category ? `/${params.category}` : '';
@@ -29,9 +31,11 @@ const Categories = () => {
     
     useEffect(() => {
         if (searchInput === '' && mounted.current) {
+            setLoading(true);
             axiosInstance(`/skins/${category}`)
                 .then((res) => {
                     console.log(res);
+                    setLoading(false);
                     setData(res);
                 });
         }
@@ -46,7 +50,12 @@ const Categories = () => {
                 axiosInstance(`/skins${category}?search=${search}`)
                     .then((res) => {
                         console.log(res.data);
-                        setSearchResults(res);
+                        if (e) {
+                            setData(res);
+                            setSearchResults(null);
+                        } else {
+                            setSearchResults(res)
+                        }
                         setSearchLoading(false);
                     });
             }
@@ -124,23 +133,26 @@ const Categories = () => {
                         </button>
                     </form>
                 </div>
-                <div className="Categories__body">
-                    {params.category &&
-                        <div className="Categories__head" id="popular">
-                            <h2 className="heading heading--main mr-1">{t('nav.popular')}</h2>
-                        </div>
-                    }
-                    <section className="Categories__group">
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                    </section>
-                </div>
+                {loading 
+                    ? <Spinner className="loader--relative" />
+                    : <div className="Categories__body">
+                        {params.category &&
+                            <div className="Categories__head" id="popular">
+                                <h2 className="heading heading--main mr-1">{t('nav.popular')}</h2>
+                            </div>
+                        }
+                        <section className="Categories__group">
+                            <Card data={skin} />
+                            <Card data={skin} />
+                            <Card data={skin} />
+                            <Card data={skin} />
+                            <Card data={skin} />
+                            <Card data={skin} />
+                            <Card data={skin} />
+                            <Card data={skin} />
+                        </section>
+                    </div>
+                }
                 <div className="Categories__footer">
                     
                 </div>
