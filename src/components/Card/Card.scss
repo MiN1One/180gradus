@@ -31,21 +31,53 @@
 
     &:hover::after,
     &:focus::after { background: rgba($yellow, .9); }
+    
+    @include respond(xs) {
+        &::after {
+            background: linear-gradient(135deg, rgba($yellow, .9) 0%, transparent 45%, transparent 55%, rgba($yellow, .9) 100%);
+        }
+    }
+
+    @include respond(ms) {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1.5rem 3rem;
+        padding-right: 5rem;
+        height: auto; 
+    
+        &::after {
+            width: 102.5%;
+            background: linear-gradient(155deg, rgba($yellow, .9) 0%, transparent 45%, transparent 55%, rgba($yellow, .9) 100%);
+        }
+    }
+
 
     &__head {
         width: 100%;
         margin-bottom: 2rem;
+
+        @include respond(xs) { width: 12rem; }
+
+        @include respond(ms) {
+            margin: 0;
+            width: 10rem;
+        }
     }
 
     &__body {
         display: flex;
         flex-direction: column;
+        align-items: center;
         margin-top: 1rem;
     }
 
     &__figure {
         width: 100%;
         height: 12.5rem;
+
+        @include respond(xs) { height: 15rem; }
+
+        @include respond(ms) { height: 100%; }
     }
 
     &__img {

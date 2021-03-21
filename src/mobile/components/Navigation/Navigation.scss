@@ -1,21 +1,81 @@
 @use '../../../assets/sass' as *;
 
 .m-nav {
-    height: 5rem;
+    height: 6.5rem;
     width: 100%;
+    display: flex;
+    align-items: center;
 
-    &__menu {
-        padding: .35rem 1.25rem;
-        // background: $yellow;
+    &--fill {
+        background: $pitch;
+        box-shadow: 0 0 .75rem rgba($pitch, .35);
+    }
 
-        &:hover,
-        &:focus {
-            // background: $yellow !important;
+    &__bar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 60%;
+        height: 100vh;
+        z-index: 110;
+        background: $pitch;
+        transform: translateX(60vw); 
+        padding: 1.65rem 2.5rem;
+        box-shadow: -1rem 0 1.5rem rgba($pitch, .45);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    &__group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        grid-auto-rows: max-content;
+        gap: 1rem;
+        
+        &:nth-child(2) {
+            grid-template-columns: repeat(2, 1fr);
         }
     }
 
+    &__title {
+        grid-column: 1 / -1;
+    }
+
+    &__link {
+        background: $black;
+        font-size: 1.35rem;
+        color: $light;
+        text-transform: capitalize;
+        border-radius: .55rem;
+        padding: 1rem 2rem;
+        border: 2px solid transparent;
+
+        &--active { border-color: rgba($yellow, .7); }
+    }
+
+    &__menu {
+        display: flex;
+        align-items: center;
+        border-radius: .55rem;
+        color: $light;
+        transition: all .3s ease-in-out;
+        font-size: 1.4rem;
+        padding: 1rem 1.35rem;
+        padding-right: 1.9rem;
+        box-shadow: 0 0 .75rem rgba($pitch, .35);
+        border: 2px solid rgba($yellow, .2);
+
+        &--active {
+            border-color: rgba($yellow, .7);
+            background: $pitch;
+        }
+    }
+    
+
     &__icon {
-        width: 2.15rem;
-        height: 2.15rem;
+        
+        // &--right { transform: translateX(-1rem); }
+        // &--left { transform: translateX(-1rem); }
     }
 }

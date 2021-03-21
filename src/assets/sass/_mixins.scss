@@ -2,6 +2,8 @@
 
 @mixin moveDown {
     margin-top: 7.5rem;
+
+    @include respond(mid) { margin: 0; }
 };
 
 @mixin gradienty {
@@ -21,7 +23,7 @@
     }
 }
 
-// xl, lg, row, mid, sm, xs, ss, ms 
+// xl, lg, row, mid, sm, xs, ss, ms, mms 
 
 @mixin respond($bp) {
     @if ($bp == xl) {
@@ -62,5 +64,10 @@
     @if ($bp == ms) {
         // 400
         @media screen and (max-width: 25em) { @content; }
+    }
+
+    @if ($bp == mms) {
+        // 350
+        @media screen and (max-width: 21.875em) { @content; }
     }
 }

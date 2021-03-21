@@ -30,21 +30,16 @@
     align-items: center;
     justify-content: center;
 
-    &--relative {
-        position: relative;
-        background-color: transparent;
-        width: 100%;
-
-        &::after { content: none; }
-    }
-
     &__appdev {
         position: absolute;
         bottom: 5%;
         left: 50%;
         transform: translateX(-50%);
-        color: $grey-dark;
+        color: $black;
         font-size: 1.55rem;
+
+        &:hover,
+        &:focus { color: $grey-dark; }
     }
     
     &__wrapper {
@@ -52,10 +47,13 @@
         height: 15rem;
         position: relative;
         margin-top: -8.5rem;
+
+        @include respond(mid) {
+            width: 12.25rem;
+            height: 12.25rem;
+        }
     }
 
-    &--relative &__wrapper { margin-top: -30rem; }
-    
     &__logo {
         position: absolute;
         top: 50%;
@@ -109,4 +107,9 @@
     width: 7.5rem;
     height: 6rem;
     display: inline-block;
+
+    @include respond(mid) {
+        width: 7rem;
+        height: 5.5rem;
+    }
 }

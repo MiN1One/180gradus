@@ -57,7 +57,11 @@ function App({ error, onError, onSetMedia, media }) {
     
     useEffect(() => {
         const requestInterceptor = axiosInstance.interceptors.request.use(
-            (req) => req,
+            (req) => {
+                req.headers.language = i18n.language;
+                console.log(req);
+                return req;
+            },
             (er) => {
                 console.log('req error' + er);
                 onError(er.message);
@@ -66,34 +70,38 @@ function App({ error, onError, onSetMedia, media }) {
         );
     
         const responseInterceptor = axiosInstance.interceptors.response.use(
-            (res) => res,
+            (res) => {
+                console.log(res);
+                return res;
+            },
             (er) => {
                 console.log('res error' + er);
                 onError(er.message);
                 Promise.reject(er);
             }
         );
+
         return () => {
             axiosInstance.interceptors.request.eject(requestInterceptor);
             axiosInstance.interceptors.response.eject(responseInterceptor);
         }
-    }, [onError]);
+    }, []);
 
     const main = (
         <Layout>
-            <AsyncMain />
+            <AsyncMain er={error} />
         </Layout>
     );
 
-    const mobileHeader = (
-        <Layout>
-            <AsyncHeaderMobile />
-        </Layout>
-    );
+    // const mobileHeader = (
+    //     <Layout>
+    //         <AsyncHeaderMobile />
+    //     </Layout>
+    // );
 
     const categories = (
         <Layout>
-            <AsyncCategories />
+            <AsyncCategories er={error} />
         </Layout>
     );
 
@@ -123,7 +131,7 @@ function App({ error, onError, onSetMedia, media }) {
                         <Route path="/" exact>
                             {!media.mid
                                 ? <AsyncHeader />
-                                : mobileHeader
+                                : <AsyncHeaderMobile />
                             }
                         </Route>
                         <Route><Er notFound /></Route>

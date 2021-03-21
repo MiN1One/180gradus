@@ -25,7 +25,6 @@ const Footer = (props) => {
 
     const languages = [];
     for (let key in languageList) {
-        console.log(key)
         languages.push((
             <div 
                 tabIndex="0" 
@@ -34,7 +33,7 @@ const Footer = (props) => {
                 onMouseDown={() => {i18n.changeLanguage(key); console.log(key)}}>
                     {languageList[key]}
             </div>
-        ))
+        ));
     }
 
     return (
@@ -107,7 +106,7 @@ const Footer = (props) => {
                         <div className="flex fdc aic mb-lg">
                             <div className="flex aic fdc mb-3">
                                 <span className="text text--mid text--cap">{t('nav.popular')}:</span>
-                                <ul className="flex mt-2">
+                                <ul className="flex mt-2 fwrap">
                                     <li className="Footer__item">
                                         <NavLink className="btn btn__pill btn__pill--yellow Footer__tag" activeClassName="Footer__tag--active" to="/categories/phones/samsungs21">
                                             Samsung s21

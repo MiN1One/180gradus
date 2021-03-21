@@ -11,14 +11,14 @@ import './Categories.scss';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
 import Spinner from '../../UI/Spinner/Spinner';
 
-const Categories = () => {
+const Categories = ({ error }) => {
     const { t } = useTranslation();
     const params = useParams();
 
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState(null);
     const [searchLoading, setSearchLoading] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     
     const category = params.category ? `/${params.category}` : '';
@@ -27,36 +27,42 @@ const Categories = () => {
     useEffect(() => {
         mounted.current = true;
         return () => mounted.current = false;
-    });
+    }, []);
     
     useEffect(() => {
-        if (searchInput === '' && mounted.current) {
+        if (mounted.current) {
             setLoading(true);
-            axiosInstance(`/skins/${category}`)
+            axiosInstance(`/skins${category}`)
                 .then((res) => {
+                    if (error) return null;
                     console.log(res);
                     setLoading(false);
                     setData(res);
                 });
         }
-    }, [category, searchInput]);
+    }, [category, error, params.category]);
 
     const onInputSearch = (search, e) => {
-        setSearchLoading(true);
-        if (e) e.preventDefault();
+
+        if (e) {
+            e.preventDefault();
+            setLoading(true)
+        } else setSearchLoading(true);
+
         setSearchInput(search);
+
         setTimeout(() => {
             if (search !== '' && mounted.current) {
                 axiosInstance(`/skins${category}?search=${search}`)
                     .then((res) => {
-                        console.log(res.data);
+                        if (error) return null;
                         if (e) {
+                            setLoading(false);
                             setData(res);
                             setSearchResults(null);
-                        } else {
-                            setSearchResults(res)
-                        }
+                        } else setSearchResults(res);
                         setSearchLoading(false);
+                        console.log(res);
                     });
             }
         }, 850);
@@ -71,11 +77,13 @@ const Categories = () => {
         favorite: false
     };
 
+    if (loading) return <Spinner />;
+
     return (
         <section className="Categories">
             <div className="container">
                 <div className="Categories__head Categories__head--main">
-                    <h1 className="heading heading--1">{params.category ? t(`nav.${params.category}`) : t('nav.categories')}</h1>
+                    <h1 className="heading heading--1 Categories__heading--main">{params.category ? t(`nav.${params.category}`) : t('nav.categories')}</h1>
                     <form className="Categories__form" onSubmit={(e) => onInputSearch(searchInput, e)}>
                         <input 
                             className="input input--searchbar" 
@@ -133,26 +141,23 @@ const Categories = () => {
                         </button>
                     </form>
                 </div>
-                {loading 
-                    ? <Spinner className="loader--relative" />
-                    : <div className="Categories__body">
-                        {params.category &&
-                            <div className="Categories__head" id="popular">
-                                <h2 className="heading heading--main mr-1">{t('nav.popular')}</h2>
-                            </div>
-                        }
-                        <section className="Categories__group">
-                            <Card data={skin} />
-                            <Card data={skin} />
-                            <Card data={skin} />
-                            <Card data={skin} />
-                            <Card data={skin} />
-                            <Card data={skin} />
-                            <Card data={skin} />
-                            <Card data={skin} />
-                        </section>
-                    </div>
-                }
+                <div className="Categories__body">
+                    {params.category &&
+                        <div className="Categories__head" id="popular">
+                            <h2 className="heading heading--main mr-1">{t('nav.popular')}</h2>
+                        </div>
+                    }
+                    <section className="Categories__group">
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                        <Card data={skin} />
+                    </section>
+                </div>
                 <div className="Categories__footer">
                     
                 </div>

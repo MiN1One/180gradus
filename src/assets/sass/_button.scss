@@ -82,9 +82,9 @@
     &__primary,
     &__secondary {
         font-weight: 500;
-        font-size: 1.3rem;
         text-transform: uppercase;
-        padding: 1.25rem 4rem;
+        padding: 1.15rem 3.25rem;
+        font-size: 1.2rem;
         border-radius: 3.5rem;
         position: relative;
         box-shadow: 1.5rem 1.5rem 2rem rgba(#000, .15);
@@ -102,11 +102,6 @@
             height: 100%;
             z-index: -1;
             transform-origin: center;
-        }
-
-        @include respond(mid) {
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
         }
     }
 
@@ -158,6 +153,8 @@
                 &:disabled { background: rgba($grey-dark, .7); }
             }
         }
+
+        @include respond(mid) { padding: 1rem; }
     }
 
     &__circle {

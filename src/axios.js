@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     },
-    timeout: 10000,
+    // timeout: 15000,
     timeoutErrorMessage: 'Time out, check your connection'
 });
 

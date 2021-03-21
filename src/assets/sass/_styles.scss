@@ -4,7 +4,8 @@
     max-width: $row-width;
     margin: 0 auto;
 
-    @include respond(row) { padding: 0 1.5rem; }
+    @include respond(row) { padding: 0 3rem; }
+    @include respond(ms) { padding: 0 5rem; }
 }
 
 .input {

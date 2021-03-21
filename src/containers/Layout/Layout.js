@@ -16,7 +16,7 @@ const Layout = ({ media, children }) => {
                 : <AsyncNavigation />
             }
                 {children}
-            <Footer />
+            {/* <Footer /> */}
         </>
     );
 };

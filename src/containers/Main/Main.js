@@ -16,6 +16,8 @@ import './Main.scss';
 import { connect } from 'react-redux';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import axiosInstance from '../../axios';
+import Spinner from '../../UI/Spinner/Spinner';
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -24,15 +26,25 @@ const Main = (props) => {
     const history = useHistory();
     const { t } = useTranslation();
 
+    const [data, setData] = useState({});
     const [selectedSkin, setSelectedSkin] = useState(null);
     const mounted = useRef();
 
     useEffect(() => {
         mounted.current = true;
-        
-
         return () => mounted.current = false;
     }, []);
+
+    useEffect(() => {
+        if (mounted.current) {
+            axiosInstance(`/skins/${params.category}/${params.id}?skin=${selectedSkin || 'default'}`)
+                .then((res) => {
+                    if (props.error) return null;
+                    setData(res.data);
+                    console.log(res);
+                });
+        }
+    }, [params.category, params.id, props.error, selectedSkin]);
 
     const isFavorite = selectedSkin !== null && props.favorites.findIndex(el => el === selectedSkin) !== -1;
 
