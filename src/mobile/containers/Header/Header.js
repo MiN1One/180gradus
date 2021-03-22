@@ -10,6 +10,7 @@ import 'swiper/components/effect-fade/effect-fade.scss';
 import './Header.scss';
 import logo from '../../../assets/logo.png';
 import Navigation from "../../components/Navigation/Navigation";
+import { Link } from "react-router-dom";
 
 SwiperCore.use([Pagination, EffectFade, Mousewheel]);
 
@@ -49,12 +50,12 @@ const Header = () => {
                                         </p>
                                     </div>
                                     <div className="flex">
-                                        <button className="btn btn__primary mr-15">
+                                        <Link to="/categories" className="btn btn__primary mr-15">
                                             {t('main.customize')}
-                                        </button>
-                                        <button className="btn btn__secondary">
+                                        </Link>
+                                        <Link to="/categories/180degrees" className="btn btn__secondary">
                                             {t('main.sign up')}
-                                        </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

@@ -5,7 +5,8 @@ const initialState = {
     cart: JSON.parse(sessionStorage.getItem('skins')) || [],
     error: null,
     media: {
-        mid: false
+        mid: false,
+        sm: false
     }
 };
 

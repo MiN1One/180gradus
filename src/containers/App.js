@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+
 import axiosInstance from '../axios';
 import ErrorBoundary from '../hoc/ErrorBoundary';
-
 import * as actions from '../store/actions';
 import Spinner from '../UI/Spinner/Spinner';
 import Er from './Error/Error';
@@ -16,12 +16,14 @@ const AsyncInfo = React.lazy(() => import('./Info/Info'));
 const AsyncSummary = React.lazy(() => import('./Summary/Summary'));
 const AsyncHeader = React.lazy(() => import('./Header/Header'));
 const AsyncHeaderMobile = React.lazy(() => import('../mobile/containers/Header/Header'));
+const AsyncMainMobile = React.lazy(() => import('../mobile/containers/Main/Main'));
 
 function App({ error, onError, onSetMedia, media }) {
     const { i18n } = useTranslation();
     const [mounted, setMounted] = useState(false);
 
     const mediaMid = window.matchMedia('(max-width: 59.375em)');
+    const mediaSm = window.matchMedia('(max-width: 48em)');
 
     const watchMedia = (media, bp) => {
         if (media.matches) onSetMedia(bp, true);
@@ -30,7 +32,9 @@ function App({ error, onError, onSetMedia, media }) {
 
     if (!mounted) {
         mediaMid.onchange = () => watchMedia(mediaMid, 'mid');
+        mediaSm.onchange = () => watchMedia(mediaSm, 'sm');
 
+        watchMedia(mediaSm, 'sm');
         watchMedia(mediaMid, 'mid');
     }
 
@@ -89,15 +93,12 @@ function App({ error, onError, onSetMedia, media }) {
 
     const main = (
         <Layout>
-            <AsyncMain er={error} />
+            {media.sm
+                ? <AsyncMainMobile er={error} />
+                : <AsyncMain er={error} />
+            }
         </Layout>
     );
-
-    // const mobileHeader = (
-    //     <Layout>
-    //         <AsyncHeaderMobile />
-    //     </Layout>
-    // );
 
     const categories = (
         <Layout>

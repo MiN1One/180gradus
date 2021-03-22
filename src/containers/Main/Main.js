@@ -64,7 +64,7 @@ const Main = (props) => {
                 <div className="Main__left"></div>
                 <div className="Main__right"></div>
                 <div className="Main__content">
-                    <div className="container h-100">
+                    <div className="container h-100 flex aic">
                         <div className="Main__content-wrapper">
                             <div className="Main__right">
                                 <figure className="Main__figure">
@@ -99,98 +99,101 @@ const Main = (props) => {
                             </div>
                             <div className="Main__left">
                                 <div className="Main__sets">
-                                    <div className="wh-100 pos-rel">
-                                        <button className="btn__control btn__control--prev Main__btn-control">
-                                            <BiChevronLeft className="icon--sm" />
-                                        </button>
-                                        <button className="btn__control btn__control--next Main__btn-control">
-                                            <BiChevronRight className="icon--sm" />
-                                        </button>
+                                    <div className="w-100 pos-rel">
                                         <div className="flex aic mb-3">
                                             <h2 className="heading heading--sm c-white mr-1">{t('sets.black flowers')}</h2>
                                             <span className="mr-1">&bull;</span>
                                             <span className="heading heading--sub c-light">{t('sets.basic')}</span>
                                         </div>
-                                        <Swiper
-                                            slidesPerView={1}
-                                            className="Main__sets-body"
-                                            navigation={{
+                                        <div className="pos-rel w-100">
+                                            <button className="btn__control btn__control--prev Main__btn-control">
+                                                <BiChevronLeft className="icon--sm" />
+                                            </button>
+                                            <button className="btn__control btn__control--next Main__btn-control">
+                                                <BiChevronRight className="icon--sm" />
+                                            </button>
+                                            <Swiper
+                                                slidesPerView={1}
+                                                className="Main__sets-body"
+                                                navigation={{
                                                     prevEl: '.btn__control--prev', 
                                                     nextEl: '.btn__control--next', 
                                                     disabledClass: 'btn__control--disabled'
                                                 }}
-                                            spaceBetween={30}>
-                                                <SwiperSlide className="Main__sets-wrapper">
-                                                    <div className={`Main__sets-item ${selectedSkin === 0 ? 'Main__sets-item--active' : ''}`} onClick={() => setSelectedSkin(0)}>
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                spaceBetween={30}
+                                                updateOnWindowResize={true}>
+                                                    <SwiperSlide className="Main__sets-wrapper">
+                                                        <div className={`Main__sets-item ${selectedSkin === 0 ? 'Main__sets-item--active' : ''}`} onClick={() => setSelectedSkin(0)}>
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </SwiperSlide>
-                                                <SwiperSlide className="Main__sets-wrapper">
-                                                    <div className="Main__sets-item">
-                                                        <div className="Main__tooltip">
-                                                            Black flowers
+                                                    </SwiperSlide>
+                                                    <SwiperSlide className="Main__sets-wrapper">
+                                                        <div className="Main__sets-item">
+                                                            <div className="Main__tooltip">
+                                                                Black flowers
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                    </div>
-                                                    <div className="Main__sets-item">
-                                                    </div>
-                                                </SwiperSlide>
-                                        </Swiper>
+                                                        <div className="Main__sets-item">
+                                                        </div>
+                                                        <div className="Main__sets-item">
+                                                        </div>
+                                                        <div className="Main__sets-item">
+                                                        </div>
+                                                        <div className="Main__sets-item">
+                                                        </div>
+                                                        <div className="Main__sets-item">
+                                                        </div>
+                                                        <div className="Main__sets-item">
+                                                        </div>
+                                                        <div className="Main__sets-item">
+                                                        </div>
+                                                        <div className="Main__sets-item">
+                                                        </div>
+                                                    </SwiperSlide>
+                                            </Swiper>
+                                        </div>
                                     </div>
                                     <div className="Main__summary">
                                         {selectedSkin !== null && <div className="Main__price">$5.99</div>}
