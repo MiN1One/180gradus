@@ -6,7 +6,6 @@ import Footer from "../../components/Footer/Footer";
 const AsyncNavigation = React.lazy(() => import('../../components/Navigation/Navigation'));
 const AsyncMobileNav = React.lazy(() => import('../../mobile/components/Navigation/Navigation'));
 
-
 const Layout = ({ media, children }) => {
 
     return (
@@ -16,7 +15,7 @@ const Layout = ({ media, children }) => {
                 : <AsyncNavigation />
             }
                 {children}
-            {/* <Footer /> */}
+            <Footer />
         </>
     );
 };

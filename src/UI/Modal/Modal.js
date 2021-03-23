@@ -2,7 +2,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from 'react-i18next';
 import { BiX, BiPlus } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import './Modal.scss';
 import Backdrop from '../Backdrop/Backdrop';
@@ -28,19 +28,26 @@ const Modal = (props) => {
                 <div className="Modal__footer">
                     {!props.loading &&
                         <div className="flex aic">
-                            {props.subClick && 
-                                <>
-                                    <span className="price-tag mr-1">
-                                        {t('main.total')}: $5.99
-                                    </span>
-                                    <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.subClick()}>
-                                        {props.edit ? t('main.save') : t('main.edit')}
-                                    </button>
-                                </>
+                            {props.price &&
+                                <span className="price-tag mr-1">
+                                    {t('main.total')}: ${props.price}
+                                </span>
                             }
-                            <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.click()}>
-                                {props.actionTitle}
-                            </button>
+                            {props.edit &&
+                                <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.cancel()}>
+                                    {t('main.cancel')}
+                                </button>
+                            }
+                            {props.editSave &&
+                                <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.editSave()}>
+                                    {props.edit ? t('main.save') : t('main.edit')}
+                                </button>
+                            }
+                            {(props.primary && !props.edit) &&
+                                <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.primary()}>
+                                    {props.actionTitle}
+                                </button>
+                            }
                         </div>
                     }
                 </div>
@@ -51,11 +58,59 @@ const Modal = (props) => {
 
 export default Modal;
 
-export const ModalFavItem = ({ data, edit, cart, add, remove }) => {
+export const ModalFavItem = ({ data, edit, add, remove, media }) => {
     const { t } = useTranslation();
+    const history = useHistory();
 
     return (
-        <div className="Modal__item">
+        <div 
+            className="Modal__item" 
+            onClick={() => {
+                if (media) history.push(`/categories/${data.category}/${data.id}`);
+            }}>
+                <div className="flex aic">
+                    <figure className="Modal__figure">
+                        <LazyLoadImage
+                            className="img"
+                            src={data.img}
+                            alt={data.title}
+                            width="100%"
+                            height="100%"
+                            effect="opacity" />
+                    </figure>
+                    <div className="flex fdc">
+                        <span className="Modal__name">{data.title}</span>
+                        <span className="Modal__name--sub">{data.device}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{t('nav.skins')}</span>
+                    </div>
+                </div>
+                {edit 
+                    ? <button className="btn btn__pill btn__pill--red" onClick={() => remove(data.id)}>
+                        {t('main.remove')}
+                    </button>
+                    : (
+                        <div className="flex">
+                            {!media && 
+                                <Link to={`/categories/${data.category}/${data.id}`} className="btn btn__pill btn__pill--yellow mr-1">
+                                    {t('nav.collection')}
+                                </Link>
+                            }
+                            <button className="btn btn__pill" onClick={() => add()}>
+                                {t('main.add to cart')}
+                                <BiPlus className="ml-5 icon--sm" />
+                            </button>
+                        </div>
+                    )
+                }
+        </div>
+    )
+};
+
+export const ModalCartItem = ({ data, edit, remove }) => {
+    const { t } = useTranslation();
+    const history = useHistory();
+
+    return (
+        <div className="Modal__item" >
             <div className="flex aic">
                 <figure className="Modal__figure">
                     <LazyLoadImage
@@ -75,27 +130,8 @@ export const ModalFavItem = ({ data, edit, cart, add, remove }) => {
                 ? <button className="btn btn__pill btn__pill--red" onClick={() => remove(data.id)}>
                     {t('main.remove')}
                 </button>
-                : (
-                    <div className="flex">
-                        {!cart
-                            ? (
-                                <>
-                                    <Link to={`/categories/${data.category}/${data.id}`} className="btn btn__pill btn__pill--yellow mr-1">
-                                        {t('nav.collection')}
-                                    </Link>
-                                    <button className="btn btn__pill" onClick={() => add()}>
-                                        {t('main.add to cart')}
-                                        <BiPlus className="ml-5 icon--sm" />
-                                    </button>
-                                </>
-                            )
-                            : <span className="price-tag">{data.price}</span>
-                        }
-                    </div>
-                )
+                : <span className="price-tag">{data.price}</span>
             }
         </div>
     )
 };
-
-

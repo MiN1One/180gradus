@@ -18,9 +18,10 @@ const AsyncHeader = React.lazy(() => import('./Header/Header'));
 const AsyncHeaderMobile = React.lazy(() => import('../mobile/containers/Header/Header'));
 const AsyncMainMobile = React.lazy(() => import('../mobile/containers/Main/Main'));
 
-function App({ error, onError, onSetMedia, media }) {
+function App({ onSetMedia, media }) {
     const { i18n } = useTranslation();
     const [mounted, setMounted] = useState(false);
+    const [error, setError] = useState(null);
 
     const mediaMid = window.matchMedia('(max-width: 59.375em)');
     const mediaSm = window.matchMedia('(max-width: 48em)');
@@ -68,8 +69,8 @@ function App({ error, onError, onSetMedia, media }) {
             },
             (er) => {
                 console.log('req error' + er);
-                onError(er.message);
-                Promise.reject(er);
+                setError(er.message);
+                return Promise.reject(er);
             }
         );
     
@@ -80,8 +81,8 @@ function App({ error, onError, onSetMedia, media }) {
             },
             (er) => {
                 console.log('res error' + er);
-                onError(er.message);
-                Promise.reject(er);
+                setError(er.message);
+                return Promise.reject(er);
             }
         );
 
@@ -95,14 +96,14 @@ function App({ error, onError, onSetMedia, media }) {
         <Layout>
             {media.sm
                 ? <AsyncMainMobile er={error} />
-                : <AsyncMain er={error} />
+                : <AsyncMain />
             }
         </Layout>
     );
 
     const categories = (
         <Layout>
-            <AsyncCategories er={error} />
+            <AsyncCategories />
         </Layout>
     );
 
@@ -114,15 +115,15 @@ function App({ error, onError, onSetMedia, media }) {
 
     const summary = (
         <Layout>
-            <AsyncSummary er={error} />
+            <AsyncSummary />
         </Layout>
     );
 
     return (
         <React.Suspense fallback={<Spinner />}>
-            <ErrorBoundary onError={onError}>
+            <ErrorBoundary onError={setError}>
                 {error
-                    ? <Er er={error} clean={() => onError(null)} />
+                    ? <Er er={error} clean={() => setError(null)} />
                     : <Switch>
                         <Route path="/summary" exact>{summary}</Route>
                         <Route path="/categories/:category/:id" exact>{main}</Route>
@@ -145,12 +146,10 @@ function App({ error, onError, onSetMedia, media }) {
 }
 
 const state = state => ({
-    error: state.error,
     media: state.media
 });
 
 const dispatch = dispatch => ({
-    onError: (er) => dispatch(actions.error(er)),
     onSetMedia: (bp, val) => dispatch(actions.setMedia(bp, val))
 });
 

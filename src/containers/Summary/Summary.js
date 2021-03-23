@@ -3,30 +3,34 @@ import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { BiChevronRight, BiChevronLeft, BiPalette, BiChevronDown } from 'react-icons/bi';
+import { BiChevronRight, BiChevronLeft, BiPalette, BiChevronDown, BiX } from 'react-icons/bi';
 import ShadowScrollbars from "../../UI/ShadowScrollbars/ShadowScrollbars";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as emailValidator from 'email-validator';
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 
+import * as actions from '../../store/actions';
 import './Summary.scss';
 import vivo from '../../assets/images/Vivo X50.png';
 import axios from '../../axios';
+import { connect } from "react-redux";
 
 const AsynSuccess = React.lazy(() => import('../Success/Success'));
 
 SwiperCore.use([Navigation, Pagination]);
 
-const Summary = ({ er }) => {
+const Summary = ({ onRemoveFromCart, cart, onAddToCart }) => {
     const { t } = useTranslation();
     const [swiper, setSwiper] = useState(null);
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
     const [geoMode, setGeoMode] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [cartItems, setCartItems] = useState([ ...cart ]);
 
     const emailRef = useRef();
     const phoneRef = useRef();
@@ -37,10 +41,22 @@ const Summary = ({ er }) => {
     useEffect(() => {
         if (swiper) swiper.update();
     });
+
+    useEffect(() => setCartItems([ ...cart ]), [cart]);
     
     useEffect(() => {
         if (error) document.documentElement.scrollTop = 0;
     }, [error]);
+
+    const onRemoveCartItem = (id) => {
+        const newArr = cartItems.filter(el => el !== id);
+        setCartItems(newArr);
+    };
+
+    const onApplyChanges = () => {
+        cartItems.forEach(el => onRemoveFromCart(el));
+        setEditMode(false);
+    };
 
     const onSubmit = () => {
         if (
@@ -54,12 +70,12 @@ const Summary = ({ er }) => {
             !geoMode && 
             (addressInputRef.current.value === '' || 
             addressInputRef.current.value.length < 4)
-           ) { return setError(t('input:provide valid address')) }
+           ) { return setError(t('input:provide valid address')) };
 
         if (
             emailRef.current.value !== '' &&
             !emailValidator.validate(emailRef.current.value)
-           ) { return setError(t('input:provide valid email')) }
+           ) { return setError(t('input:provide valid email')) };
 
         setError(null);
 
@@ -74,18 +90,20 @@ const Summary = ({ er }) => {
         axios
             .post('/order', body)
             .then(() => {
-                if (!er) setSuccess(true);
+                // if (geoMode) window.location.replace('https://www.t.me/he_go_bot');
+                if (geoMode) window.open('https://www.t.me/he_go_bot', '_blank');
+                setSuccess(true);
             });
     };
 
-    if (success) return <AsynSuccess />
+    if (success) return <AsynSuccess geoMode={geoMode} />;
 
     return (
         <section className="Summary">
             <div className="Summary__left">
                 <div className="d-flex fdc w-100">
                     <Swiper
-                        className="Summary__images mb-3"
+                        className="Summary__list mb-3"
                         navigation={{
                             prevEl: '.btn__control--prev',
                             nextEl: '.btn__control--next',
@@ -94,23 +112,27 @@ const Summary = ({ er }) => {
                         slidesPerView={1}
                         onInit={(sw) => setSwiper(sw)}
                         onActiveIndexChange={({ activeIndex }) => console.log(activeIndex)}>
-                            <SwiperSlide className="Summary__figure">
-                                <LazyLoadImage 
-                                    src={vivo}
-                                    alt="vivo"
-                                    width="100%"
-                                    height="100%"
-                                    effect="opacity"
-                                    className="Summary__img" />
+                            <SwiperSlide className="Summary__item">
+                                <figure className="Summary__figure">
+                                    <LazyLoadImage 
+                                        src={vivo}
+                                        alt="vivo"
+                                        width="100%"
+                                        height="100%"
+                                        effect="opacity"
+                                        className="img" />
+                                </figure>
                             </SwiperSlide>
-                            <SwiperSlide className="Summary__figure">
-                                <LazyLoadImage 
-                                    src={vivo}
-                                    alt="vivo"
-                                    width="100%"
-                                    height="100%"
-                                    effect="opacity"
-                                    className="Summary__img" />
+                            <SwiperSlide className="Summary__item">
+                                <figure className="Summary__figure">
+                                    <LazyLoadImage 
+                                        src={vivo}
+                                        alt="vivo"
+                                        width="100%"
+                                        height="100%"
+                                        effect="opacity"
+                                        className="img" />
+                                </figure>
                             </SwiperSlide>
                             <button className="Summary__btn-control btn__control btn__control--prev">
                                 <BiChevronLeft className="icon--sm" />
@@ -135,15 +157,23 @@ const Summary = ({ er }) => {
                                 </div>
                                 <span className="price-tag">$5.99</span>
                             </div>
-                            <div className="Summary__card" tabIndex="0" onClick={() => swiper.slideTo(1, 300)}>
-                                <div className="flex aic">
-                                    <BiPalette className="icon mr-1" />
-                                    <div className="flex fdc">
-                                        <span className="Summary__card-title">Black flowers</span>
-                                        <span className="Summary__card-title--sub">{t('nav.skins')}</span>
+                            <div 
+                                className="Summary__card" 
+                                tabIndex="0" 
+                                onClick={() => swiper.slideTo(1, 300)}>
+                                    <div className="flex aic">
+                                        <BiPalette className="icon mr-1" />
+                                        <div className="flex fdc">
+                                            <span className="Summary__card-title">Black flowers</span>
+                                            <span className="Summary__card-title--sub">{t('nav.skins')}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <span className="price-tag">$5.99</span>
+                                    {editMode
+                                        ? <button onClick={() => onRemoveCartItem(1)} className="price-tag mr-5 Summary__card-btn">
+                                            <BiX className="icon" /> 
+                                        </button>
+                                        : <span className="price-tag">$5.99</span>
+                                    }
                             </div>
                             <div className="Summary__card" tabIndex="0">
                                 <div className="flex aic">
@@ -188,10 +218,27 @@ const Summary = ({ er }) => {
                         </ShadowScrollbars>
                     </div>
                 </div>
-                <p className="text text--sm w-100 c-grey-l px-15">
-                    {t('summary:num of skins')}: 7,<br/> 
-                    {t('summary:sets')}: Rose, Black Flowers
-                </p>
+                <div className="w-100 flex jcsb px-15">
+                    {editMode
+                        ? <button 
+                            onClick={() => {
+                                setCartItems(cart);
+                                setEditMode(false);
+                            }}
+                            className="btn btn__ghost btn__ghost--active">
+                                {t('main.cancel')}
+                        </button>
+                        : <p className="text text--sm text--wrap w-50 c-grey-l">
+                            {t('summary:num of skins')}: {cart.length},<br/> 
+                            {t('summary:sets')}: Rose, Black Flowers
+                        </p>
+                    }
+                    <button 
+                        onClick={() => editMode ? onApplyChanges() : setEditMode(true)} 
+                        className="btn btn__ghost btn__ghost--active">
+                            {!editMode ? t('main.edit') : t('main.save')}
+                    </button>
+                </div>
             </div>
             <div className="Summary__right">
                 <div className="Summary__head">
@@ -264,4 +311,13 @@ const Summary = ({ er }) => {
     );
 };
 
-export default React.memo(Summary);
+const state = state => ({
+    cart: state.cart
+});
+
+const dispatch = dispatch => ({
+    onRemoveFromCart: (id) => dispatch(actions.removeFromCart(id)),
+    onAddToCart: (id) => dispatch(actions.addToCart(id))
+});
+
+export default React.memo(connect(state, dispatch)(Summary));

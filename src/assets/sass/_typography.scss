@@ -46,14 +46,30 @@
     }
     
     &--cap { text-transform: capitalize; }
-
+    
     &--mid {
         font-size: 1.75rem;
         color: $grey-light;
         font-weight: 300;
     }
-
+    
     &--sm { font-size: 1.3rem; }
-
+    
     &--xs { font-size: 1.2rem; }
+
+    &--wrap {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    
+    @include respond(sm) {
+        &--main { font-size: 1.6rem; }
+
+        &--mid { font-size: 1.8rem; }
+
+        &--sm { font-size: 1.4rem; }
+        
+        &--xs { font-size: 1.3rem; }
+    }
 }

@@ -5,6 +5,8 @@
     @include gradienty;
     height: calc(100vh - 7.5rem);
 
+    @include respond(mid) { height: 100vh; }
+
     &__body { padding: 5rem 0; }
 
     &__text {

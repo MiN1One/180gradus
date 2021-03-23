@@ -11,7 +11,7 @@ import './Categories.scss';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
 import Spinner from '../../UI/Spinner/Spinner';
 
-const Categories = ({ error }) => {
+const Categories = () => {
     const { t } = useTranslation();
     const params = useParams();
 
@@ -34,13 +34,12 @@ const Categories = ({ error }) => {
             setLoading(true);
             axiosInstance(`/skins${category}`)
                 .then((res) => {
-                    if (error) return null;
                     console.log(res);
                     setLoading(false);
                     setData(res);
                 });
         }
-    }, [category, error, params.category]);
+    }, [category, params.category]);
 
     const onInputSearch = (search, e) => {
 
@@ -55,7 +54,6 @@ const Categories = ({ error }) => {
             if (search !== '' && mounted.current) {
                 axiosInstance(`/skins${category}?search=${search}`)
                     .then((res) => {
-                        if (error) return null;
                         if (e) {
                             setLoading(false);
                             setData(res);

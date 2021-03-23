@@ -142,7 +142,7 @@ const Header = () => {
                                     </h1>
                                     <div className="flex">
                                         <Link to="/categories" className="Header__btn btn btn__primary mr-15">{t('main.customize')}</Link>
-                                        <Link to="/categories" href="/" className="Header__btn btn btn__secondary btn__secondary--fill">{t('main.order')}</Link>
+                                        <Link to="/180degrees/about" href="/" className="Header__btn btn btn__secondary btn__secondary--fill">{t('nav.about')}</Link>
                                     </div>
                                 </div>
                             </div>

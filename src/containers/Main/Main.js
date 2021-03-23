@@ -28,6 +28,7 @@ const Main = (props) => {
 
     const [data, setData] = useState({});
     const [selectedSkin, setSelectedSkin] = useState(null);
+    const [skinImg, setSkinImg] = useState(null);
     const mounted = useRef();
 
     useEffect(() => {
@@ -37,15 +38,23 @@ const Main = (props) => {
 
     useEffect(() => {
         if (mounted.current) {
-            axiosInstance(`/skins/${params.category}/${params.id}?skin=${selectedSkin || 'default'}`)
+            axiosInstance(`/skins/${params.category}/${params.id}`)
                 .then((res) => {
-                    if (props.error) return null;
                     setData(res.data);
+                    setSkinImg('img');
                     console.log(res);
                 });
         }
-    }, [params.category, params.id, props.error, selectedSkin]);
+    }, [params.category, params.id, props.error]);
 
+    const onSelectSkin = (skinId) => {
+        if (!mounted.current) return null;
+        axiosInstance(`/skins/${params.category}/${params.id}/${skinId}`)
+            .then(res => {
+                setSkinImg(res);
+            });
+        setSelectedSkin(skinId)
+    };
     const isFavorite = selectedSkin !== null && props.favorites.findIndex(el => el === selectedSkin) !== -1;
 
     return (
@@ -100,11 +109,13 @@ const Main = (props) => {
                             <div className="Main__left">
                                 <div className="Main__sets">
                                     <div className="w-100 pos-rel">
-                                        <div className="flex aic mb-3">
-                                            <h2 className="heading heading--sm c-white mr-1">{t('sets.black flowers')}</h2>
-                                            <span className="mr-1">&bull;</span>
-                                            <span className="heading heading--sub c-light">{t('sets.basic')}</span>
-                                        </div>
+                                        {selectedSkin !== null &&
+                                            <div className="flex aic mb-3">
+                                                <h5 className="heading heading--sm c-white mr-1">{t('sets.black flowers')}</h5>
+                                                <span className="mr-1">&bull;</span>
+                                                <span className="heading heading--sub c-light">{t('sets.basic')}</span>
+                                            </div>
+                                        }
                                         <div className="pos-rel w-100">
                                             <button className="btn__control btn__control--prev Main__btn-control">
                                                 <BiChevronLeft className="icon--sm" />
@@ -123,7 +134,7 @@ const Main = (props) => {
                                                 spaceBetween={30}
                                                 updateOnWindowResize={true}>
                                                     <SwiperSlide className="Main__sets-wrapper">
-                                                        <div className={`Main__sets-item ${selectedSkin === 0 ? 'Main__sets-item--active' : ''}`} onClick={() => setSelectedSkin(0)}>
+                                                        <div className={`Main__sets-item ${selectedSkin === 0 ? 'Main__sets-item--active' : ''}`} onClick={() => onSelectSkin('01')}>
                                                             <div className="Main__tooltip">
                                                                 Black flowers
                                                             </div>

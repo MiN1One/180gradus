@@ -53,8 +53,8 @@ const Header = () => {
                                         <Link to="/categories" className="btn btn__primary mr-15">
                                             {t('main.customize')}
                                         </Link>
-                                        <Link to="/categories/180degrees" className="btn btn__secondary">
-                                            {t('main.sign up')}
+                                        <Link to="/180degrees/about" className="btn btn__secondary">
+                                            {t('nav.about')}
                                         </Link>
                                     </div>
                                 </div>
