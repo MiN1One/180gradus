@@ -19,8 +19,10 @@
     &__bottom {
         width: 100%;
         background: $pitch;
-        box-shadow: 0 0 1.5rem rgba($pitch, .7);
+        box-shadow: 0 1rem 1.5rem rgba($pitch, .7), 0 -.75rem 1.5rem rgba($pitch, .7);
         padding: 2.25rem 2.5rem;
+        position: relative;
+        z-index: 1;
     }
 
     &__figure {
@@ -43,10 +45,43 @@
         width: 100%;
         background: $grey-light;
         border-radius: .75rem;
+
+        &--active { background: rgba($grey-dark, .75); }
     }
     
     &__title {
         margin-top: 1.5rem;
         font-size: 1.9rem;
+    }
+
+    &__summary {
+        width: 100%;
+        background: $black;
+        padding: 3rem 0;
+    }
+
+    &__btn {
+        display: flex;
+        align-items: center;
+        background: $gradient-main;
+        padding: 1.25rem 1.75rem;
+        border-radius: .55rem;
+        font-size: 1.45rem;
+        color: $light;
+        text-transform: uppercase;
+        font-weight: 500;
+
+        &:disabled { opacity: .6; }
+    }
+
+    &__control {
+        &--left { left: -2.5rem; }
+        &--right { right: -2.5rem; }
+    }
+
+    &__price {
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
     }
 }

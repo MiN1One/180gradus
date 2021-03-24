@@ -67,6 +67,9 @@ const Navigation = () => {
                             <NavLink activeClassName="m-nav__link--active" to="/categories/exclusive" className="m-nav__link">
                                 {t('nav.exclusive')}
                             </NavLink>
+                            <NavLink activeClassName="m-nav__link--active" to="/180degrees/about" className="m-nav__link">
+                                {t('nav.about')}
+                            </NavLink>
                         </div>
                         <div className="m-nav__group">
                             <button 

@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Scrollbar } from 'swiper';
-import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import { BiCart, BiChevronLeft, BiChevronRight, BiX } from 'react-icons/bi';
 import { connect } from 'react-redux';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
@@ -51,6 +52,8 @@ const Main = (props) => {
         setSelectedSkin(skinId);
     };
 
+    const isFavorite = selectedSkin && props.favorites.findIndex(el => el === selectedSkin) !== -1;
+
     return (
         <section className="m-main">
             <div className="main-head">
@@ -71,7 +74,26 @@ const Main = (props) => {
                         <figure className="m-main__figure">
                             <img className="img" src={vivo} alt="vivo" />
                         </figure>
-                        {selectedSkin && <span className="m-main__title text text--mid">Black flowers</span>}
+                        {selectedSkin && 
+                            <div className="flex fdc aic">
+                                <span className="m-main__title text text--mid mb-1">Black flowers</span>
+                                <div className="flex">
+                                    <button  
+                                        className="btn btn__ghost btn__ghost--active mr-1"
+                                        onClick={() => setSelectedSkin(null)}>
+                                            <BiX className="icon" />
+                                    </button>
+                                    <button 
+                                        className="btn btn__ghost btn__ghost--active"
+                                        onClick={() => props.onAddToFav(selectedSkin)}>
+                                            {isFavorite
+                                                ? <AiFillStar className="icon" />
+                                                : <AiOutlineStar className="icon" />
+                                            }
+                                    </button>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="m-main__bottom">
@@ -81,58 +103,73 @@ const Main = (props) => {
                             <span className="mr-1 c-light">&bull;</span>
                             <span className="heading heading--sub c-light">{t('sets.basic')}</span>
                         </div>
-                        <Swiper
-                            className="m-main__list"
-                            navigation={{
-                                nextEl: '.btn__control--next',
-                                prevEl: '.btn__control--prev',
-                                disabledClass: 'btn__control--disabled'
-                            }}
-                            slidesPerView={5}
-                            spaceBetween={15}
-                            breakpoints={{
-                                // min-width
-                                200: { slidesPerView: 2 },
-                                350: { slidesPerView: 3 },
-                                400: { slidesPerView: 4 },
-                                500: { slidesPerView: 5 },
-                                600: { slidesPerView: 6 },
-                                700: { slidesPerView: 7 },
-                            }}>
-                                <button className="btn__control btn__control--prev">
-                                    <BiChevronLeft className="icon--sm" />
+                        <div className="pos-rel w-100">
+                            <button className="btn__control m-main__control--left btn__control--prev">
+                                <BiChevronLeft className="icon--sm" />
+                            </button>
+                            <button className="btn__control m-main__control--right btn__control--next">
+                                <BiChevronRight className="icon--sm" />
+                            </button>
+                            <Swiper
+                                className="m-main__list"
+                                navigation={{
+                                    nextEl: '.btn__control--next',
+                                    prevEl: '.btn__control--prev',
+                                    disabledClass: 'btn__control--disabled'
+                                }}
+                                slidesPerView={5}
+                                spaceBetween={15}
+                                breakpoints={{
+                                    // min-width
+                                    200: { slidesPerView: 2 },
+                                    350: { slidesPerView: 3 },
+                                    400: { slidesPerView: 4 },
+                                    500: { slidesPerView: 5 },
+                                    600: { slidesPerView: 6 },
+                                    700: { slidesPerView: 7 },
+                                }}>
+                                    <SwiperSlide className={`m-main__sets-item ${selectedSkin ? 'm-main__sets-item--active' : ''}`} onClick={() => onSelectSkin('01')}>
+                                        
+                                    </SwiperSlide>
+                                    <SwiperSlide className="m-main__sets-item">
+                                        
+                                    </SwiperSlide>
+                                    <SwiperSlide className="m-main__sets-item">
+                                        
+                                    </SwiperSlide>
+                                    <SwiperSlide className="m-main__sets-item">
+                                        
+                                    </SwiperSlide>
+                                    <SwiperSlide className="m-main__sets-item">
+                                        
+                                    </SwiperSlide>
+                                    <SwiperSlide className="m-main__sets-item">
+                                        
+                                    </SwiperSlide>
+                                    <SwiperSlide className="m-main__sets-item">
+                                        
+                                    </SwiperSlide>
+                                    <SwiperSlide className="m-main__sets-item">
+                                        
+                                    </SwiperSlide>
+                                    <SwiperSlide className="m-main__sets-item">
+                                        
+                                    </SwiperSlide>
+                            </Swiper>
+                        </div>
+                    </div>
+                </div>
+                <div className="m-main__summary">
+                    <div className="container">
+                        <div className="flex jce">
+                            <div className="flex">
+                                {selectedSkin && <span className="price-tag m-main__price mr-5">$5.99</span>}
+                                <button className="m-main__btn" disabled={selectedSkin ? false : true}>
+                                    {t('main.to cart')}
+                                    <BiCart className="icon--mid ml-5" />
                                 </button>
-                                <button className="btn__control btn__control--next">
-                                    <BiChevronRight className="icon--sm" />
-                                </button>
-                                <SwiperSlide className="m-main__sets-item" onClick={() => onSelectSkin('01')}>
-                                    
-                                </SwiperSlide>
-                                <SwiperSlide className="m-main__sets-item">
-                                    
-                                </SwiperSlide>
-                                <SwiperSlide className="m-main__sets-item">
-                                    
-                                </SwiperSlide>
-                                <SwiperSlide className="m-main__sets-item">
-                                    
-                                </SwiperSlide>
-                                <SwiperSlide className="m-main__sets-item">
-                                    
-                                </SwiperSlide>
-                                <SwiperSlide className="m-main__sets-item">
-                                    
-                                </SwiperSlide>
-                                <SwiperSlide className="m-main__sets-item">
-                                    
-                                </SwiperSlide>
-                                <SwiperSlide className="m-main__sets-item">
-                                    
-                                </SwiperSlide>
-                                <SwiperSlide className="m-main__sets-item">
-                                    
-                                </SwiperSlide>
-                        </Swiper>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

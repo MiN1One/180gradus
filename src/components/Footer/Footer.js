@@ -30,7 +30,7 @@ const Footer = (props) => {
                 tabIndex="0" 
                 className="Footer__drop-item" 
                 key={key}
-                onMouseDown={() => {i18n.changeLanguage(key); console.log(key)}}>
+                onMouseDown={() => i18n.changeLanguage(key)}>
                     {languageList[key]}
             </div>
         ));
@@ -41,19 +41,19 @@ const Footer = (props) => {
             <div className="Footer__head">
                 <div className="container w-100">
                     <div className="w-100 flex aic jcsb">
-                        <div className="flex">
+                        <div className="flex aic text--wrap">
                             <Link to="/" className="Footer__bread-item">
-                                <BiHome className="icon--mid icon--grey mr-1" />
+                                <BiHome className="icon icon--grey mr-1" />
                                 {t('nav.home')}
                             </Link>
                             {params.category &&
                                 <>
-                                    <span className="Footer__bread-item c-grey">&bull;</span>
+                                    <span className="text--main mr-1 c-grey">&bull;</span>
                                     {!params.id
                                         ? <span className="Footer__bread-item Footer__bread-item--active">
                                             {t(`nav.${params.category}`)}
                                         </span>
-                                        : <Link to={`/categories/${params.category}`} className="Footer__bread-item">
+                                        : <Link to={`/categories/${params.category}`} className="Footer__bread-item text--wrap">
                                             {t(`nav.${params.category}`)}
                                         </Link>
                                     }
@@ -61,7 +61,7 @@ const Footer = (props) => {
                             }
                             {params.id &&
                                 <>
-                                    <span className="Footer__bread-item c-grey">&bull;</span>
+                                    <span className="text--main mr-1 c-grey">&bull;</span>
                                     <span className="Footer__bread-item Footer__bread-item--active">
                                         {t(`${params.category}.${params.id}`)}
                                     </span>
@@ -80,9 +80,9 @@ const Footer = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="container">
+            <div className="container z pos-rel">
                 <div className="Footer__content">
-                    <div className="flex jcsb w-100 aic fwrap fwrap--ss z pos-rel">
+                    <div className="flex jcsb w-100 aic fwrap fwrap--ss pos-rel">
                         <div className="flex aic mb-15">
                             <span className="text text--mid text--cap flex mr-1 tc">{t('main.find us on')}:</span>
                             <div className="flex">
