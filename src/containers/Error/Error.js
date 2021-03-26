@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { BiChevronLeft } from 'react-icons/bi';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import './Error.scss';
 
 const Er = ({ er, clean, notFound }) => {
     const { t } = useTranslation();
+    const history = useHistory();
 
     return (
         <div className="Er">
@@ -28,18 +29,26 @@ const Er = ({ er, clean, notFound }) => {
                         {notFound ? 'Make sure you have right address' : 'This might be due to poor internet connection or server error.'}
                     </p>
                     <div className="flex">
+                        <button
+                            onClick={() => {
+                                history.goBack();
+                                !notFound && clean();
+                            }} 
+                            className="btn btn__ghost btn__ghost--active mr-15">
+                                {t('main.go back')}
+                        </button>
                         <Link 
                             to="/" 
-                            className="btn btn__ghost btn__ghost--active mr-15" 
+                            className="btn btn__ghost btn__ghost--active" 
                             onClick={() => !notFound && clean()}>
                                 {t('nav.home')}
                         </Link>
-                        <Link 
+                        {/* <Link 
                             to="/180degrees/trouble" 
                             className="btn btn__ghost btn__ghost--active"
                             onClick={() => !notFound && clean()}>
                                 {t('nav.troubleshooting')}
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

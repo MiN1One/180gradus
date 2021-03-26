@@ -1,0 +1,11 @@
+{
+    "main": {
+
+    },
+    "nav": {
+        "laptops": "Noutbuklar",
+        "phones": "Telefonlar",
+        "consoles": "Konsollar",
+        "skins": "Qoplamalar"
+    }
+}

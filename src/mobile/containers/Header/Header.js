@@ -43,10 +43,10 @@ const Header = () => {
                                     </figure>
                                     <div className="mb-1">
                                         <h1 className="m-header__heading">
-                                            Reacreate you phone
+                                            {t('main.hero text.p1')}
                                         </h1>
                                         <p className="m-header__heading--sub">
-                                            Best choice for you and your device
+                                            {t('main.hero text.p2')}
                                         </p>
                                     </div>
                                     <div className="flex">

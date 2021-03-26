@@ -69,6 +69,20 @@
         flex-direction: column;
         align-items: center;
         margin-top: 1rem;
+
+        span {
+            &:first-child {
+                font-size: 1.45rem;
+
+                @include respond(sm) { font-size: 1.55rem; }
+                @include respond(ss) { font-size: 1.7rem; }
+            }
+            
+            &:last-child {
+                @include respond(sm) { font-size: 1.35rem; }
+                @include respond(ss) { font-size: 1.5rem; }
+            }
+        }
     }
 
     &__figure {

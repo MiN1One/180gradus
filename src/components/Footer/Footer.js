@@ -84,7 +84,7 @@ const Footer = (props) => {
                 <div className="Footer__content">
                     <div className="flex jcsb w-100 aic fwrap fwrap--ss pos-rel">
                         <div className="flex aic mb-15">
-                            <span className="text text--mid text--cap flex mr-1 tc">{t('main.find us on')}:</span>
+                            <span className="text text--mid text--cap flex mr-1 tc">{t('main.find us')}:</span>
                             <div className="flex">
                                 <Link to="/" className="btn btn__ghost mr-5">
                                     <FaInstagram className="icon--mid Footer__i" />
@@ -151,7 +151,7 @@ const Footer = (props) => {
                                 </ul>
                             </div>
                             <p className="text text--main c-grey-l Footer__text">
-                                You can contact us at any convenient for you time via phone 71-200-0060 or email 180gradus@enter.org
+                                {t('main.contact text')}
                             </p>
                         </div>
                         <div className="flex fwrap mb-2 fwrap--ss">

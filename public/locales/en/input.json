@@ -1,0 +1,20 @@
+{
+    "enter fname": "Enter your first name",
+    "enter lname": "Enter your first name",
+    "enter email": "Enter your email (Optional)",
+    "enter phone": "Enter your contact number",
+    "enter address": "Enter your delivery address",
+    "choose method": "Choose location input method",
+    "fname": "First name",
+    "lname": "Last name",
+    "phone": "Contact number",
+    "address": "Delivery address",
+    "telegram": "Telegram bot",
+    "input": "Address input",
+    "email": "Email address (optional)",
+    "fill": "Fill out all the fields",
+    "invalid phone": "Please provide valid phone number",
+    "invalid address": "Please provide valid address",
+    "invalid email": "Please provide valid email",
+    "text": ""
+}

@@ -95,7 +95,7 @@ export const ModalFavItem = ({ data, edit, add, remove, media }) => {
                                 </Link>
                             }
                             <button className="btn btn__pill" onClick={() => add()}>
-                                {t('main.add to cart')}
+                                {t('main.to cart')}
                                 <BiPlus className="ml-5 icon--sm" />
                             </button>
                         </div>

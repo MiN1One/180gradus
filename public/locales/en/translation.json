@@ -1,0 +1,45 @@
+{
+    "main": {
+        "search": "Search",
+        "reserved": "All rights reserved",
+        "find us": "Find us on social media",
+        "contact us": "Contact us",
+        "contact text": "You can contact us at any convenient for you time via phone 71-200-0060 or email 180gradus@enter.org",
+        "customize": "Customize",
+        "hero text": {
+            "p1": "Reacreate your phone",
+            "p2": "Best choice for you and your device"
+        },
+        "edit": "Edit",
+        "save": "Save",
+        "total": "Total",
+        "proceed": "Proceed",
+        "to cart": "Add to cart",
+        "cancel": "Cancel",
+        "remove": "Remove",
+        "order": "Order",
+        "num skins": "Number of skins"
+    },
+    "nav": {
+        "set": "Set",
+        "summary": "Summary",
+        "collection": "Collection",
+        "laptops": "Laptops",
+        "phones": "Phones",
+        "consoles": "Consoles",
+        "skins": "Skins",
+        "home": "Home",
+        "about": "About us",
+        "popular": "Popular",
+        "privacy": "Privacy policy",
+        "help": "Help",
+        "delivery": "Delivery",
+        "refund": "Refund",
+        "exclusive": "Exclusive Edition",
+        "cart": "Cart",
+        "favorites": "Favorites",
+        "categories": "Categories",
+        "all skins": "All skins"
+    }
+}
+

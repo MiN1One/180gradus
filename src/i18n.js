@@ -10,6 +10,7 @@ i18n
     .init({
         fallbackLng: false,
         load: 'currentOnly',
+        saveMissing: true,
         whitelist: ['ru', 'en', 'uz'],
         react: { useSuspense: false },
         debug: true 

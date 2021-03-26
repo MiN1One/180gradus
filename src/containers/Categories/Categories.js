@@ -11,7 +11,7 @@ import './Categories.scss';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
 import Spinner from '../../UI/Spinner/Spinner';
 
-const Categories = () => {
+const Categories = ({ categories }) => {
     const { t } = useTranslation();
     const params = useParams();
 
@@ -20,9 +20,9 @@ const Categories = () => {
     const [searchLoading, setSearchLoading] = useState(false);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
-    
-    const category = params.category ? `/${params.category}` : '';
 
+    const category = params.category ? `/${params.category}` : '';
+    
     const mounted = useRef();
     useEffect(() => {
         mounted.current = true;
@@ -30,16 +30,17 @@ const Categories = () => {
     }, []);
     
     useEffect(() => {
+        const categoryQuery = params.category ? `category=${params.category}` : '';
         if (mounted.current) {
             setLoading(true);
-            axiosInstance(`/skins${category}`)
+            axiosInstance(`/skins?${categoryQuery}&project=default,device,deviceVendor,type`)
                 .then((res) => {
-                    console.log(res);
                     setLoading(false);
-                    setData(res);
+                    setData(Object.entries(res)[0][1]);
+                    console.log(Object.entries(res)[0][1]);
                 });
         }
-    }, [category, params.category]);
+    }, [params.category]);
 
     const onInputSearch = (search, e) => {
 
@@ -52,15 +53,17 @@ const Categories = () => {
 
         setTimeout(() => {
             if (search !== '' && mounted.current) {
-                axiosInstance(`/skins${category}?search=${search}`)
+                axiosInstance(`/skins?search=${search}`)
                     .then((res) => {
                         if (e) {
                             setLoading(false);
-                            setData(res);
+                            setData(Object.entries(res)[0][1]);
                             setSearchResults(null);
-                        } else setSearchResults(res);
+                        } else 
+                            setSearchResults(Object.entries(res)[0][1]);
+
                         setSearchLoading(false);
-                        console.log(res);
+                        console.log(Object.entries(res)[0][1]);
                     });
             }
         }, 850);
@@ -76,6 +79,26 @@ const Categories = () => {
     };
 
     if (loading) return <Spinner />;
+
+    const cards = (data && data.length) && data.map((el, i) => (
+        <Card data={el} key={i} />
+    ));
+
+    const categoryItems = (categories && categories.length && !params.category) && categories.map((el, i) => (
+        <Card data={el} key={i} />
+    ));
+
+    const searchItems = searchResults && searchResults.map((el, i) => (
+        <Link to={`/skins${category}/${el._id}`} className="input__drop-item" key={i}>
+            <figure className="input__figure">
+                <img className="img" src={`http://localhost:3003/assets/images/${el.default}`} alt={el.device} />
+            </figure>
+            <div className="flex fdc">
+                <span className="text--sm c-black">{el.device}</span>
+                <span className="text--xs c-grey">{t(`nav.${el.type}`)}</span>
+            </div>
+        </Link>
+    ));
 
     return (
         <section className="Categories">
@@ -96,35 +119,7 @@ const Categories = () => {
                             <div className="input__dropdown">
                                 {searchLoading 
                                     ? <SubSpinner className="loading--sm" />
-                                    : <>
-                                        <Link to={`/categories/${params.category}/vivox50`} className="input__drop-item">
-                                            <figure className="input__figure">
-                                                <img className="img" src={x50} alt="vivo" />
-                                            </figure>
-                                            <div className="flex fdc">
-                                                <span className="text--sm c-black">Vivo X50</span>
-                                                <span className="text--xs c-grey">{t('nav.skins')}</span>
-                                            </div>
-                                        </Link>
-                                        <Link to={`/categories/${params.category}/vivox50`} className="input__drop-item">
-                                            <figure className="input__figure">
-                                                <img className="img" src={x50} alt="vivo" />
-                                            </figure>
-                                            <div className="flex fdc">
-                                                <span className="text--sm c-black">Vivo X50</span>
-                                                <span className="text--xs c-grey">{t('nav.skins')}</span>
-                                            </div>
-                                        </Link>
-                                        <Link to={`/categories/${params.category}/vivox50`} className="input__drop-item">
-                                            <figure className="input__figure">
-                                                <img className="img" src={x50} alt="vivo" />
-                                            </figure>
-                                            <div className="flex fdc">
-                                                <span className="text--sm c-black">Vivo X50</span>
-                                                <span className="text--xs c-grey">{t('nav.skins')}</span>
-                                            </div>
-                                        </Link>
-                                    </>
+                                    : <>{(searchItems && searchItems.length) ? searchItems : t('main.no results')}</>
                                 }
                             </div>
                         }
@@ -140,20 +135,16 @@ const Categories = () => {
                     </form>
                 </div>
                 <div className="Categories__body">
-                    {params.category &&
-                        <div className="Categories__head" id="popular">
-                            <h2 className="heading heading--main mr-1">{t('nav.popular')}</h2>
-                        </div>
-                    }
+                    {!params.category &&
+                        <section className="Categories__group">
+                            {categoryItems}
+                        </section>
+                        }
+                    <div className="Categories__head" id="popular">
+                        <h2 className="heading heading--main mr-1">{params.category ? t('nav.popular') : t('nav.all skins')}</h2>
+                    </div>
                     <section className="Categories__group">
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
-                        <Card data={skin} />
+                        {cards}
                     </section>
                 </div>
                 <div className="Categories__footer">

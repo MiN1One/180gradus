@@ -17,7 +17,6 @@ import { connect } from 'react-redux';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import axiosInstance from '../../axios';
-import Spinner from '../../UI/Spinner/Spinner';
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -49,12 +48,13 @@ const Main = (props) => {
 
     const onSelectSkin = (skinId) => {
         if (!mounted.current) return null;
-        axiosInstance(`/skins/${params.category}/${params.id}/${skinId}`)
+        axiosInstance(`/skins/${params.category}/${params.id}?limit=skins&skin=${skinId}`)
             .then(res => {
                 setSkinImg(res);
             });
         setSelectedSkin(skinId)
     };
+
     const isFavorite = selectedSkin !== null && props.favorites.findIndex(el => el === selectedSkin) !== -1;
 
     return (

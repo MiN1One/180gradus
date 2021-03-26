@@ -22,6 +22,7 @@ function App({ onSetMedia, media }) {
     const { i18n } = useTranslation();
     const [mounted, setMounted] = useState(false);
     const [error, setError] = useState(null);
+    const [categoryItems, setCategoryItems] = useState(null);
 
     const mediaMid = window.matchMedia('(max-width: 59.375em)');
     const mediaSm = window.matchMedia('(max-width: 48em)');
@@ -76,8 +77,9 @@ function App({ onSetMedia, media }) {
     
         const responseInterceptor = axiosInstance.interceptors.response.use(
             (res) => {
-                console.log(res);
-                return res;
+                const { data } = res.data;
+                console.log(data);
+                return data;
             },
             (er) => {
                 console.log('res error' + er);
@@ -90,6 +92,13 @@ function App({ onSetMedia, media }) {
             axiosInstance.interceptors.request.eject(requestInterceptor);
             axiosInstance.interceptors.response.eject(responseInterceptor);
         }
+    }, [i18n.language]);
+
+    useEffect(() => {
+        axiosInstance('/categories')
+            .then((data) => {
+                setCategoryItems(Object.entries(data)[0][1]);
+            });
     }, []);
 
     const main = (
@@ -103,7 +112,7 @@ function App({ onSetMedia, media }) {
 
     const categories = (
         <Layout>
-            <AsyncCategories />
+            <AsyncCategories categories={categoryItems} />
         </Layout>
     );
 
@@ -125,10 +134,10 @@ function App({ onSetMedia, media }) {
                 {error
                     ? <Er er={error} clean={() => setError(null)} />
                     : <Switch>
+                        <Route path="/categories/:type" exact>{categories}</Route>
+                        <Route path="/categories/:type/:category" exact>{categories}</Route>
+                        <Route path="/categories/:type/:category/:id" exact>{main}</Route>
                         <Route path="/summary" exact>{summary}</Route>
-                        <Route path="/categories/:category/:id" exact>{main}</Route>
-                        <Route path="/categories" exact>{categories}</Route>
-                        <Route path="/categories/:category" exact>{categories}</Route>
                         <Route path="/180degrees/:category" exact>{info}</Route>
                         <Route path="/" exact>
                             {!media.mid
@@ -139,7 +148,6 @@ function App({ onSetMedia, media }) {
                         <Route><Er notFound /></Route>
                     </Switch>
                 }
-                {/* <Spinner /> */}
             </ErrorBoundary>
         </React.Suspense>
     );

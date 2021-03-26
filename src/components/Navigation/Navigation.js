@@ -36,15 +36,15 @@ const Navigation = (props) => {
                                     <NavLink
                                         exact
                                         activeClassName="Navigation__link--active"
-                                        to="/categories"
+                                        to="/categories/skins"
                                         className="Navigation__link">
                                         {t('nav.skins')}
                                     </NavLink>
-                                </li>                                    
+                                </li>  
                                 <li className="Navigation__item">
                                     <NavLink 
                                         activeClassName="Navigation__link--active"
-                                        to="/categories/phones"
+                                        to="/categories/skins/phones"
                                         className="Navigation__link">
                                         {t('nav.phones')}
                                     </NavLink>
@@ -52,7 +52,7 @@ const Navigation = (props) => {
                                 <li className="Navigation__item">
                                     <NavLink 
                                         activeClassName="Navigation__link--active"
-                                        to="/categories/laptops"
+                                        to="/categories/skins/laptops"
                                         className="Navigation__link">
                                         {t('nav.laptops')}
                                     </NavLink>
@@ -60,7 +60,7 @@ const Navigation = (props) => {
                                 <li className="Navigation__item">
                                     <NavLink 
                                         activeClassName="Navigation__link--active"
-                                        to="/categories/consoles"
+                                        to="/categories/skins/consoles"
                                         className="Navigation__link">
                                         {t('nav.consoles')}
                                     </NavLink>
@@ -68,19 +68,11 @@ const Navigation = (props) => {
                                 <li className="Navigation__item">
                                     <NavLink 
                                         activeClassName="Navigation__link--active"
-                                        to="/categories/exclusive"
+                                        to="/categories/skins/exclusive"
                                         className="Navigation__link">
-                                        {t('nav.exclusive edition')}
+                                        {t('nav.exclusive')}
                                     </NavLink>
-                                </li>                                    
-                                <li className="Navigation__item">
-                                    <NavLink 
-                                        activeClassName="Navigation__link--active"
-                                        to="/180degrees/about"
-                                        className="Navigation__link">
-                                        {t('nav.about')}
-                                    </NavLink>
-                                </li>                                    
+                                </li>                         
                             </ul>
                         </div>
                         <div className="Navigation__side">

@@ -27,6 +27,8 @@
 
     &__figure {
         width: 4rem;
+        display: flex;
+        align-items: center;
         height: auto;
     }
 
@@ -60,6 +62,8 @@
         background: $light;
         border-radius: 1.5rem;
         box-shadow: 0 0 .75rem rgba($pitch, .5);
+        font-size: 1.3rem;
+        color: $grey-dark;
     }
 
     &--clear-btn {

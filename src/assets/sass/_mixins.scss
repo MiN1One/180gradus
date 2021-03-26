@@ -26,14 +26,9 @@
 // xl, lg, row, mid, sm, xs, ss, ms, mms 
 
 @mixin respond($bp) {
-    @if ($bp == xl) {
+    @if ($bp == lg) {
         // 1600
         @media screen and (min-width: 100em) { @content; }
-    }
-    
-    @if ($bp == lg) {
-        // 1141
-        @media screen and (min-width: 71.3125em) { @content; }
     }
 
     @if ($bp == row) {

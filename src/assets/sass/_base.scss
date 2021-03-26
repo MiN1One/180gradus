@@ -19,7 +19,11 @@
 
 html {
   font-size: 62.5%;
-
+  
+  // 10.5
+  @include respond(lg) { font-size: 65.625%; }
+  // 9.5
+  @include respond(row) { font-size: 59.375%; }
   // 9.25
   @include respond(mid) { font-size: 57.8125%; }
   // 8.7

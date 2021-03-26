@@ -52,19 +52,19 @@ const Navigation = () => {
                     <nav className="m-nav__bar">
                         <div className="m-nav__group">
                             <span className="m-nav__title text text--mid">{t('main.categories')}:</span>
-                            <NavLink activeClassName="m-nav__link--active" exact to="/categories" className="m-nav__link">
+                            <NavLink activeClassName="m-nav__link--active" exact to="/categories/skins" className="m-nav__link">
                                 {t('nav.categories')}
                             </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/categories/phones" className="m-nav__link">
+                            <NavLink activeClassName="m-nav__link--active" to="/categories/skins/phones" className="m-nav__link">
                                 {t('nav.phones')}
                             </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/categories/consoles" className="m-nav__link">
+                            <NavLink activeClassName="m-nav__link--active" to="/categories/skins/consoles" className="m-nav__link">
                                 {t('nav.consoles')}
                             </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/categories/laptops" className="m-nav__link">
+                            <NavLink activeClassName="m-nav__link--active" to="/categories/skins/laptops" className="m-nav__link">
                                 {t('nav.laptops')}
                             </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/categories/exclusive" className="m-nav__link">
+                            <NavLink activeClassName="m-nav__link--active" to="/categories/skins/exclusive" className="m-nav__link">
                                 {t('nav.exclusive')}
                             </NavLink>
                             <NavLink activeClassName="m-nav__link--active" to="/180degrees/about" className="m-nav__link">

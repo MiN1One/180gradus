@@ -1,10 +1,12 @@
+@use '../../assets/sass' as *;
+
 .Tooltip {
     position: absolute;
     top: 95%;
     left: 50%;
-    background: #f1c40f;
+    background: $yellow;
     padding: 1.5rem 2rem;
-    color: #464646;
+    color: $black;
     z-index: 10;
     border-radius: .5rem;
     width: max-content;
@@ -22,7 +24,7 @@
         transform: translateX(-50%);
         border-width: .7rem;
         border-style: solid;
-        border-color: transparent transparent #f1c40f transparent;
+        border-color: transparent transparent $yellow transparent;
     }
 
     &--bottom {

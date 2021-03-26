@@ -12,17 +12,17 @@ import { Link } from 'react-router-dom';
 import s10 from '../../assets/images/Samsung+Galaxy+S10+5G+stock.png';
 
 const Header = () => {
+    const { t } = useTranslation();
+
     const [transformUp, setTransformUp] = useState(0);
     const [viewOne, setViewOne] = useState(0);
     const [viewTwo, setViewTwo] = useState(0);
     const [viewThree, setViewThree] = useState(0);
     const [viewFour, setViewFour] = useState(0);
 
-    const container = window.innerHeight * 8; // 500 footer height
+    const container = window.innerHeight * 8;
 
     const [hideElements, setHideElements] = useState(false);
-
-    const { t } = useTranslation();
 
     const onScroll = () => {
         const inHeight = window.innerHeight;
