@@ -15,6 +15,8 @@ import * as actions from '../../../store/actions';
 import vivo from '../../../assets/images/Vivo X50.png';
 import './Main.scss';
 import axiosInstance from '../../../axios';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import SubSpinner from '../../../UI/SubSpinner/SubSpinner';
 
 SwiperCore.use([Navigation, Scrollbar]);
 
@@ -34,7 +36,7 @@ const Main = (props) => {
 
     useEffect(() => {
         if (mounted.current) {
-            axiosInstance(`/skins/${params.category}/${params.id}`)
+            axiosInstance(`/skins/${params.id}`)
                 .then((res) => {
                     setData(res.data);
                     setSkinImg('img');
@@ -45,7 +47,7 @@ const Main = (props) => {
 
     const onSelectSkin = (skinId) => {
         if (!mounted.current) return null;
-        axiosInstance(`/skins/${params.category}/${params.id}/${skinId}`)
+        axiosInstance(`/skins/${params.id}?project=skins&skin=${skinId}`)
             .then(res => {
                 setSkinImg(res);
             });
@@ -63,7 +65,7 @@ const Main = (props) => {
                             <BiChevronLeft className="icon--lg icon--dark" />
                         </button>
                         <h2 className="heading heading--1 heading--black">
-                            {params.category} ~ {params.id}
+                            {params.id}
                         </h2>
                     </div>
                 </div>
@@ -72,7 +74,13 @@ const Main = (props) => {
                 <div className="m-main__top">
                     <div className="container flex aic jcc fdc">
                         <figure className="m-main__figure">
-                            <img className="img" src={vivo} alt="vivo" />
+                            <LazyLoadImage
+                                src={vivo}
+                                alt="vivo"
+                                className="img"
+                                width="100%"
+                                placeholder={<SubSpinner />}
+                                height="100%" />
                         </figure>
                         {selectedSkin && 
                             <div className="flex fdc aic">

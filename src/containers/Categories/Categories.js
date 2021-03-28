@@ -24,6 +24,7 @@ const Categories = ({ categories }) => {
     const category = params.category ? `/${params.category}` : '';
     
     const mounted = useRef();
+
     useEffect(() => {
         mounted.current = true;
         return () => mounted.current = false;
@@ -36,8 +37,7 @@ const Categories = ({ categories }) => {
             axiosInstance(`/skins?${categoryQuery}&project=default,device,deviceVendor,type`)
                 .then((res) => {
                     setLoading(false);
-                    setData(Object.entries(res)[0][1]);
-                    console.log(Object.entries(res)[0][1]);
+                    setData(res.devices);
                 });
         }
     }, [params.category]);
@@ -46,7 +46,7 @@ const Categories = ({ categories }) => {
 
         if (e) {
             e.preventDefault();
-            setLoading(true)
+            setLoading(true);
         } else setSearchLoading(true);
 
         setSearchInput(search);
@@ -57,13 +57,10 @@ const Categories = ({ categories }) => {
                     .then((res) => {
                         if (e) {
                             setLoading(false);
-                            setData(Object.entries(res)[0][1]);
+                            setData(res.devices);
                             setSearchResults(null);
-                        } else 
-                            setSearchResults(Object.entries(res)[0][1]);
-
+                        } else setSearchResults(res.devices);
                         setSearchLoading(false);
-                        console.log(Object.entries(res)[0][1]);
                     });
             }
         }, 850);
@@ -84,7 +81,7 @@ const Categories = ({ categories }) => {
         <Card data={el} key={i} />
     ));
 
-    const categoryItems = (categories && categories.length && !params.category) && categories.map((el, i) => (
+    const categoryItems = (categories && !params.category) && categories.map((el, i) => (
         <Card data={el} key={i} />
     ));
 
@@ -104,7 +101,9 @@ const Categories = ({ categories }) => {
         <section className="Categories">
             <div className="container">
                 <div className="Categories__head Categories__head--main">
-                    <h1 className="heading heading--1 Categories__heading--main">{params.category ? t(`nav.${params.category}`) : t('nav.categories')}</h1>
+                    <h1 className="heading heading--1 Categories__heading--main">
+                        {params.category ? t(`nav.${params.category}`) : t('nav.categories')}
+                    </h1>
                     <form className="Categories__form" onSubmit={(e) => onInputSearch(searchInput, e)}>
                         <input 
                             className="input input--searchbar" 

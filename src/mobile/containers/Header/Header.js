@@ -19,9 +19,7 @@ const Header = () => {
     const [swiper, setSwiper] = useState(null);
     const [reachEnd, setReachEnd] = useState(false);
 
-    useEffect(() => {
-        if (swiper) swiper.update();
-    });
+    useEffect(() => swiper && swiper.update());
 
     return (
         <>
@@ -45,9 +43,9 @@ const Header = () => {
                                         <h1 className="m-header__heading">
                                             {t('main.hero text.p1')}
                                         </h1>
-                                        <p className="m-header__heading--sub">
+                                        <h2 className="m-header__heading--sub">
                                             {t('main.hero text.p2')}
-                                        </p>
+                                        </h2>
                                     </div>
                                     <div className="flex">
                                         <Link to="/categories" className="btn btn__primary mr-15">

@@ -12,7 +12,8 @@ const Card = ({ data }) => {
     return (
         <Link 
             to={`/categories/skins${category}/${data.name || data._id}`} 
-            className="Card" >
+            className="Card"
+            data-premium={data.exclusive || false}>
                 <div className="Card__head">
                     <figure className="Card__figure">
                         <LazyLoadImage

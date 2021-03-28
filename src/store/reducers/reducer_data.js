@@ -6,7 +6,8 @@ const initialState = {
     media: {
         mid: false,
         sm: false
-    }
+    },
+    categories: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -41,7 +42,10 @@ const reducer = (state = initialState, action) => {
                     ...state.media,
                     [action.bp]: action.value
                 }
-            } 
+            }
+
+        case actionTypes.ON_SET_DATA: 
+            return { ...state, [action.name]: action.value }
 
         default: return state;
     }

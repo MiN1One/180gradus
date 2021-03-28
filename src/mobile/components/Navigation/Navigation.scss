@@ -39,9 +39,7 @@
         }
     }
 
-    &__title {
-        grid-column: 1 / -1;
-    }
+    &__title { grid-column: 1 / -1; }
 
     &__link {
         background: $black;
@@ -52,7 +50,11 @@
         padding: 1rem 2rem;
         border: 2px solid transparent;
 
-        &--active { border-color: rgba($yellow, .7); }
+        &--active { 
+            border-color: rgba($yellow, .7);
+
+            &[data-premium=true] { border-color: $primary; }
+        }
     }
 
     &__menu {
@@ -74,9 +76,9 @@
     }
     
 
-    &__icon {
+    // &__icon {
         
         // &--right { transform: translateX(-1rem); }
         // &--left { transform: translateX(-1rem); }
-    }
+    // }
 }

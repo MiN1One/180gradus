@@ -12,6 +12,12 @@
     &--1 {
         font-size: 3.25rem;
         font-weight: 300;
+        display: inline-block;
+        max-width: 60rem;
+        text-overflow: ellipsis;
+        white-space: wrap;
+        overflow: hidden;
+        height: max-content;
     }
 
     &--main {

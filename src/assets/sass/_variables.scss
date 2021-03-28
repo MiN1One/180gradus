@@ -19,5 +19,5 @@ $gradient-main: linear-gradient(-40deg, #8035e4 13%, #5c54ec 27%,  #4c6cec 54%, 
 $gradient-hover: linear-gradient(-40deg, #8035e4 35%, #5c54ec 47%,  #4c6cec 67%, #3c7ff3, 85%, #2c94f4 95%, #15a8fb);
 $gradient-light: linear-gradient(120deg, $primary 75%, $primary-light);
 $gradient-grace-yellow: linear-gradient(125deg, rgba($yellow, .9) 0%, transparent 45%, transparent 55%, rgba($yellow, .9) 100%);
-$gradient-card-premium: linear-gradient(130deg, $grey-light 60%, rgba($yellow, .2) 100%);
+$gradient-card-premium: linear-gradient(130deg, $grey-light 60%, rgba($primary, .3) 100%);
 $gradient-grace-primary: linear-gradient(125deg, rgba($primary-light, .9) 0%, transparent 45%, transparent 55%, $secondary-light 100%);

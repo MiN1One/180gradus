@@ -16,5 +16,20 @@
     "invalid phone": "Please provide valid phone number",
     "invalid address": "Please provide valid address",
     "invalid email": "Please provide valid email",
-    "text": ""
+    "summary": {
+        "s1": {
+            "p1": "All of your data is kept private, your data is not used except for serving purposes. You can read about privacy policy on ", 
+            "p2": "this page. "
+        },
+        "s2": {
+            "p1": "You can also read about delivery and skinning process ", 
+            "p2": "here."
+        },
+        "s3": {
+            "p1": "You can specify your location by sending your geolocation via ", 
+            "p2": "telegram", 
+            "p3": " or input your address in the field provided."
+        }
+    },
+    "userMessagesUnread": "Hola <1>{{name}}</1>, pohe yor {{count}} surf massag. <5>gota massagmjnkjnk</5>."
 }

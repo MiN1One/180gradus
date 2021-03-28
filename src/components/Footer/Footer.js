@@ -151,7 +151,7 @@ const Footer = (props) => {
                                 </ul>
                             </div>
                             <p className="text text--main c-grey-l Footer__text">
-                                {t('main.contact text')}
+                                {t('text.contact')}
                             </p>
                         </div>
                         <div className="flex fwrap mb-2 fwrap--ss">

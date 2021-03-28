@@ -37,22 +37,22 @@ const Main = (props) => {
 
     useEffect(() => {
         if (mounted.current) {
-            axiosInstance(`/skins/${params.category}/${params.id}`)
+            axiosInstance(`/skins/${params.id}`)
                 .then((res) => {
                     setData(res.data);
                     setSkinImg('img');
-                    console.log(res);
                 });
         }
     }, [params.category, params.id, props.error]);
 
     const onSelectSkin = (skinId) => {
         if (!mounted.current) return null;
-        axiosInstance(`/skins/${params.category}/${params.id}?limit=skins&skin=${skinId}`)
+        axiosInstance(`/skins/${params.id}?skin=${skinId}`)
             .then(res => {
                 setSkinImg(res);
+                console.log(res);
             });
-        setSelectedSkin(skinId)
+        setSelectedSkin(skinId);
     };
 
     const isFavorite = selectedSkin !== null && props.favorites.findIndex(el => el === selectedSkin) !== -1;
@@ -65,7 +65,9 @@ const Main = (props) => {
                         <button className="btn btn__square mr-2" onClick={() => history.push(`/categories/${params.category}`)}>
                             <BiChevronLeft className="icon--lg icon--dark" /> 
                         </button>
-                        <h2 className="heading heading--1 heading--black">{t(`nav.${params.category}`)} ~ {params.id}</h2>
+                        <h2 className="heading heading--1 heading--black">
+                            {t(`nav.${params.category}`)} ~ {params.id}
+                        </h2>
                     </div>
                 </div>
             </div>

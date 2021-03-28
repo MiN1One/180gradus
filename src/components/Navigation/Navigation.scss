@@ -71,21 +71,17 @@
             transition: all .25s ease;
         }
 
-        &:hover {
+        &:hover,
+        &:focus {
             color: $yellow;
-
-            &::after { transform: translateY(-100%) translateX(-50%) scale(1); }
-
             span {
                 background-image: $gradient-main;
                 color: $light;
             }
-
             .Navigation__icon { fill: $yellow; }
         }
 
         &--pop {
-
             &::after { content: none; }
 
             &:hover + .Tooltip {
@@ -95,10 +91,19 @@
             }
         }
 
+        
+        &[data-premium=true] {
+            &::after { background: $primary-light; }
+            
+            &:hover,
+            &:focus { color: $primary-light; }
+        }
+        
         &--active {
             color: $yellow;
-
             &::after { transform: translateY(-100%) translateX(-50%) scale(1); }
+
+            &[data-premium=true] { color: $primary; }
         }
     }
 

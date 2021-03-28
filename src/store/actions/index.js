@@ -2,5 +2,6 @@ export {
     addToFavorites,
     addToCart,
     setMedia,
-    removeFromCart
+    removeFromCart,
+    setData
 } from './actions_data';

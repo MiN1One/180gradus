@@ -31,7 +31,8 @@
     }
 
     &__heading {
-        &--main { 
+        &--main {
+            overflow: initial;
             @include respond(ss) { margin-bottom: 1.5rem; }
         }
     }
@@ -45,8 +46,6 @@
     &__group {
         width: 100%;
         display: grid;
-        // justify-content: space-between;
-        // justify-content: space-evenly;
         grid-template-columns: repeat(5, 1fr);
         column-gap: 4.5rem;
         row-gap: 6rem;

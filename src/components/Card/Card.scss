@@ -9,9 +9,12 @@
     align-items: center;
     justify-content: center;
     height: 26rem;
+    // height: 24rem;
     border-radius: 1rem;
     position: relative;
     animation-delay: .3s;
+    transition: all .45s ease;
+    backface-visibility: hidden;
     
     &::after {
         content: "";
@@ -28,6 +31,8 @@
         animation-delay: 1s;
         transition: all .45s ease;
     }
+
+    &:hover { background: $light; }
 
     &:hover::after,
     &:focus::after { background: rgba($yellow, .9); }
@@ -100,13 +105,21 @@
         object-fit: contain;
     }
 
-}
+    // [data-premium=true] { background: $gradient-card-premium; }
+    &[data-premium=true] {
+        // background: $gradient-card-premium;
+        &::after { background: $gradient-grace-primary; }
 
-[data-premium=true] { background: $gradient-card-premium; }
+        &:hover {
+            background: $light;
+            &::after { background: $primary; }
+        }
+    }
 
-[data-favorite=true] {
+    &[data-favorite=true] {
 
-    &::after { background: $gradient-grace-primary; }
+        &::after { background: $gradient-grace-primary; }
 
-    &:hover::after { background: $primary; }
+        &:hover::after { background: $primary; }
+    }
 }

@@ -18,11 +18,10 @@ const AsyncHeader = React.lazy(() => import('./Header/Header'));
 const AsyncHeaderMobile = React.lazy(() => import('../mobile/containers/Header/Header'));
 const AsyncMainMobile = React.lazy(() => import('../mobile/containers/Main/Main'));
 
-function App({ onSetMedia, media }) {
+function App({ onSetMedia, media, onSetData, categories }) {
     const { i18n } = useTranslation();
     const [mounted, setMounted] = useState(false);
     const [error, setError] = useState(null);
-    const [categoryItems, setCategoryItems] = useState(null);
 
     const mediaMid = window.matchMedia('(max-width: 59.375em)');
     const mediaSm = window.matchMedia('(max-width: 48em)');
@@ -97,7 +96,8 @@ function App({ onSetMedia, media }) {
     useEffect(() => {
         axiosInstance('/categories')
             .then((data) => {
-                setCategoryItems(Object.entries(data)[0][1]);
+                console.log(data);
+                onSetData('categories', data.allCategories);
             });
     }, []);
 
@@ -110,9 +110,9 @@ function App({ onSetMedia, media }) {
         </Layout>
     );
 
-    const categories = (
+    const categoriesView = (
         <Layout>
-            <AsyncCategories categories={categoryItems} />
+            <AsyncCategories categories={categories} />
         </Layout>
     );
 
@@ -134,8 +134,8 @@ function App({ onSetMedia, media }) {
                 {error
                     ? <Er er={error} clean={() => setError(null)} />
                     : <Switch>
-                        <Route path="/categories/:type" exact>{categories}</Route>
-                        <Route path="/categories/:type/:category" exact>{categories}</Route>
+                        <Route path="/categories/:type" exact>{categoriesView}</Route>
+                        <Route path="/categories/:type/:category" exact>{categoriesView}</Route>
                         <Route path="/categories/:type/:category/:id" exact>{main}</Route>
                         <Route path="/summary" exact>{summary}</Route>
                         <Route path="/180degrees/:category" exact>{info}</Route>
@@ -154,11 +154,13 @@ function App({ onSetMedia, media }) {
 }
 
 const state = state => ({
-    media: state.media
+    media: state.media,
+    categories: state.categories
 });
 
 const dispatch = dispatch => ({
-    onSetMedia: (bp, val) => dispatch(actions.setMedia(bp, val))
+    onSetMedia: (bp, val) => dispatch(actions.setMedia(bp, val)),
+    onSetData: (name, value) => dispatch(actions.setData(name, value))
 });
 
 export default connect(state, dispatch)(App);

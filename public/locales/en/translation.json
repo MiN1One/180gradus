@@ -4,7 +4,6 @@
         "reserved": "All rights reserved",
         "find us": "Find us on social media",
         "contact us": "Contact us",
-        "contact text": "You can contact us at any convenient for you time via phone 71-200-0060 or email 180gradus@enter.org",
         "customize": "Customize",
         "hero text": {
             "p1": "Reacreate your phone",
@@ -18,7 +17,8 @@
         "cancel": "Cancel",
         "remove": "Remove",
         "order": "Order",
-        "num skins": "Number of skins"
+        "num skins": "Number of skins",
+        "no results": "Nothing found"
     },
     "nav": {
         "set": "Set",
@@ -40,6 +40,8 @@
         "favorites": "Favorites",
         "categories": "Categories",
         "all skins": "All skins"
+    },
+    "text": {
+        "contact": "You can contact us at any convenient for you time via phone 71-200-0060 or email 180gradus@enter.org"
     }
 }
-

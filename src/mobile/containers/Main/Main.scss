@@ -9,11 +9,13 @@
     &__top,
     &__bottom {
         width: 100%;
-        justify-content: center;
     }
    
     &__top {
         margin-bottom: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     &__bottom {
@@ -21,6 +23,7 @@
         background: $pitch;
         box-shadow: 0 1rem 1.5rem rgba($pitch, .7), 0 -.75rem 1.5rem rgba($pitch, .7);
         padding: 2.25rem 2.5rem;
+        padding-bottom: 3.5rem;
         position: relative;
         z-index: 1;
     }
@@ -28,6 +31,9 @@
     &__figure {
         width: 35rem;
         height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     &__list {

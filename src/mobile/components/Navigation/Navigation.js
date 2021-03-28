@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineStar } from 'react-icons/ai';
 import { BiCart, BiMenuAltLeft, BiMenuAltRight } from 'react-icons/bi';
+import { connect } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import Cart from '../../../components/Cart/Cart';
@@ -10,7 +11,7 @@ import Backdrop from '../../../UI/Backdrop/Backdrop';
 import Logo from '../../../UI/Logo/Logo';
 import './Navigation.scss';
 
-const Navigation = () => {
+const Navigation = ({ categories }) => {
     const { t } = useTranslation();
     const location = useLocation();
     const [menu, setMenu] = useState(false);
@@ -42,6 +43,18 @@ const Navigation = () => {
 
     const isHome = location.pathname === '/'; 
 
+    const navItems = categories && categories.map((el, i) => (
+        <NavLink 
+            key={i} 
+            activeClassName="m-nav__link--active" 
+            exact 
+            to={`/categories/${el.type}/${el.name}`}
+            className="m-nav__link"
+            data-premium={el.exclusive}>
+                {t(`nav.${el.name}`)}
+        </NavLink>
+    ));
+
     return (
         <>  
             {favView && <Favorites t={t} close={() => setFavView(false)} />}
@@ -53,23 +66,9 @@ const Navigation = () => {
                         <div className="m-nav__group">
                             <span className="m-nav__title text text--mid">{t('main.categories')}:</span>
                             <NavLink activeClassName="m-nav__link--active" exact to="/categories/skins" className="m-nav__link">
-                                {t('nav.categories')}
+                                {t('nav.skins')}
                             </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/categories/skins/phones" className="m-nav__link">
-                                {t('nav.phones')}
-                            </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/categories/skins/consoles" className="m-nav__link">
-                                {t('nav.consoles')}
-                            </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/categories/skins/laptops" className="m-nav__link">
-                                {t('nav.laptops')}
-                            </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/categories/skins/exclusive" className="m-nav__link">
-                                {t('nav.exclusive')}
-                            </NavLink>
-                            <NavLink activeClassName="m-nav__link--active" to="/180degrees/about" className="m-nav__link">
-                                {t('nav.about')}
-                            </NavLink>
+                            {navItems}
                         </div>
                         <div className="m-nav__group">
                             <button 
@@ -118,4 +117,8 @@ const Navigation = () => {
     );
 };
 
-export default React.memo(Navigation);
+const state = (state) => ({
+    categories: state.categories
+});
+
+export default React.memo(connect(state)(Navigation));

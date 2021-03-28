@@ -4,6 +4,7 @@
     @include moveDown;
     display: grid;
     grid-template-columns: 35rem 1fr;
+    grid-template-rows: max-content;
 
     @include respond(xs) {
         grid-template-columns: 100vw;

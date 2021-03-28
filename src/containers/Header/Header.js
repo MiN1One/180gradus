@@ -122,7 +122,7 @@ const Header = () => {
                 topFourth: viewFour,
                 transform: transformUp
             }} /> */}
-            <Navigation class={hideElements && 'Navigation--hide'} />
+            <Navigation className={hideElements && 'Navigation--hide'} />
             <div style={{height: container + 'px'}} id="heightContainer"></div>
             <div style={{top: -transformUp + 'px'}} id="wrapper"> 
                 <header className="Header">

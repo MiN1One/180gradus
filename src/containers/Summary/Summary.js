@@ -62,7 +62,8 @@ const Summary = ({ onRemoveFromCart, cart, onAddToCart }) => {
             lnameRef.current.value.length < 2
            ) { return setError(t('input:fill out all')) }
 
-        if (phoneRef.current.value.length < 7) return setError(t('input:provide valid phone number'));
+        if (phoneRef.current.value.length < 7) 
+            return setError(t('input:provide valid phone number'));
 
         if (
             !geoMode && 
@@ -243,10 +244,9 @@ const Summary = ({ onRemoveFromCart, cart, onAddToCart }) => {
                 </div>
                 <div className="Summary__body">
                     <p className="text text--main mb-lg">
-                        All of your data is kept private, your data is not used except for serving purposes. You can read about privacy policy on <Link to="/180degrees/privacy" className="link link--outline">this page.</Link> You can also read about delivery and skinning process <Link to="/180degrees/delivery" className="link link--outline">here.</Link><br/>
-                        You can specify your location by sending your geolocation via <a rel="noreferrer noopener" target="_blank" href="https://www.t.me/he_go_bot" className="link link--outline">telegram</a> or input your address in the field provided.
+                        {t('input:summary.s1.p1')}<Link to="/180degrees/privacy" className="link link--outline">{t('input:summary.s1.p2')}</Link>{t('input:summary.s2.p1')}<Link to="/180degrees/delivery" className="link link--outline">{t('input:summary.s2.p2')}</Link><br/>
+                        {t('input:summary.s3.p1')}<a rel="noreferrer noopener" target="_blank" href="https://www.t.me/he_go_bot" className="link link--outline">{t('input:summary.s3.p2')}</a>{t('input:summary.s3.p3')}
                     </p>
-                    {t('input:text', { test: 'hgeetgdfvdf' })}
                     {error && <p className="text text--main c-red mb-15">{error}</p>}
                     <form className="Summary__form">
                         <div className="flex fdc wh-auto">

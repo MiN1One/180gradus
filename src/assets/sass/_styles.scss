@@ -22,6 +22,8 @@
         &:focus {
             width: 32rem;
             box-shadow: 0 0 .75rem rgba($pitch, .5);
+
+            @include respond(mms) { width: 29rem; }
         }
     }
 
@@ -39,7 +41,7 @@
         padding: .5rem 0;
 
         &:hover,
-        &:focus {
+        &:focus { 
             background: $grey-light;
             border-radius: .55rem;
         }

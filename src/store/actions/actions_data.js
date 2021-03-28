@@ -20,3 +20,9 @@ export const removeFromCart = (skinId) => ({
     type: actionTypes.ON_REMOVE_FROM_CART,
     skinId
 });
+
+export const setData = (name, value) => ({
+    type: actionTypes.ON_SET_DATA,
+    name, 
+    value
+});
