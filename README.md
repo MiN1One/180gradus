@@ -1,1 +1,6 @@
-#### Animation test with image prototypes
+#### Unfinished project
+
+# 180Gradus
+#### EN | RU | UZ
+
+
