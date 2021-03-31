@@ -18,7 +18,10 @@
         "remove": "Remove",
         "order": "Order",
         "num skins": "Number of skins",
-        "no results": "Nothing found"
+        "no results": "Nothing found",
+        "in the cart": "In the cart",
+        "close": "Close",
+        "basic": "Basic"
     },
     "nav": {
         "set": "Set",
@@ -39,7 +42,8 @@
         "cart": "Cart",
         "favorites": "Favorites",
         "categories": "Categories",
-        "all skins": "All skins"
+        "all skins": "All skins",
+        "menu": "Menu"
     },
     "text": {
         "contact": "You can contact us at any convenient for you time via phone 71-200-0060 or email 180gradus@enter.org"

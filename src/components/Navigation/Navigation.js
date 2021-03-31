@@ -3,7 +3,7 @@ import { BiCart } from 'react-icons/bi';
 import { AiOutlineStar } from 'react-icons/ai';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './Navigation.scss';
 import Tooltip from '../../UI/Tooltip/Tooltip';
@@ -11,9 +11,10 @@ import Logo from '../../UI/Logo/Logo';
 import Cart from '../Cart/Cart';
 import Favorites from '../Favorites/Favorites';
 
-const Navigation = ({ categories, className }) => {
+const Navigation = ({ className }) => {
     const { t } = useTranslation();
     const location = useLocation();
+    const { categories, cart, favorites } = useSelector(state => state);
 
     useEffect(() => {
         setFavView(false);
@@ -26,7 +27,6 @@ const Navigation = ({ categories, className }) => {
     const navItems = categories && categories.map((el, i) => (
         <li className="Navigation__item" key={i}>
             <NavLink
-                exact
                 activeClassName="Navigation__link--active"
                 to={`/categories/${el.type}/${el.name}`}
                 className="Navigation__link"
@@ -63,6 +63,7 @@ const Navigation = ({ categories, className }) => {
                                 <button 
                                     className="Navigation__link Navigation__link--pop" 
                                     onClick={() => setCartView(true)}>
+                                        {cart.length !== 0 && <span>{cart.length}</span>}
                                         <BiCart className="Navigation__icon" />
                                 </button>
                                 <Tooltip>{t('nav.cart')}</Tooltip>
@@ -71,7 +72,7 @@ const Navigation = ({ categories, className }) => {
                                 <button 
                                     className="Navigation__link Navigation__link--pop" 
                                     onClick={() => setFavView(true)}>
-                                        <span>2</span>
+                                        {favorites.length !== 0 && <span>{favorites.length}</span>}
                                         <AiOutlineStar className="Navigation__icon" />
                                 </button>
                                 <Tooltip>{t('nav.favorites')}</Tooltip>
@@ -85,8 +86,4 @@ const Navigation = ({ categories, className }) => {
     );
 };
 
-const state = (state) => ({
-    categories: state.categories
-});
-
-export default React.memo(connect(state)(Navigation));
+export default React.memo(Navigation);

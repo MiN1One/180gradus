@@ -1,13 +1,13 @@
 import actionTypes from './actionTypes';
 
-export const addToFavorites = (skinId) => ({
+export const addToFavorites = (skin) => ({
     type: actionTypes.ON_ADD_TO_FAVORITES,
-    skinId
+    skin
 });
 
-export const addToCart = (skinId) => ({
+export const addToCart = (skin) => ({
     type: actionTypes.ON_ADD_TO_CART,
-    skinId
+    skin
 });
 
 export const setMedia = (bp, value) => ({

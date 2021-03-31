@@ -2,7 +2,7 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     favorites: JSON.parse(localStorage.getItem('favorites')) || [],
-    cart: JSON.parse(sessionStorage.getItem('skins')) || [],
+    cart: JSON.parse(sessionStorage.getItem('cart')) || [],
     media: {
         mid: false,
         sm: false
@@ -13,22 +13,21 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ON_ADD_TO_FAVORITES:
-
             let newList = [...state.favorites];
-            const existing = state.favorites.findIndex(el => el === action.skinId) !== -1;    
-            if (existing) newList = newList.filter(el => el !== action.skinId);
-            else newList.push(action.skinId);
-            localStorage.setItem('favorites', JSON.stringify(newList));
-
+            
+                const existing = state.favorites.length && state.favorites.find(el => el._id === action.skin._id);    
+                if (existing) newList = newList.filter(el => el !== existing);
+                else if (state.favorites.length < 7) newList.push(action.skin);
+                localStorage.setItem('favorites', JSON.stringify(newList));
             return { ...state, favorites: newList };
 
         case actionTypes.ON_ERROR: return { ...state, error: action.error };
 
         case actionTypes.ON_ADD_TO_CART: 
-            const exists = state.cart.findIndex(el => el === action.skinId) !== -1;
+            const exists = state.cart.findIndex(el => el._id === action.skin._id) !== -1;
             if (exists) return { ...state };
-            const newArr = [...state.cart, action.skinId];
-            sessionStorage.setItem('skins', JSON.stringify(newArr));
+            const newArr = [...state.cart, action.skin];
+            sessionStorage.setItem('cart', JSON.stringify(newArr));
             return { ...state, cart: newArr };
 
         case actionTypes.ON_REMOVE_FROM_CART:

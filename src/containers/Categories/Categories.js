@@ -31,14 +31,24 @@ const Categories = ({ categories }) => {
     }, []);
     
     useEffect(() => {
-        const categoryQuery = params.category ? `category=${params.category}` : '';
         if (mounted.current) {
             setLoading(true);
-            axiosInstance(`/skins?${categoryQuery}&project=default,device,deviceVendor,type`)
-                .then((res) => {
-                    setLoading(false);
-                    setData(res.devices);
-                });
+
+            if (params.category) {
+                const categoryId = categories && categories.find(el => el.name === params.category)._id;
+                categoryId && axiosInstance(`/categories/${categoryId}?project=devices`)
+                    .then((res) => {
+                        setLoading(false);
+                        console.log(res);
+                        setData(res.data.devices);
+                    });
+            } else {
+                axiosInstance('/skins')
+                    .then((res) => {
+                        setLoading(false);
+                        setData(res.data);
+                    });
+            }
         }
     }, [params.category]);
 
@@ -51,19 +61,17 @@ const Categories = ({ categories }) => {
 
         setSearchInput(search);
 
-        setTimeout(() => {
-            if (search !== '' && mounted.current) {
-                axiosInstance(`/skins?search=${search}`)
-                    .then((res) => {
-                        if (e) {
-                            setLoading(false);
-                            setData(res.devices);
-                            setSearchResults(null);
-                        } else setSearchResults(res.devices);
-                        setSearchLoading(false);
-                    });
-            }
-        }, 850);
+        if (search !== '' && mounted.current) {
+            axiosInstance(`/skins?search=${search}`)
+                .then((res) => {
+                    if (e) {
+                        setLoading(false);
+                        setData(res.data);
+                        setSearchResults(null);
+                    } else setSearchResults(res.data);
+                    setSearchLoading(false);
+                });
+        }
     };
 
     const skin = {

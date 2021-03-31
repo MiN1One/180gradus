@@ -26,30 +26,28 @@ const Modal = (props) => {
                     </div>
                 </Scrollbars>
                 <div className="Modal__footer">
-                    {!props.loading &&
-                        <div className="flex aic">
-                            {props.price &&
-                                <span className="price-tag mr-1">
-                                    {t('main.total')}: ${props.price}
-                                </span>
-                            }
-                            {props.edit &&
-                                <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.cancel()}>
-                                    {t('main.cancel')}
-                                </button>
-                            }
-                            {props.editSave &&
-                                <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.editSave()}>
-                                    {props.edit ? t('main.save') : t('main.edit')}
-                                </button>
-                            }
-                            {(props.primary && !props.edit) &&
-                                <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.primary()}>
-                                    {props.actionTitle}
-                                </button>
-                            }
-                        </div>
-                    }
+                    <div className="flex aic">
+                        {props.price &&
+                            <span className="price-tag mr-1">
+                                {t('main.total')}: ${props.price}
+                            </span>
+                        }
+                        {props.edit &&
+                            <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.cancel()}>
+                                {t('main.cancel')}
+                            </button>
+                        }
+                        {props.editSave &&
+                            <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.editSave()}>
+                                {props.edit ? t('main.save') : t('main.edit')}
+                            </button>
+                        }
+                        {(props.primary && !props.edit) &&
+                            <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.primary()}>
+                                {props.actionTitle}
+                            </button>
+                        }
+                    </div>
                 </div>
             </div>
         </>
@@ -72,14 +70,14 @@ export const ModalFavItem = ({ data, edit, add, remove, media }) => {
                     <figure className="Modal__figure">
                         <LazyLoadImage
                             className="img"
-                            src={data.img}
-                            alt={data.title}
+                            src={`http://localhost:3003/assets/images/${data.image}`}
+                            alt={data.name}
                             width="100%"
                             height="100%"
                             effect="opacity" />
                     </figure>
                     <div className="flex fdc">
-                        <span className="Modal__name">{data.title}</span>
+                        <span className="Modal__name">{data.name}</span>
                         <span className="Modal__name--sub">{data.device}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{t('nav.skins')}</span>
                     </div>
                 </div>
@@ -107,7 +105,6 @@ export const ModalFavItem = ({ data, edit, add, remove, media }) => {
 
 export const ModalCartItem = ({ data, edit, remove }) => {
     const { t } = useTranslation();
-    const history = useHistory();
 
     return (
         <div className="Modal__item" >
@@ -115,22 +112,22 @@ export const ModalCartItem = ({ data, edit, remove }) => {
                 <figure className="Modal__figure">
                     <LazyLoadImage
                         className="img"
-                        src={data.img}
-                        alt={data.title}
+                        src={`http://localhost:3003/assets/images/${data.image}`}
+                        alt={data.name}
                         width="100%"
                         height="100%"
                         effect="opacity" />
                 </figure>
                 <div className="flex fdc">
-                    <span className="Modal__name">{data.title}</span>
+                    <span className="Modal__name">{data.name}</span>
                     <span className="Modal__name--sub">{data.device}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{t('nav.skins')}</span>
                 </div>
             </div>
             {edit 
-                ? <button className="btn btn__pill btn__pill--red" onClick={() => remove(data.id)}>
+                ? <button className="btn btn__pill btn__pill--red" onClick={() => remove(data._id)}>
                     {t('main.remove')}
                 </button>
-                : <span className="price-tag">{data.price}</span>
+                : <span className="price-tag">${data.price}</span>
             }
         </div>
     )

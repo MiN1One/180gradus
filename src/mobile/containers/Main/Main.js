@@ -12,7 +12,6 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 
 import * as actions from '../../../store/actions';
-import vivo from '../../../assets/images/Vivo X50.png';
 import './Main.scss';
 import axiosInstance from '../../../axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -21,12 +20,12 @@ import SubSpinner from '../../../UI/SubSpinner/SubSpinner';
 SwiperCore.use([Navigation, Scrollbar]);
 
 const Main = (props) => {
-    const { t } = useTranslation();
     const params = useParams();
     const history = useHistory();
     const [selectedSkin, setSelectedSkin] = useState(null);
-    const [skinImg, setSkinImg] = useState(null);
     const [data, setData] = useState(null); 
+    
+    const { t } = useTranslation(['translation', data && data.device]);
 
     const mounted = useRef();
     useEffect(() => {
@@ -39,22 +38,31 @@ const Main = (props) => {
             axiosInstance(`/skins/${params.id}`)
                 .then((res) => {
                     setData(res.data);
-                    setSkinImg('img');
                     console.log(res);
                 });
         }
     }, [params.category, params.id]);
 
-    const onSelectSkin = (skinId) => {
-        if (!mounted.current) return null;
-        axiosInstance(`/skins/${params.id}?project=skins&skin=${skinId}`)
-            .then(res => {
-                setSkinImg(res);
-            });
-        setSelectedSkin(skinId);
-    };
-
     const isFavorite = selectedSkin && props.favorites.findIndex(el => el === selectedSkin) !== -1;
+    const inTheCart = selectedSkin && props.cart.findIndex(el => el._id === selectedSkin._id);
+
+    let skins = null, deviceName = null;
+
+    if (data) {
+        deviceName = data.device;
+
+        skins = data.skins.map((el, i) => {
+            el.device = deviceName;
+            return (
+                <SwiperSlide 
+                    key={i}
+                    className={`m-main__sets-item ${(selectedSkin && selectedSkin._id === el._id) ? 'm-main__sets-item--active' : ''}`} 
+                    onClick={() => setSelectedSkin(el)}>
+                        
+                </SwiperSlide>
+            )
+        });
+    }
 
     return (
         <section className="m-main">
@@ -65,7 +73,7 @@ const Main = (props) => {
                             <BiChevronLeft className="icon--lg icon--dark" />
                         </button>
                         <h2 className="heading heading--1 heading--black">
-                            {params.id}
+                            {deviceName}
                         </h2>
                     </div>
                 </div>
@@ -74,17 +82,22 @@ const Main = (props) => {
                 <div className="m-main__top">
                     <div className="container flex aic jcc fdc">
                         <figure className="m-main__figure">
-                            <LazyLoadImage
-                                src={vivo}
-                                alt="vivo"
-                                className="img"
-                                width="100%"
-                                placeholder={<SubSpinner />}
-                                height="100%" />
+                            {selectedSkin
+                                ? <LazyLoadImage
+                                    src={`http://localhost:3003/assets/images/${selectedSkin.image}`}
+                                    alt={selectedSkin.name}
+                                    className="img"
+                                    width="100%"
+                                    placeholder={<SubSpinner />}
+                                    height="100%" />
+                                : <img className="img" alt={deviceName} src={`http://localhost:3003/assets/images/${data && data.default}`} />
+                            }
                         </figure>
                         {selectedSkin && 
                             <div className="flex fdc aic">
-                                <span className="m-main__title text text--mid mb-1">Black flowers</span>
+                                <span className="m-main__title text text--mid mb-1">
+                                    {t(`${deviceName}:${selectedSkin.name}`)}
+                                </span>
                                 <div className="flex">
                                     <button  
                                         className="btn btn__ghost btn__ghost--active mr-1"
@@ -96,7 +109,7 @@ const Main = (props) => {
                                         onClick={() => props.onAddToFav(selectedSkin)}>
                                             {isFavorite
                                                 ? <AiFillStar className="icon" />
-                                                : <AiOutlineStar className="icon" />
+                                                : <AiOutlineStar className="m-main__icon" />
                                             }
                                     </button>
                                 </div>
@@ -106,11 +119,15 @@ const Main = (props) => {
                 </div>
                 <div className="m-main__bottom">
                     <div className="container">
-                        <div className="flex mb-15 aic">
-                            <h5 className="heading heading--sm c-white mr-1">{t('sets.black flowers')}</h5>
-                            <span className="mr-1 c-light">&bull;</span>
-                            <span className="heading heading--sub c-light">{t('sets.basic')}</span>
-                        </div>
+                        {selectedSkin &&
+                            <div className="flex mb-15 aic">
+                                <h5 className="heading heading--sm c-white mr-1">
+                                    {t(`${deviceName}:${selectedSkin.name}`)}
+                                </h5>
+                                <span className="mr-1 c-light">&bull;</span>
+                                <span className="heading heading--sub c-light">{t('translation:main.basic')}</span>
+                            </div>
+                        }
                         <div className="pos-rel w-100">
                             <button className="btn__control m-main__control--left btn__control--prev">
                                 <BiChevronLeft className="icon--sm" />
@@ -136,33 +153,7 @@ const Main = (props) => {
                                     600: { slidesPerView: 6 },
                                     700: { slidesPerView: 7 },
                                 }}>
-                                    <SwiperSlide className={`m-main__sets-item ${selectedSkin ? 'm-main__sets-item--active' : ''}`} onClick={() => onSelectSkin('01')}>
-                                        
-                                    </SwiperSlide>
-                                    <SwiperSlide className="m-main__sets-item">
-                                        
-                                    </SwiperSlide>
-                                    <SwiperSlide className="m-main__sets-item">
-                                        
-                                    </SwiperSlide>
-                                    <SwiperSlide className="m-main__sets-item">
-                                        
-                                    </SwiperSlide>
-                                    <SwiperSlide className="m-main__sets-item">
-                                        
-                                    </SwiperSlide>
-                                    <SwiperSlide className="m-main__sets-item">
-                                        
-                                    </SwiperSlide>
-                                    <SwiperSlide className="m-main__sets-item">
-                                        
-                                    </SwiperSlide>
-                                    <SwiperSlide className="m-main__sets-item">
-                                        
-                                    </SwiperSlide>
-                                    <SwiperSlide className="m-main__sets-item">
-                                        
-                                    </SwiperSlide>
+                                    {skins}
                             </Swiper>
                         </div>
                     </div>
@@ -173,7 +164,7 @@ const Main = (props) => {
                             <div className="flex">
                                 {selectedSkin && <span className="price-tag m-main__price mr-5">$5.99</span>}
                                 <button className="m-main__btn" disabled={selectedSkin ? false : true}>
-                                    {t('main.to cart')}
+                                    {t('translation:main.to cart')}
                                     <BiCart className="icon--mid ml-5" />
                                 </button>
                             </div>
@@ -186,7 +177,8 @@ const Main = (props) => {
 };
 
 const state = (state) => ({
-    favorites: state.favorites
+    favorites: state.favorites,
+    cart: state.cart
 });
 
 const dispatch = dispatch => ({

@@ -10,7 +10,6 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/swiper.scss';
 
-import x50 from '../../assets/images/Vivo X50.png';
 import * as actions from '../../store/actions';
 import './Main.scss';
 import { connect } from 'react-redux';
@@ -23,12 +22,12 @@ SwiperCore.use([Navigation, Pagination]);
 const Main = (props) => {
     const params = useParams();
     const history = useHistory();
-    const { t } = useTranslation();
-
-    const [data, setData] = useState({});
+    
+    const [data, setData] = useState(null);
     const [selectedSkin, setSelectedSkin] = useState(null);
-    const [skinImg, setSkinImg] = useState(null);
     const mounted = useRef();
+
+    const { t } = useTranslation(['translation', data && data.device]);
 
     useEffect(() => {
         mounted.current = true;
@@ -40,33 +39,61 @@ const Main = (props) => {
             axiosInstance(`/skins/${params.id}`)
                 .then((res) => {
                     setData(res.data);
-                    setSkinImg('img');
+                    console.log(res.data.skins);
                 });
         }
     }, [params.category, params.id, props.error]);
 
-    const onSelectSkin = (skinId) => {
-        if (!mounted.current) return null;
-        axiosInstance(`/skins/${params.id}?skin=${skinId}`)
-            .then(res => {
-                setSkinImg(res);
-                console.log(res);
-            });
-        setSelectedSkin(skinId);
-    };
+    const isFavorite = selectedSkin && props.favorites.findIndex(el => el._id === selectedSkin._id) !== -1;
+    const inTheCart = selectedSkin && props.cart.findIndex(el => el._id === selectedSkin._id) !== -1;
+    
+    let skinsSlide = null, deviceName = null;
 
-    const isFavorite = selectedSkin !== null && props.favorites.findIndex(el => el === selectedSkin) !== -1;
+    if (data) {
+        deviceName = data.device;
+
+        const counter = Math.ceil(data.skins.length / 9);
+        let skinsArr = [];
+        if (counter)
+            for (let i = 0; i < counter; i++) {
+                skinsArr.push([...data.skins.slice(i * 9, 9 * (i+1))])
+            }
+
+        else skinsArr.push([...data.skins]);
+
+        skinsSlide = skinsArr.map((el, i) => {
+            const skins = el.map((skin, index) => {
+                skin.device = deviceName;
+                return (
+                    <div 
+                        key={index}
+                        className={`Main__sets-item ${(selectedSkin && selectedSkin.name) === skin.name ? 'Main__sets-item--active' : ''}`} 
+                        onClick={() => setSelectedSkin(skin)}>
+                            <div className="Main__tooltip">
+                                {t(`${deviceName}:${skin.name}`)}
+                            </div>
+                    </div>
+                )
+            });
+
+            return (
+                <SwiperSlide className="Main__sets-wrapper" key={i}>
+                    {skins}
+                </SwiperSlide>
+            )
+        });
+    }
 
     return (
         <header className="Main">
             <div className="main-head">
                 <div className="container">
                     <div className="flex aic">
-                        <button className="btn btn__square mr-2" onClick={() => history.push(`/categories/${params.category}`)}>
+                        <button className="btn btn__square mr-2" onClick={() => history.push(`/categories/skins/${params.category}`)}>
                             <BiChevronLeft className="icon--lg icon--dark" /> 
                         </button>
                         <h2 className="heading heading--1 heading--black">
-                            {t(`nav.${params.category}`)} ~ {params.id}
+                            {t(`nav.${params.category}`)} ~ {deviceName}
                         </h2>
                     </div>
                 </div>
@@ -79,17 +106,20 @@ const Main = (props) => {
                         <div className="Main__content-wrapper">
                             <div className="Main__right">
                                 <figure className="Main__figure">
-                                    <LazyLoadImage 
-                                        src={x50}
-                                        alt={params.id}
-                                        className="Main__img"
-                                        width="100%"
-                                        height="100%"
-                                        placeholder={<SubSpinner />} />
+                                    {selectedSkin 
+                                        ? <LazyLoadImage 
+                                            src={`http://localhost:3003/assets/images/${selectedSkin.image}`}
+                                            alt={selectedSkin.name}
+                                            className="Main__img"
+                                            width="100%"
+                                            height="100%"
+                                            placeholder={<SubSpinner />} />
+                                        : <img className="Main__img" src={data && `http://localhost:3003/assets/images/${data.default}`} alt={data && data.device} />
+                                    }
                                 </figure>
                                 {selectedSkin !== null && 
                                     <>
-                                        <h5 className="text text--mid Main__title">Black flowers</h5>
+                                        <h5 className="text text--mid Main__title">{selectedSkin ? t(`${deviceName}:${selectedSkin.name}`) : t('translation:main.default')}</h5>
                                         <div className="Main__right-panel">
                                             <button 
                                                 className="btn btn__ghost btn__ghost--active mr-1"
@@ -100,8 +130,8 @@ const Main = (props) => {
                                                 className="btn btn__ghost btn__ghost--active"
                                                 onClick={() => props.onAddToFav(selectedSkin)}>
                                                     {isFavorite
-                                                        ? <AiFillStar className="icon" />
-                                                        : <AiOutlineStar className="icon" />
+                                                        ? <AiFillStar className="Main__icon" />
+                                                        : <AiOutlineStar className="Main__icon" />
                                                     }
                                             </button>
                                         </div>
@@ -113,9 +143,9 @@ const Main = (props) => {
                                     <div className="w-100 pos-rel">
                                         {selectedSkin !== null &&
                                             <div className="flex aic mb-3">
-                                                <h5 className="heading heading--sm c-white mr-1">{t('sets.black flowers')}</h5>
+                                                <h5 className="heading heading--sm c-white mr-1">{t(`${deviceName}:${selectedSkin.name}`)}</h5>
                                                 <span className="mr-1">&bull;</span>
-                                                <span className="heading heading--sub c-light">{t('sets.basic')}</span>
+                                                <span className="heading heading--sub c-light">{t('translation:main.basic')}</span>
                                             </div>
                                         }
                                         <div className="pos-rel w-100">
@@ -135,89 +165,18 @@ const Main = (props) => {
                                                 }}
                                                 spaceBetween={30}
                                                 updateOnWindowResize={true}>
-                                                    <SwiperSlide className="Main__sets-wrapper">
-                                                        <div className={`Main__sets-item ${selectedSkin === 0 ? 'Main__sets-item--active' : ''}`} onClick={() => onSelectSkin('01')}>
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                    </SwiperSlide>
-                                                    <SwiperSlide className="Main__sets-wrapper">
-                                                        <div className="Main__sets-item">
-                                                            <div className="Main__tooltip">
-                                                                Black flowers
-                                                            </div>
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                        </div>
-                                                        <div className="Main__sets-item">
-                                                        </div>
-                                                    </SwiperSlide>
+                                                    {skinsSlide}
                                             </Swiper>
                                         </div>
                                     </div>
                                     <div className="Main__summary">
-                                        {selectedSkin !== null && <div className="Main__price">$5.99</div>}
+                                        {selectedSkin !== null && <div className="Main__price">${selectedSkin.price}</div>}
                                         <button 
-                                            className="Main__btn" 
-                                            disabled={selectedSkin !== null ? false : true}
-                                            onClick={() => {
-                                                if (selectedSkin !== null) props.onAddToCart(selectedSkin);
-                                            }}>
-                                                {t('main.to cart')}
-                                                <BiCartAlt className="icon--mid ml-5" />
+                                            className={`Main__btn ${inTheCart ? 'Main__btn--active' : ''}`} 
+                                            disabled={selectedSkin ? false : true}
+                                            onClick={() => selectedSkin && props.onAddToCart(selectedSkin)}>
+                                                {inTheCart ? t('translation:main.in the cart') : t('translation:main.to cart')}
+                                                <BiCartAlt className="icon ml-5" />
                                         </button>
                                     </div>
                                 </div>
@@ -234,7 +193,8 @@ const Main = (props) => {
 };
 
 const state = state => ({
-    favorites: state.favorites
+    favorites: state.favorites,
+    cart: state.cart
 });
 
 const dispatch = dispatch => ({

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineStar } from 'react-icons/ai';
 import { BiCart, BiMenuAltLeft, BiMenuAltRight } from 'react-icons/bi';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import Cart from '../../../components/Cart/Cart';
@@ -11,12 +11,13 @@ import Backdrop from '../../../UI/Backdrop/Backdrop';
 import Logo from '../../../UI/Logo/Logo';
 import './Navigation.scss';
 
-const Navigation = ({ categories }) => {
+const Navigation = () => {
     const { t } = useTranslation();
     const location = useLocation();
     const [menu, setMenu] = useState(false);
     const [favView, setFavView] = useState(false);
     const [cartView, setCartView] = useState(false);
+    const categories = useSelector(state => state.categories);
     
     useEffect(() => {
         const root = document.getElementById('root');
@@ -47,7 +48,6 @@ const Navigation = ({ categories }) => {
         <NavLink 
             key={i} 
             activeClassName="m-nav__link--active" 
-            exact 
             to={`/categories/${el.type}/${el.name}`}
             className="m-nav__link"
             data-premium={el.exclusive}>
@@ -117,8 +117,4 @@ const Navigation = ({ categories }) => {
     );
 };
 
-const state = (state) => ({
-    categories: state.categories
-});
-
-export default React.memo(connect(state)(Navigation));
+export default React.memo(Navigation);

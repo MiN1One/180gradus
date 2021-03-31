@@ -1,17 +1,19 @@
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Link, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import './Card.scss';
 
 const Card = ({ data }) => {
     const { t } = useTranslation();
-    const params = useParams();
-    const category = params.category ? `/${params.category}` : '';
+    const categoriesList = useSelector(state => state.categories);
+
+    const category = data.category && categoriesList.find(el => el._id === data.category).name;
 
     return (
         <Link 
-            to={`/categories/skins${category}/${data.name || data._id}`} 
+            to={`/categories/skins/${data.category ? `${category}/${data._id}` : data.name}`} 
             className="Card"
             data-premium={data.exclusive || false}>
                 <div className="Card__head">

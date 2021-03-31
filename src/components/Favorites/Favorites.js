@@ -1,24 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../store/actions';
 import Modal, { ModalFavItem } from '../../UI/Modal/Modal';
-import vivo from '../../assets/images/Vivo X50.png';
-import SubSpinner from '../../UI/SubSpinner/SubSpinner';
 
 const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }) => {
     const [editMode, setEditMode] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [favItems, setFavItems] = useState([ ...favorites ]);
-
-    const mounted = useRef();
-
-    useEffect(() => {
-        mounted.current = true;
-        setLoading(true);
-        setTimeout(() => setLoading(false), 2000);
-        return () => mounted.current = false;
-    }, []);
 
     useEffect(() => setFavItems([ ...favorites ]), [favorites]);
 
@@ -32,12 +20,15 @@ const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }
         setEditMode(false);
     };
 
-    const data = {
-        id: 'someid',
-        img: vivo,
-        title: 'Black Flowers',
-        device: 'Vivo X50'
-    };
+    const favoriteItems = favorites.map((el, i) => (
+        <ModalFavItem
+            key={i}
+            media={media} 
+            data={el}
+            edit={editMode}
+            add={() => onAddToCart(el)}
+            remove={() => onRemoveAddToFav(el)} />
+    ));
 
     return (
         <Modal
@@ -46,52 +37,11 @@ const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }
             title={t('nav.favorites')}
             edit={editMode}
             cancel={onRevertChanges}
-            loading={loading}
             close={() => {
                 close(false);
                 setEditMode(false);
             }}>
-                {loading
-                    ? <SubSpinner className="Modal__spinner" />
-                    : <>
-                        <ModalFavItem
-                            media={media} 
-                            data={data}
-                            edit={editMode}
-                            add={() => onAddToCart(1)}
-                            remove={() => onRemoveAddToFav(1)} />
-                        <ModalFavItem
-                            media={media} 
-                            data={data}
-                            edit={editMode}
-                            add={() => onAddToCart(1)}
-                            remove={() => onRemoveAddToFav(1)} />
-                        <ModalFavItem
-                            media={media} 
-                            data={data}
-                            edit={editMode}
-                            add={() => onAddToCart(1)}
-                            remove={() => onRemoveAddToFav(1)} />
-                        <ModalFavItem
-                            media={media} 
-                            data={data}
-                            edit={editMode}
-                            add={() => onAddToCart(1)}
-                            remove={() => onRemoveAddToFav(1)} />
-                        <ModalFavItem
-                            media={media} 
-                            data={data}
-                            edit={editMode}
-                            add={() => onAddToCart(1)}
-                            remove={() => onRemoveAddToFav(1)} />
-                        <ModalFavItem
-                            media={media} 
-                            data={data}
-                            edit={editMode}
-                            add={() => onAddToCart(1)}
-                            remove={() => onRemoveAddToFav(1)} />
-                    </>
-                }
+                {favoriteItems}
         </Modal>
     );
 };
@@ -102,8 +52,8 @@ const state = state => ({
 });
 
 const dispatch = (dispatch) => ({
-    onAddToCart: (id) => dispatch(actions.addToCart(id)),
-    onRemoveAddToFav: (id) => dispatch(actions.addToFavorites(id))
+    onAddToCart: (skin) => dispatch(actions.addToCart(skin)),
+    onRemoveAddToFav: (skin) => dispatch(actions.addToFavorites(skin))
 });
 
 export default React.memo(connect(state, dispatch)(Favorites));

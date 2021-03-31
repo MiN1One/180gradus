@@ -8,7 +8,7 @@
     &__body {
         position: relative;
         width: 100%;
-        height: 80rem;
+        height: 73rem;
         display: flex;
 
         // @include respond(mid) {
@@ -44,7 +44,7 @@
     &__content-wrapper {
         width: 100%;
         display: flex;
-        height: 65rem;
+        height: 58rem;
         border-radius: .55rem;
         overflow: hidden;
         box-shadow: .75rem .75rem 1.5rem rgba(#000, .7);
@@ -88,8 +88,6 @@
             left: -5.4rem;
             transform: translateY(-50%);
         }
-
-        
     }
 
     &__footer {
@@ -185,21 +183,22 @@
     }
     
     &__tooltip {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         position: absolute;
+        text-align: center;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: $yellow;
         color: $black;
         border-radius: .55rem;
-        width: max-content;
+        width: 10.5rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         font-size: 1.3rem;
         box-shadow: 0 0 .75rem rgba(#000, .5);
         transform-origin: center;
-        padding: .75rem 1.25rem;
+        padding: .75rem 1rem;
         opacity: 0;
         transition: opacity .15s ease;
     }
@@ -209,21 +208,17 @@
     &__sets-item:nth-child(3n+1) &__tooltip,
     &__sets-item:first-child &__tooltip {
         left: 0;
-        padding-left: .5rem;
         transform: translateY(-50%);
         border-radius: 0 .55rem .55rem 0;
         transform-origin: left;
-        justify-content: flex-start;
     }
     
     &__sets-item:nth-child(3n) &__tooltip {
         left: initial;
         right: 0;
         transform: translateY(-50%);
-        padding-right: .5rem;
         border-radius: .55rem 0 0 .55rem;
         transform-origin: right;
-        justify-content: flex-end;
     }
 
     &__sets-item--active &__tooltip {
@@ -242,8 +237,8 @@
         display: flex;
         align-items: center;
         height: 5rem;
-        font-size: 1.75rem;
-        padding: 3rem;
+        font-size: 1.55rem;
+        padding: 2.6rem;
         font-weight: 300;
         border-radius: .55rem 0 0 .55rem;
         background: $black;
@@ -259,13 +254,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        text-transform: uppercase;
+        text-transform: capitalize;
+        font-weight: 300;
         color: $white;
-        padding: 2rem;
+        padding: 1.75rem;
         border-radius: .55rem;
-        font-size: 1.7rem;
+        font-size: 1.5rem;
         width: max-content;
         box-shadow: 0 0 1rem rgba(#000, .5);
+        transition: transform .3s ease;
 
         svg { transition: transform .25s ease-in-out; }
 
@@ -274,9 +271,12 @@
             opacity: .65;
         }
 
-        @include respond(mid) {
-            font-size: 1.6rem;
+        &--active {
+            background: $primary;
         }
+
+        &:hover,
+        &:focus { transform: scale(1.025); }
     }
 
     &__btn-control {
@@ -294,5 +294,10 @@
         bottom: 6rem;
         left: 50%;
         transform: translateX(-50%);
+    }
+
+    &__icon {
+        width: 1.8rem;        
+        height: 1.8rem;        
     }
 }
