@@ -5,9 +5,10 @@ import { useHistory } from 'react-router';
 import * as actions from '../../store/actions';
 import Modal, { ModalCartItem } from '../../UI/Modal/Modal';
 
-const Cart = ({ t, close, onRemoveFromCart, cart, onAddToCart }) => {
+const Cart = ({ t, close, onRemoveFromCart, cart }) => {
     const [editMode, setEditMode] = useState(false);
-    const [cartItems, setCartItems] = useState([ ...cart ])
+    const [cartItems, setCartItems] = useState([ ...cart ]);
+    const [removedItems, setRemovedItems] = useState([]);
     const history = useHistory();
 
     useEffect(() => setCartItems([ ...cart ]), [cart]);
@@ -15,19 +16,28 @@ const Cart = ({ t, close, onRemoveFromCart, cart, onAddToCart }) => {
     const onRevertChanges = () => {
         setCartItems(cart);
         setEditMode(false);
+        setRemovedItems([]);
     };
 
     const onApplyChanges = () => {
-        cartItems.forEach(el => onAddToCart(el));
+        removedItems.forEach(el => onRemoveFromCart(el));
         setEditMode(false);
+        setRemovedItems([]);
     };
 
-    const items = cart.length !== 0 && cart.map((el, i) => (
+    const removeItem = (id) => {
+        const newList = cartItems.filter(el => el._id !== id);
+        const item = cartItems.find(el => el._id === id)._id;
+        setRemovedItems(prevState => [...prevState, item && item]);
+        setCartItems(newList);
+    };
+
+    const items = cartItems.map((el, i) => (
         <ModalCartItem 
             key={i}
             data={el}
             edit={editMode}
-            remove={() => onRemoveFromCart(el._id)} />
+            remove={() => removeItem(el._id)} />
     ));
 
     const totalPrice = cart.length !== 0 && cart.reduce((acc, el) => acc + parseFloat(el.price), 0);
@@ -45,7 +55,7 @@ const Cart = ({ t, close, onRemoveFromCart, cart, onAddToCart }) => {
             }}
             editSave={() => editMode ? onApplyChanges() : setEditMode(true)}
             edit={editMode}>
-                {items}
+                {cart.length !== 0 && items}
         </Modal>
     );
 };
@@ -55,8 +65,7 @@ const state = (state) => ({
 });
 
 const dispatch = (dispatch) => ({
-    onRemoveFromCart: (id) => dispatch(actions.removeFromCart(id)),
-    onAddToCart: (id) => dispatch(actions.addToCart(id))
+    onRemoveFromCart: (id) => dispatch(actions.removeFromCart(id))
 });
 
 export default React.memo(connect(state, dispatch)(Cart));

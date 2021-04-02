@@ -9,6 +9,15 @@ import * as actions from '../store/actions';
 import Spinner from '../UI/Spinner/Spinner';
 import Er from './Error/Error';
 import Layout from './Layout/Layout';
+// import asyncComponent from '../hoc/asyncComponent';
+
+// const AsyncMain = asyncComponent(() => import('./Main/Main'));
+// const AsyncCategories = asyncComponent(() => import('./Categories/Categories'));
+// const AsyncInfo = asyncComponent(() => import('./Info/Info'));
+// const AsyncSummary = asyncComponent(() => import('./Summary/Summary'));
+// const AsyncHeader = asyncComponent(() => import('./Header/Header'));
+// const AsyncHeaderMobile = asyncComponent(() => import('../mobile/containers/Header/Header'));
+// const AsyncMainMobile = asyncComponent(() => import('../mobile/containers/Main/Main'));
 
 const AsyncMain = React.lazy(() => import('./Main/Main'));
 const AsyncCategories = React.lazy(() => import('./Categories/Categories'));

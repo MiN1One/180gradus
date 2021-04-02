@@ -160,6 +160,9 @@
         &--sub { display: none; }
     }
 
+    &__card:hover &__card-btn,
+    &__card:focus &__card-btn { background: rgba($red, .85) !important; }
+
     &__dropdown {
         display: none;
         padding: 1rem;
@@ -208,8 +211,5 @@
         justify-content: center;
     }
 
-    &__card-btn {
-        padding: .85rem;
-        background: $red !important;
-    }
+    &__card-btn { padding: .85rem; }
 }

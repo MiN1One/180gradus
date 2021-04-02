@@ -7,27 +7,37 @@ import Modal, { ModalFavItem } from '../../UI/Modal/Modal';
 const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }) => {
     const [editMode, setEditMode] = useState(false);
     const [favItems, setFavItems] = useState([ ...favorites ]);
+    const [removedItems, setRemovedItems] = useState([]);
 
     useEffect(() => setFavItems([ ...favorites ]), [favorites]);
 
     const onRevertChanges = () => {
         setFavItems(favorites);
         setEditMode(false);
+        setRemovedItems([]);
     };
 
     const onApplyChanges = () => {
-        favItems.forEach(el => onAddToCart(el));
+        removedItems.forEach(el => onRemoveAddToFav(el));
         setEditMode(false);
+        setRemovedItems([]);
     };
 
-    const favoriteItems = favorites.map((el, i) => (
+    const removeFromFav = (id) => {
+        const removed = favItems.find(el => el._id === id);
+        const newList = favItems.filter(el => el._id !== id);
+        setFavItems(newList);
+        setRemovedItems(prevState => [...prevState, removed && removed]);
+    };
+
+    const favoriteItems = favItems.map((el, i) => (
         <ModalFavItem
             key={i}
             media={media} 
             data={el}
             edit={editMode}
             add={() => onAddToCart(el)}
-            remove={() => onRemoveAddToFav(el)} />
+            remove={() => removeFromFav(el._id)} />
     ));
 
     return (
@@ -41,7 +51,7 @@ const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }
                 close(false);
                 setEditMode(false);
             }}>
-                {favoriteItems}
+                {favorites.length !== 0 && favoriteItems}
         </Modal>
     );
 };

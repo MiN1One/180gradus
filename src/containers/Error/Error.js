@@ -13,8 +13,10 @@ const Er = ({ er, clean, notFound }) => {
             <div className="main-head">
                 <div className="container">
                     <div className="flex aic">
-                        <button className="btn btn__square mr-2" onClick={() => !notFound && clean()}>
-                            <BiChevronLeft className="icon--lg icon--dark" /> 
+                        <button 
+                            className="btn btn__square mr-2" 
+                            onClick={() => notFound ? history.goBack() : clean()}>
+                                <BiChevronLeft className="icon--lg icon--dark" /> 
                         </button>
                         <h2 className="heading heading--1 heading--black">{t('main.error')}</h2>
                     </div>
@@ -26,7 +28,7 @@ const Er = ({ er, clean, notFound }) => {
                         {notFound ? t('main.not found') : er}
                     </p>
                     <p className="text text--mid mb-2">
-                        {notFound ? 'Make sure you have right address' : 'This might be due to poor internet connection or server error.'}
+                        {notFound ? t('main.wrong address') : t('main.error reason')}
                     </p>
                     <div className="flex">
                         <button

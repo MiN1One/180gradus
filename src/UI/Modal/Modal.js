@@ -22,32 +22,38 @@ const Modal = (props) => {
                 </div>
                 <Scrollbars className="Modal__body">
                     <div className="Modal__wrapper">
-                        {props.children}
+                        {props.children || 
+                            <p className="Modal__text">
+                                {t('main.nothing here')}
+                            </p>
+                        }
                     </div>
                 </Scrollbars>
                 <div className="Modal__footer">
-                    <div className="flex aic">
-                        {props.price &&
-                            <span className="price-tag mr-1">
-                                {t('main.total')}: ${props.price}
-                            </span>
-                        }
-                        {props.edit &&
-                            <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.cancel()}>
-                                {t('main.cancel')}
-                            </button>
-                        }
-                        {props.editSave &&
-                            <button className="btn btn__ghost btn__ghost--active Modal__btn mr-1" onClick={() => props.editSave()}>
-                                {props.edit ? t('main.save') : t('main.edit')}
-                            </button>
-                        }
-                        {(props.primary && !props.edit) &&
-                            <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.primary()}>
-                                {props.actionTitle}
-                            </button>
-                        }
-                    </div>
+                    {props.children &&
+                        <div className="flex aic">
+                            {props.price &&
+                                <span className="price-tag mr-1">
+                                    {t('main.total')}: ${props.price}
+                                </span>
+                            }
+                            {props.edit &&
+                                <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.cancel()}>
+                                    {t('main.cancel')}
+                                </button>
+                            }
+                            {props.editSave &&
+                                <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.editSave()}>
+                                    {props.edit ? t('main.save') : t('main.edit')}
+                                </button>
+                            }
+                            {(props.primary && !props.edit) &&
+                                <button className="btn btn__ghost btn__ghost--active Modal__btn" onClick={() => props.primary()}>
+                                    {props.actionTitle}
+                                </button>
+                            }
+                        </div>
+                    }
                 </div>
             </div>
         </>
@@ -64,7 +70,7 @@ export const ModalFavItem = ({ data, edit, add, remove, media }) => {
         <div 
             className="Modal__item" 
             onClick={() => {
-                if (media) history.push(`/categories/${data.category}/${data.id}`);
+                if (media) history.push(`/categories/${data.type}/${data.category}/${data.deviceId}`);
             }}>
                 <div className="flex aic">
                     <figure className="Modal__figure">
@@ -78,21 +84,21 @@ export const ModalFavItem = ({ data, edit, add, remove, media }) => {
                     </figure>
                     <div className="flex fdc">
                         <span className="Modal__name">{data.name}</span>
-                        <span className="Modal__name--sub">{data.device}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{t('nav.skins')}</span>
+                        <span className="Modal__name--sub">{data.device}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{t(`nav.${data.type}`)}</span>
                     </div>
                 </div>
                 {edit 
-                    ? <button className="btn btn__pill btn__pill--red" onClick={() => remove(data.id)}>
+                    ? <button className="btn btn__pill btn__pill--red" onClick={remove}>
                         {t('main.remove')}
                     </button>
                     : (
                         <div className="flex">
                             {!media && 
-                                <Link to={`/categories/${data.category}/${data.id}`} className="btn btn__pill btn__pill--yellow mr-1">
+                                <Link to={`/categories/${data.type}/${data.category}/${data.deviceId}`} className="btn btn__pill btn__pill--yellow mr-1">
                                     {t('nav.collection')}
                                 </Link>
                             }
-                            <button className="btn btn__pill" onClick={() => add()}>
+                            <button className="btn btn__pill" onClick={add}>
                                 {t('main.to cart')}
                                 <BiPlus className="ml-5 icon--sm" />
                             </button>
@@ -124,7 +130,7 @@ export const ModalCartItem = ({ data, edit, remove }) => {
                 </div>
             </div>
             {edit 
-                ? <button className="btn btn__pill btn__pill--red" onClick={() => remove(data._id)}>
+                ? <button className="btn btn__pill btn__pill--red" onClick={remove}>
                     {t('main.remove')}
                 </button>
                 : <span className="price-tag">${data.price}</span>

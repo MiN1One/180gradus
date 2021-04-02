@@ -48,22 +48,25 @@ const Main = (props) => {
     const inTheCart = selectedSkin && props.cart.findIndex(el => el._id === selectedSkin._id) !== -1;
     
     let skinsSlide = null, deviceName = null;
-
+    // console.log(data);
     if (data) {
         deviceName = data.device;
 
-        const counter = Math.ceil(data.skins.length / 9);
+        const numSlides = Math.ceil(data.skins.length / 9);
         let skinsArr = [];
-        if (counter)
-            for (let i = 0; i < counter; i++) {
-                skinsArr.push([...data.skins.slice(i * 9, 9 * (i+1))])
-            }
-
-        else skinsArr.push([...data.skins]);
+        if (numSlides) {
+            for (let i = 0; i < numSlides; i++)
+                skinsArr.push([...data.skins.slice(i * 9, 9 * (i+1))]);
+        } else skinsArr.push([...data.skins]);
 
         skinsSlide = skinsArr.map((el, i) => {
             const skins = el.map((skin, index) => {
+                const category = props.categories && props.categories.find(cat => cat._id === data.category);
                 skin.device = deviceName;
+                skin.category = category && category.name;
+                skin.deviceId = data._id;
+                skin.type = data.type;
+
                 return (
                     <div 
                         key={index}
@@ -117,7 +120,7 @@ const Main = (props) => {
                                         : <img className="Main__img" src={data && `http://localhost:3003/assets/images/${data.default}`} alt={data && data.device} />
                                     }
                                 </figure>
-                                {selectedSkin !== null && 
+                                {selectedSkin && 
                                     <>
                                         <h5 className="text text--mid Main__title">{selectedSkin ? t(`${deviceName}:${selectedSkin.name}`) : t('translation:main.default')}</h5>
                                         <div className="Main__right-panel">
@@ -141,7 +144,7 @@ const Main = (props) => {
                             <div className="Main__left">
                                 <div className="Main__sets">
                                     <div className="w-100 pos-rel">
-                                        {selectedSkin !== null &&
+                                        {selectedSkin &&
                                             <div className="flex aic mb-3">
                                                 <h5 className="heading heading--sm c-white mr-1">{t(`${deviceName}:${selectedSkin.name}`)}</h5>
                                                 <span className="mr-1">&bull;</span>
@@ -170,13 +173,18 @@ const Main = (props) => {
                                         </div>
                                     </div>
                                     <div className="Main__summary">
-                                        {selectedSkin !== null && <div className="Main__price">${selectedSkin.price}</div>}
+                                        {selectedSkin && <div className="Main__price">${selectedSkin.price}</div>}
                                         <button 
                                             className={`Main__btn ${inTheCart ? 'Main__btn--active' : ''}`} 
                                             disabled={selectedSkin ? false : true}
                                             onClick={() => selectedSkin && props.onAddToCart(selectedSkin)}>
-                                                {inTheCart ? t('translation:main.in the cart') : t('translation:main.to cart')}
-                                                <BiCartAlt className="icon ml-5" />
+                                                {inTheCart
+                                                    ? t('translation:main.in the cart')
+                                                    : <>
+                                                        {t('translation:main.to cart')}
+                                                        <BiCartAlt className="icon ml-5" />
+                                                    </>
+                                                }
                                         </button>
                                     </div>
                                 </div>
@@ -194,7 +202,8 @@ const Main = (props) => {
 
 const state = state => ({
     favorites: state.favorites,
-    cart: state.cart
+    cart: state.cart,
+    categories: state.categories
 });
 
 const dispatch = dispatch => ({

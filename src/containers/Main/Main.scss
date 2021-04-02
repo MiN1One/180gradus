@@ -254,7 +254,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        text-transform: capitalize;
+        text-transform: uppercase;
         font-weight: 300;
         color: $white;
         padding: 1.75rem;
@@ -270,13 +270,18 @@
             cursor: default;
             opacity: .65;
         }
-
-        &--active {
-            background: $primary;
-        }
-
+        
         &:hover,
         &:focus { transform: scale(1.025); }
+        
+        &--active {
+            background: $primary;
+            cursor: default;
+            opacity: .85;
+
+            &:hover,
+            &:focus { transform: none; }
+        }
     }
 
     &__btn-control {

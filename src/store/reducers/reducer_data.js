@@ -14,11 +14,10 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ON_ADD_TO_FAVORITES:
             let newList = [...state.favorites];
-            
-                const existing = state.favorites.length && state.favorites.find(el => el._id === action.skin._id);    
-                if (existing) newList = newList.filter(el => el !== existing);
-                else if (state.favorites.length < 7) newList.push(action.skin);
-                localStorage.setItem('favorites', JSON.stringify(newList));
+            const existing = state.favorites.length && state.favorites.find(el => el._id === action.skin._id);    
+            if (existing) newList = newList.filter(el => el !== existing);
+            else if (state.favorites.length < 10) newList.push(action.skin);
+            localStorage.setItem('favorites', JSON.stringify(newList));
             return { ...state, favorites: newList };
 
         case actionTypes.ON_ERROR: return { ...state, error: action.error };
@@ -31,13 +30,13 @@ const reducer = (state = initialState, action) => {
             return { ...state, cart: newArr };
 
         case actionTypes.ON_REMOVE_FROM_CART:
-            const freshArr = state.cart.filter(el => el !== action.skinId);
+            const freshArr = state.cart.filter(el => el._id !== action.skinId);
             return { ...state, cart: freshArr };
 
         case actionTypes.ON_SET_MEDIA: 
             return { 
                 ...state, 
-                media: { 
+                media: {
                     ...state.media,
                     [action.bp]: action.value
                 }

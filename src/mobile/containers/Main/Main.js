@@ -22,10 +22,13 @@ SwiperCore.use([Navigation, Scrollbar]);
 const Main = (props) => {
     const params = useParams();
     const history = useHistory();
+    const [swiper, setSwiper] = useState(null);
     const [selectedSkin, setSelectedSkin] = useState(null);
-    const [data, setData] = useState(null); 
+    const [data, setData] = useState(null);
     
     const { t } = useTranslation(['translation', data && data.device]);
+
+    useEffect(() => swiper && swiper.update());
 
     const mounted = useRef();
     useEffect(() => {
@@ -53,12 +56,17 @@ const Main = (props) => {
 
         skins = data.skins.map((el, i) => {
             el.device = deviceName;
+            const category = props.categories && props.categories.find(cat => cat._id === data.category);
+            el.category = category && category.name;
+            el.deviceId = data._id;
+            el.type = data.type;
+
             return (
                 <SwiperSlide 
                     key={i}
                     className={`m-main__sets-item ${(selectedSkin && selectedSkin._id === el._id) ? 'm-main__sets-item--active' : ''}`} 
                     onClick={() => setSelectedSkin(el)}>
-                        
+
                 </SwiperSlide>
             )
         });
@@ -69,7 +77,7 @@ const Main = (props) => {
             <div className="main-head">
                 <div className="container">
                     <div className="flex aic">
-                        <button className="btn btn__square mr-2" onClick={() => history.push(`/categories/${params.category}`)}>
+                        <button className="btn btn__square mr-2" onClick={() => history.push(`/categories/skins/${params.category}`)}>
                             <BiChevronLeft className="icon--lg icon--dark" />
                         </button>
                         <h2 className="heading heading--1 heading--black">
@@ -80,7 +88,7 @@ const Main = (props) => {
             </div>
             <div className="m-main__body">
                 <div className="m-main__top">
-                    <div className="container flex aic jcc fdc">
+                    <div className="container flex aic jcc fdc pos-rel">
                         <figure className="m-main__figure">
                             {selectedSkin
                                 ? <LazyLoadImage
@@ -94,7 +102,7 @@ const Main = (props) => {
                             }
                         </figure>
                         {selectedSkin && 
-                            <div className="flex fdc aic">
+                            <div className="flex fdc aic m-main__panel">
                                 <span className="m-main__title text text--mid mb-1">
                                     {t(`${deviceName}:${selectedSkin.name}`)}
                                 </span>
@@ -152,7 +160,8 @@ const Main = (props) => {
                                     500: { slidesPerView: 5 },
                                     600: { slidesPerView: 6 },
                                     700: { slidesPerView: 7 },
-                                }}>
+                                }}
+                                onInit={(sw) => setSwiper(sw)}>
                                     {skins}
                             </Swiper>
                         </div>
@@ -162,10 +171,18 @@ const Main = (props) => {
                     <div className="container">
                         <div className="flex jce">
                             <div className="flex">
-                                {selectedSkin && <span className="price-tag m-main__price mr-5">$5.99</span>}
-                                <button className="m-main__btn" disabled={selectedSkin ? false : true}>
-                                    {t('translation:main.to cart')}
-                                    <BiCart className="icon--mid ml-5" />
+                                {selectedSkin && <span className="price-tag m-main__price mr-5">${selectedSkin.price}</span>}
+                                <button 
+                                    className={`m-main__btn ${inTheCart ? 'm-main__btn--active' : ''}`} 
+                                    disabled={selectedSkin ? false : true}
+                                    onClick={() => props.onAddToCart(selectedSkin)}>
+                                        {!inTheCart
+                                            ? <>
+                                                {t('translation:main.to cart')}
+                                                <BiCart className="icon ml-5" />
+                                            </>
+                                            : <>{t('translation:main.in the cart')}</>
+                                        }
                                 </button>
                             </div>
                         </div>
@@ -178,7 +195,8 @@ const Main = (props) => {
 
 const state = (state) => ({
     favorites: state.favorites,
-    cart: state.cart
+    cart: state.cart,
+    categories: state.categories
 });
 
 const dispatch = dispatch => ({

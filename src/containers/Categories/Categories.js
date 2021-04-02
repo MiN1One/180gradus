@@ -1,62 +1,55 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiSearch, BiX } from 'react-icons/bi';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-import x50 from '../../assets/images/Vivo X50.png';
 import Card from '../../components/Card/Card';
 import axiosInstance from '../../axios';
 import './Categories.scss';
+import Error from '../../containers/Error/Error';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
-import Spinner from '../../UI/Spinner/Spinner';
 
 const Categories = ({ categories }) => {
-    const { t } = useTranslation();
-    const params = useParams();
 
-    const [searchInput, setSearchInput] = useState('');
-    const [searchResults, setSearchResults] = useState(null);
-    const [searchLoading, setSearchLoading] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState(null);
-
-    const category = params.category ? `/${params.category}` : '';
-    
     const mounted = useRef();
 
     useEffect(() => {
         mounted.current = true;
         return () => mounted.current = false;
     }, []);
+
+    const { t } = useTranslation();
+    const params = useParams();
+    const history = useHistory();
+    
+    const [searchInput, setSearchInput] = useState('');
+    const [searchResults, setSearchResults] = useState(null);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const [data, setData] = useState(null);
     
     useEffect(() => {
         if (mounted.current) {
-            setLoading(true);
 
             if (params.category) {
-                const categoryId = categories && categories.find(el => el.name === params.category)._id;
-                categoryId && axiosInstance(`/categories/${categoryId}?project=devices`)
+                const categoryId = categories && categories.find(el => el.name === params.category);
+                categoryId && axiosInstance(`/categories/${categoryId._id}?project=devices`)
                     .then((res) => {
-                        setLoading(false);
                         console.log(res);
                         setData(res.data.devices);
                     });
             } else {
                 axiosInstance('/skins')
                     .then((res) => {
-                        setLoading(false);
                         setData(res.data);
                     });
             }
         }
-    }, [params.category]);
+    }, [params.category, categories]);
 
     const onInputSearch = (search, e) => {
 
         if (e) {
             e.preventDefault();
-            setLoading(true);
         } else setSearchLoading(true);
 
         setSearchInput(search);
@@ -65,7 +58,6 @@ const Categories = ({ categories }) => {
             axiosInstance(`/skins?search=${search}`)
                 .then((res) => {
                     if (e) {
-                        setLoading(false);
                         setData(res.data);
                         setSearchResults(null);
                     } else setSearchResults(res.data);
@@ -74,36 +66,32 @@ const Categories = ({ categories }) => {
         }
     };
 
-    const skin = {
-        source: x50,
-        title: 'Vivo X50',
-        category: params.category,
-        popular: false,
-        premium: false,
-        favorite: false
-    };
-
-    if (loading) return <Spinner />;
-
-    const cards = (data && data.length) && data.map((el, i) => (
+    const cards = (data && data.length !== 0) && data.map((el, i) => (
         <Card data={el} key={i} />
     ));
 
     const categoryItems = (categories && !params.category) && categories.map((el, i) => (
         <Card data={el} key={i} />
     ));
+    
+    const searchItems = searchResults && searchResults.map((el, i) => {
+        const category = categories && categories.find(cat => cat._id === el.category).name;
 
-    const searchItems = searchResults && searchResults.map((el, i) => (
-        <Link to={`/skins${category}/${el._id}`} className="input__drop-item" key={i}>
-            <figure className="input__figure">
-                <img className="img" src={`http://localhost:3003/assets/images/${el.default}`} alt={el.device} />
-            </figure>
-            <div className="flex fdc">
-                <span className="text--sm c-black">{el.device}</span>
-                <span className="text--xs c-grey">{t(`nav.${el.type}`)}</span>
+        return (
+            <div className="input__drop-item" key={i} onMouseDown={() => history.push(`/categories/skins/${category}/${el._id}`)}>
+                <figure className="input__figure">
+                    <img className="img" src={`http://localhost:3003/assets/images/${el.default}`} alt={el.device} />
+                </figure>
+                <div className="flex fdc">
+                    <span className="text--sm c-black">{el.device}</span>
+                    <span className="text--xs c-grey">{t(`nav.${el.type}`)}</span>
+                </div>
             </div>
-        </Link>
-    ));
+        )
+    });
+
+    const catExists = (categories && params.category) && categories.findIndex((el) => el.name === params.category) !== -1;
+    if (!catExists && mounted.current && params.category) return <Error notFound />;
 
     return (
         <section className="Categories">
@@ -146,7 +134,7 @@ const Categories = ({ categories }) => {
                         <section className="Categories__group">
                             {categoryItems}
                         </section>
-                        }
+                    }
                     <div className="Categories__head" id="popular">
                         <h2 className="heading heading--main mr-1">{params.category ? t('nav.popular') : t('nav.all skins')}</h2>
                     </div>

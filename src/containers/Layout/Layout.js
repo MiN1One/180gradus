@@ -2,9 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Footer from "../../components/Footer/Footer";
+import asyncComponent from "../../hoc/asyncComponent";
 
 const AsyncNavigation = React.lazy(() => import('../../components/Navigation/Navigation'));
 const AsyncMobileNav = React.lazy(() => import('../../mobile/components/Navigation/Navigation'));
+
+// const AsyncNavigation = asyncComponent(() => import('../../components/Navigation/Navigation'));
+// const AsyncMobileNav = asyncComponent(() => import('../../mobile/components/Navigation/Navigation'));
 
 const Layout = ({ media, children }) => {
 

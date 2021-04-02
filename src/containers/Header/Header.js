@@ -9,8 +9,6 @@ import logo from '../../assets/logo.png';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 
-import s10 from '../../assets/images/Samsung+Galaxy+S10+5G+stock.png';
-
 const Header = () => {
     const { t } = useTranslation();
 
@@ -141,7 +139,7 @@ const Header = () => {
                                         <span className="Header__heading--sub">Best choice for you and your device</span>
                                     </h1>
                                     <div className="flex">
-                                        <Link to="/categories" className="Header__btn btn btn__primary mr-15">{t('main.customize')}</Link>
+                                        <Link to="/categories/skins" className="Header__btn btn btn__primary mr-15">{t('main.customize')}</Link>
                                         <Link to="/180degrees/about" href="/" className="Header__btn btn btn__secondary btn__secondary--fill">{t('nav.about')}</Link>
                                     </div>
                                 </div>
