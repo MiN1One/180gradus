@@ -9,11 +9,12 @@ const Card = ({ data }) => {
     const { t } = useTranslation();
     const categoriesList = useSelector(state => state.categories);
 
-    const category = data.category && categoriesList.find(el => el._id === data.category).name;
+    const category = data.category && categoriesList.find(el => el._id === data.category);
+    const categoryName = category && category.name;
 
     return (
         <Link 
-            to={`/categories/skins/${data.category ? `${category}/${data._id}` : data.name}`} 
+            to={`/categories/skins/${data.category ? `${categoryName}/${data._id}` : data.name}`} 
             className="Card"
             data-premium={data.exclusive || false}>
                 <div className="Card__head">

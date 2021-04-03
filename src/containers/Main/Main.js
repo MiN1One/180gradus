@@ -24,21 +24,46 @@ const Main = (props) => {
     const history = useHistory();
     
     const [data, setData] = useState(null);
+    const [swiper, setSwiper] = useState(null);
+    const [loadingImage, setLoadingImage] = useState(false);
     const [selectedSkin, setSelectedSkin] = useState(null);
     const mounted = useRef();
 
     const { t } = useTranslation(['translation', data && data.device]);
+
+    useEffect(() => swiper && swiper.update(), [data, swiper]);
 
     useEffect(() => {
         mounted.current = true;
         return () => mounted.current = false;
     }, []);
 
+    const image = selectedSkin && selectedSkin.image;
+    useEffect(() => {
+        if (selectedSkin) {
+            setLoadingImage(true);
+            const imagePreloader = new Image();
+      
+            imagePreloader.src = `http://localhost:3003/assets/images/${selectedSkin.image}`;
+
+            if (imagePreloader.complete) {
+                setLoadingImage(false);
+                imagePreloader.onload = null;
+            } else {
+                imagePreloader.onload = () => {
+                    setLoadingImage(false);
+                    imagePreloader.onload = null;
+                };
+            }
+        }
+    }, [image]);
+
     useEffect(() => {
         if (mounted.current) {
             axiosInstance(`/skins/${params.id}`)
                 .then((res) => {
                     setData(res.data);
+                    props.onSetData('data', res.data.device);
                     console.log(res.data.skins);
                 });
         }
@@ -48,7 +73,6 @@ const Main = (props) => {
     const inTheCart = selectedSkin && props.cart.findIndex(el => el._id === selectedSkin._id) !== -1;
     
     let skinsSlide = null, deviceName = null;
-    // console.log(data);
     if (data) {
         deviceName = data.device;
 
@@ -69,12 +93,23 @@ const Main = (props) => {
 
                 return (
                     <div 
-                        key={index}
-                        className={`Main__sets-item ${(selectedSkin && selectedSkin.name) === skin.name ? 'Main__sets-item--active' : ''}`} 
-                        onClick={() => setSelectedSkin(skin)}>
-                            <div className="Main__tooltip">
-                                {t(`${deviceName}:${skin.name}`)}
-                            </div>
+                        className="Main__item-wrapper" 
+                        onClick={() => setSelectedSkin(skin)}
+                        tabIndex="0">
+                        <div 
+                            key={index}
+                            className={`Main__sets-item ${(selectedSkin && selectedSkin.name) === skin.name ? 'Main__sets-item--active' : ''}`}>
+                                <LazyLoadImage 
+                                    className="img" 
+                                    alt={skin.name} 
+                                    src={`localhost:3003/asstes/images/placeholders/${skin.placeholder}`} 
+                                    width="100%"
+                                    height="100%"
+                                    effect="opacity" />
+                        </div>
+                        <div className="Main__tooltip">
+                            {t(`${deviceName}:${skin.name}`)}
+                        </div>
                     </div>
                 )
             });
@@ -109,15 +144,22 @@ const Main = (props) => {
                         <div className="Main__content-wrapper">
                             <div className="Main__right">
                                 <figure className="Main__figure">
-                                    {selectedSkin 
-                                        ? <LazyLoadImage 
-                                            src={`http://localhost:3003/assets/images/${selectedSkin.image}`}
-                                            alt={selectedSkin.name}
-                                            className="Main__img"
-                                            width="100%"
-                                            height="100%"
-                                            placeholder={<SubSpinner />} />
-                                        : <img className="Main__img" src={data && `http://localhost:3003/assets/images/${data.default}`} alt={data && data.device} />
+                                    {loadingImage
+                                        ? <SubSpinner />
+                                        : (
+                                            <>
+                                                {selectedSkin 
+                                                    ? <LazyLoadImage 
+                                                        src={`http://localhost:3003/assets/images/${selectedSkin.image}`}
+                                                        alt={selectedSkin.name}
+                                                        className="Main__img"
+                                                        width="100%"
+                                                        height="100%"
+                                                        placeholder={<SubSpinner />} />
+                                                    : <img className="Main__img" src={data && `http://localhost:3003/assets/images/${data.default}`} alt={data && data.device} />
+                                                }
+                                            </>
+                                        )
                                     }
                                 </figure>
                                 {selectedSkin && 
@@ -167,13 +209,14 @@ const Main = (props) => {
                                                     disabledClass: 'btn__control--disabled'
                                                 }}
                                                 spaceBetween={30}
-                                                updateOnWindowResize={true}>
+                                                updateOnWindowResize={true}
+                                                onInit={sw => setSwiper(sw)}>
                                                     {skinsSlide}
                                             </Swiper>
                                         </div>
                                     </div>
                                     <div className="Main__summary">
-                                        {selectedSkin && <div className="Main__price">${selectedSkin.price}</div>}
+                                        {selectedSkin && <div className="Main__price">${parseFloat(selectedSkin.price).toFixed(2)}</div>}
                                         <button 
                                             className={`Main__btn ${inTheCart ? 'Main__btn--active' : ''}`} 
                                             disabled={selectedSkin ? false : true}
@@ -208,7 +251,8 @@ const state = state => ({
 
 const dispatch = dispatch => ({
     onAddToCart: (id) => dispatch(actions.addToCart(id)),
-    onAddToFav: (id) => dispatch(actions.addToFavorites(id))
+    onAddToFav: (id) => dispatch(actions.addToFavorites(id)),
+    onSetData: (name, val) => dispatch(actions.setData(name, val))
 });
 
 export default connect(state, dispatch)(Main);

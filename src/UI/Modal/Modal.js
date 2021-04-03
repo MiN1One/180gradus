@@ -133,7 +133,7 @@ export const ModalCartItem = ({ data, edit, remove }) => {
                 ? <button className="btn btn__pill btn__pill--red" onClick={remove}>
                     {t('main.remove')}
                 </button>
-                : <span className="price-tag">${data.price}</span>
+                : <span className="price-tag">${parseFloat(data.price).toFixed(2)}</span>
             }
         </div>
     )

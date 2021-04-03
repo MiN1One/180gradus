@@ -50,6 +50,7 @@
         width: 100%;
         background: $grey-light;
         border-radius: .75rem;
+        overflow: hidden;
 
         &--active { background: rgba($grey-dark, .75); }
     }

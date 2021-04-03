@@ -7,7 +7,9 @@ const initialState = {
         mid: false,
         sm: false
     },
-    categories: null
+    categories: null,
+    data: null,
+    popular: null
 };
 
 const reducer = (state = initialState, action) => {

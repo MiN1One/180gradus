@@ -21,7 +21,19 @@
         "no results": "Nothing found",
         "in the cart": "In the cart",
         "close": "Close",
-        "basic": "Basic"
+        "basic": "Basic",
+        "nothing here": "Nothing here",
+        "not found": "Reqested page is not found",
+        "error": "Error 404",
+        "go back": "Go back",
+        "wrong address": "Make sure you have right address",
+        "error reason": "This might be due to poor internet connection or server error.",
+        "success": "Success",
+        "success text": { 
+            "p1": "Thank you for choosing us. Your order has been sent for processing and will be delivered  within 2 hours You can read more about delivery proccess ",
+            "p2": "here."
+        },
+        "telegram text": "You need to go to telegram to complete your order. Send us delivery address."
     },
     "nav": {
         "set": "Set",

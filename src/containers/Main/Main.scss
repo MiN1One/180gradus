@@ -169,11 +169,14 @@
     }
 
     &__sets-item {
+        height: 100%;
+        width: 100%;
         border-radius: .55rem;
         background: $grey-light;
         box-shadow: 0 0 .75rem rgba($pitch, .9);
         cursor: pointer;
         position: relative;
+        overflow: hidden;
 
         &--active {
             background: rgba($white, .3);
@@ -200,20 +203,34 @@
         transform-origin: center;
         padding: .75rem 1rem;
         opacity: 0;
+        visibility: hidden;
         transition: opacity .15s ease;
+
+        &:hover {
+            opacity: 1;
+            visibility: visible;
+        }
     }
     
-    &__sets-item:hover &__tooltip { opacity: 1; }
+    &__sets-item:hover + &__tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &__item-wrapper {
+        position: relative;
+        cursor: pointer;
+    }
     
-    &__sets-item:nth-child(3n+1) &__tooltip,
-    &__sets-item:first-child &__tooltip {
+    &__item-wrapper:nth-child(3n+1) + &__tooltip,
+    &__item-wrapper:first-child + &__tooltip {
         left: 0;
         transform: translateY(-50%);
         border-radius: 0 .55rem .55rem 0;
         transform-origin: left;
     }
     
-    &__sets-item:nth-child(3n) &__tooltip {
+    &__item-wrapper:nth-child(3n) + &__tooltip {
         left: initial;
         right: 0;
         transform: translateY(-50%);
@@ -221,7 +238,7 @@
         transform-origin: right;
     }
 
-    &__sets-item--active &__tooltip {
+    &__sets-item--active + &__tooltip {
         opacity: 1;
         visibility: visible;
     }

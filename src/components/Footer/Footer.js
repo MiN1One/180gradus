@@ -1,19 +1,18 @@
 import React from 'react';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { FaInstagram, FaTelegramPlane, FaFacebookF, FaYoutube } from 'react-icons/fa';
-import { BiChevronRight } from 'react-icons/bi';
 import { BiHome, BiGlobe } from 'react-icons/bi';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import './Footer.scss';
 
-import sprite from '../../assets/icons/sprite.svg';
-import social from '../../assets/icons/social.svg';
 
-const Footer = (props) => {
+const Footer = () => {
     const { t, i18n } = useTranslation();
-    const location = useLocation();
+    const { categories, popular } = useSelector(state => state);
+    const device = useSelector(state => state.data);
     const params = useParams();
     const year = new Date().getFullYear();
 
@@ -36,6 +35,21 @@ const Footer = (props) => {
         ));
     }
 
+    const categoryType = categories && categories.find(el => el.name === params.category);
+    const popularDevices = popular && popular.map((el, i) => {
+        const category = categories && categories.find(cat => cat._id === el.category);
+        return (
+            <li className="Footer__item" key={i}>
+                <NavLink 
+                    className="btn btn__pill btn__pill--yellow Footer__tag" 
+                    activeClassName="Footer__tag--active" 
+                    to={`/categories/${el.type}/${category && category.name}/${el._id}`}>
+                        {el.device}
+                </NavLink>
+            </li>
+        )
+    });
+
     return (
         <footer className="Footer">
             <div className="Footer__head">
@@ -53,7 +67,7 @@ const Footer = (props) => {
                                         ? <span className="Footer__bread-item Footer__bread-item--active">
                                             {t(`nav.${params.category}`)}
                                         </span>
-                                        : <Link to={`/categories/${params.category}`} className="Footer__bread-item text--wrap">
+                                        : <Link to={`/categories/${categoryType && categoryType.type}/${params.category}`} className="Footer__bread-item text--wrap">
                                             {t(`nav.${params.category}`)}
                                         </Link>
                                     }
@@ -63,7 +77,7 @@ const Footer = (props) => {
                                 <>
                                     <span className="text--main mr-1 c-grey">&bull;</span>
                                     <span className="Footer__bread-item Footer__bread-item--active">
-                                        {t(`${params.category}.${params.id}`)}
+                                        {device}
                                     </span>
                                 </>
                             }
@@ -86,18 +100,18 @@ const Footer = (props) => {
                         <div className="flex aic mb-15">
                             <span className="text text--mid text--cap flex mr-1 tc">{t('main.find us')}:</span>
                             <div className="flex">
-                                <Link to="/" className="btn btn__ghost mr-5">
+                                <a href="/" className="btn btn__ghost mr-5">
                                     <FaInstagram className="icon--mid Footer__i" />
-                                </Link>
-                                <Link to="/" className="btn btn__ghost mr-5">
+                                </a>
+                                <a href="/" className="btn btn__ghost mr-5">
                                     <FaTelegramPlane className="icon--mid Footer__i" />
-                                </Link>
-                                <Link to="/" className="btn btn__ghost mr-5">
+                                </a>
+                                <a href="/" className="btn btn__ghost mr-5">
                                     <FaFacebookF className="icon--mid Footer__i" />
-                                </Link>
-                                <Link to="/" className="btn btn__ghost mr-5">
+                                </a>
+                                <a href="/" className="btn btn__ghost mr-5">
                                     <FaYoutube className="icon--mid Footer__i" />
-                                </Link>
+                                </a>
                             </div>
                         </div>
                         <Link to="/180degrees/contact" className="mb-15 btn btn__ghost btn__ghost--active">
@@ -118,36 +132,7 @@ const Footer = (props) => {
                             <div className="flex aic fdc mb-3">
                                 <span className="text text--mid text--cap">{t('nav.popular')}:</span>
                                 <ul className="flex mt-2 fwrap fwrap--sm">
-                                    <li className="Footer__item">
-                                        <NavLink className="btn btn__pill btn__pill--yellow Footer__tag" activeClassName="Footer__tag--active" to="/categories/phones/samsungs21">
-                                            Samsung s21
-                                        </NavLink>
-                                    </li>
-                                    <li className="Footer__item">
-                                        <NavLink className="btn btn__pill btn__pill--yellow Footer__tag" activeClassName="Footer__tag--active" to="/categories/phones/apple12">
-                                            Iphone 12
-                                        </NavLink>
-                                    </li>
-                                    <li className="Footer__item">
-                                        <NavLink className="btn btn__pill btn__pill--yellow Footer__tag" activeClassName="Footer__tag--active" to="/categories/phones/Vivo-x50">
-                                            Vivo X50
-                                        </NavLink>
-                                    </li>
-                                    <li className="Footer__item">
-                                        <NavLink className="btn btn__pill btn__pill--yellow Footer__tag" activeClassName="Footer__tag--active" to="/categories/phones/ps5">
-                                            PS 5
-                                        </NavLink>
-                                    </li>
-                                    <li className="Footer__item">
-                                        <NavLink className="btn btn__pill btn__pill--yellow Footer__tag" activeClassName="Footer__tag--active" to="/categories/phones/xiaomi10">
-                                            Xiaomi Mi10
-                                        </NavLink>
-                                    </li>
-                                    <li className="Footer__item">
-                                        <NavLink className="btn btn__pill btn__pill--yellow Footer__tag" activeClassName="Footer__tag--active" to="/categories/phones/huaweip40">
-                                            Huawei P40
-                                        </NavLink>
-                                    </li>
+                                    {popularDevices}
                                 </ul>
                             </div>
                             <p className="text text--main c-grey-l Footer__text">

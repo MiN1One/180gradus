@@ -106,10 +106,11 @@ function App({ onSetMedia, media, onSetData, categories }) {
     }, [i18n.language]);
 
     useEffect(() => {
-        axiosInstance('/categories')
-            .then((data) => {
-                console.log(data);
-                onSetData('categories', data.data);
+        Promise.all([axiosInstance('/categories'), axiosInstance('/skins/popular')])
+            .then(([categories, popular]) => {
+                console.log(categories, popular);
+                onSetData('categories', categories.data);
+                onSetData('popular', popular.data);
             });
     }, [onSetData]);
 

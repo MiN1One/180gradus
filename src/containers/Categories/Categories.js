@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiSearch, BiX } from 'react-icons/bi';
 import { useHistory, useParams } from 'react-router-dom';
@@ -26,31 +26,28 @@ const Categories = ({ categories }) => {
     const [searchResults, setSearchResults] = useState(null);
     const [searchLoading, setSearchLoading] = useState(false);
     const [data, setData] = useState(null);
+
+    const fetchData = useCallback(() => {
+        if (params.category) {
+            const categoryId = categories && categories.find(el => el.name === params.category);
+            categoryId && axiosInstance(`/categories/${categoryId._id}?project=devices`)
+                .then((res) => {
+                    console.log(res);
+                    setData(res.data.devices);
+                });
+        } else {
+            axiosInstance('/skins').then((res) => setData(res.data));
+        }
+    }, [categories, params.category]);
     
     useEffect(() => {
-        if (mounted.current) {
-
-            if (params.category) {
-                const categoryId = categories && categories.find(el => el.name === params.category);
-                categoryId && axiosInstance(`/categories/${categoryId._id}?project=devices`)
-                    .then((res) => {
-                        console.log(res);
-                        setData(res.data.devices);
-                    });
-            } else {
-                axiosInstance('/skins')
-                    .then((res) => {
-                        setData(res.data);
-                    });
-            }
-        }
-    }, [params.category, categories]);
+        if (mounted.current) fetchData();
+    }, [params.category, categories, fetchData]);
 
     const onInputSearch = (search, e) => {
 
-        if (e) {
-            e.preventDefault();
-        } else setSearchLoading(true);
+        if (e) e.preventDefault();
+        setSearchLoading(true);
 
         setSearchInput(search);
 
@@ -75,10 +72,10 @@ const Categories = ({ categories }) => {
     ));
     
     const searchItems = searchResults && searchResults.map((el, i) => {
-        const category = categories && categories.find(cat => cat._id === el.category).name;
+        const category = categories && categories.find(cat => cat._id === el.category);
 
         return (
-            <div className="input__drop-item" key={i} onMouseDown={() => history.push(`/categories/skins/${category}/${el._id}`)}>
+            <div className="input__drop-item" key={i} onMouseDown={() => history.push(`/categories/skins/${category && category.name}/${el._id}`)}>
                 <figure className="input__figure">
                     <img className="img" src={`http://localhost:3003/assets/images/${el.default}`} alt={el.device} />
                 </figure>
@@ -123,6 +120,7 @@ const Categories = ({ categories }) => {
                             type="button"
                             onClick={() => {
                                 setSearchInput('');
+                                fetchData();
                                 setSearchResults(null);
                             }}>
                             <BiX className="icon icon--dark" />

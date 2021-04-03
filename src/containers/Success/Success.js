@@ -20,13 +20,10 @@ const Success = ({ geoMode }) => {
                         </button>
                         {geoMode
                             ? <p className="text--mid Success__text">
-                                You need to go to telegram to complete your order.<br/>
-                                Send us delivery address.
+                                {t('main.telegram text')}
                             </p>
                             : <p className="text text--mid Success__text">
-                                Thank you for choosing us.<br/>
-                                Your order has been sent for processing and will be delivered within 2 hours<br/>
-                                You can read more about delivery proccess <Link to="/180degrees/delivery" className="link link--outline">here.</Link>
+                                {t('main.success text.p1')}<Link to="/180degrees/delivery" className="link link--outline">{t('main.success text.p2')}</Link>
                             </p>
                         }
                     </div>

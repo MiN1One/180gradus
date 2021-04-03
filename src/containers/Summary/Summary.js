@@ -91,8 +91,13 @@ const Summary = ({ onRemoveFromCart, cart }) => {
         setError(null);
 
         const items = [...cart];
-        const fieldsToRemove = ['_id', 'image', 'id'];
+        const fieldsToRemove = ['_id', 'image', 'id', 'deviceId'];
         fieldsToRemove.forEach(field => items.forEach(el => delete el[field]));
+
+        const devices = cart.map(el => el.deviceId);
+        const ids = devices.map((el, i) => {
+            return el !== devices[i+1] && el;
+        }).filter(el => el && el);
         
         const body = {
             name: fnameRef.current.value,
@@ -100,6 +105,7 @@ const Summary = ({ onRemoveFromCart, cart }) => {
             phone_number: phoneRef.current.value,
             email: emailRef.current.value !== '' ? emailRef.current.value : '',
             address: (!geoMode && addressInputRef.current.value) ? addressInputRef.current.value : '',
+            device_ids: ids,
             order: {
                 items
             }
@@ -144,7 +150,7 @@ const Summary = ({ onRemoveFromCart, cart }) => {
                     ? <button onClick={() => onRemoveCartItem(el._id)} className="price-tag mr-5 Summary__card-btn">
                         <BiX className="icon" /> 
                     </button>
-                    : <span className="price-tag">${el.price}</span>
+                    : <span className="price-tag">${parseFloat(el.price).toFixed(2)}</span>
                 }
         </div>
     ));

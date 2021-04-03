@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Scrollbar } from 'swiper';
+import SwiperCore, { Navigation } from 'swiper';
 import { BiCart, BiChevronLeft, BiChevronRight, BiX } from 'react-icons/bi';
 import { connect } from 'react-redux';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
@@ -17,12 +17,13 @@ import axiosInstance from '../../../axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import SubSpinner from '../../../UI/SubSpinner/SubSpinner';
 
-SwiperCore.use([Navigation, Scrollbar]);
+SwiperCore.use([Navigation]);
 
 const Main = (props) => {
     const params = useParams();
     const history = useHistory();
     const [swiper, setSwiper] = useState(null);
+    const [loadingImage, setLoadingImage] = useState(false);
     const [selectedSkin, setSelectedSkin] = useState(null);
     const [data, setData] = useState(null);
     
@@ -41,10 +42,31 @@ const Main = (props) => {
             axiosInstance(`/skins/${params.id}`)
                 .then((res) => {
                     setData(res.data);
+                    props.onSetData('data', res.data.device);
                     console.log(res);
                 });
         }
     }, [params.category, params.id]);
+
+    const image = selectedSkin && selectedSkin.image;
+    useEffect(() => {
+        if (selectedSkin) {
+            setLoadingImage(true);
+            const imagePreloader = new Image();
+      
+            imagePreloader.src = `http://localhost:3003/assets/images/${selectedSkin.image}`;
+
+            if (imagePreloader.complete) {
+                setLoadingImage(false);
+                imagePreloader.onload = null;
+            } else {
+                imagePreloader.onload = () => {
+                    setLoadingImage(false);
+                    imagePreloader.onload = null;
+                };
+            }
+        }
+    }, [image]);
 
     const isFavorite = selectedSkin && props.favorites.findIndex(el => el === selectedSkin) !== -1;
     const inTheCart = selectedSkin && props.cart.findIndex(el => el._id === selectedSkin._id);
@@ -66,7 +88,13 @@ const Main = (props) => {
                     key={i}
                     className={`m-main__sets-item ${(selectedSkin && selectedSkin._id === el._id) ? 'm-main__sets-item--active' : ''}`} 
                     onClick={() => setSelectedSkin(el)}>
-
+                        <LazyLoadImage 
+                            className="img" 
+                            alt={el.name} 
+                            src={`localhost:3003/asstes/images/placeholders/${el.placeholder}`} 
+                            width="100%" 
+                            height="100%"
+                            effect="opacity" />
                 </SwiperSlide>
             )
         });
@@ -90,15 +118,22 @@ const Main = (props) => {
                 <div className="m-main__top">
                     <div className="container flex aic jcc fdc pos-rel">
                         <figure className="m-main__figure">
-                            {selectedSkin
-                                ? <LazyLoadImage
-                                    src={`http://localhost:3003/assets/images/${selectedSkin.image}`}
-                                    alt={selectedSkin.name}
-                                    className="img"
-                                    width="100%"
-                                    placeholder={<SubSpinner />}
-                                    height="100%" />
-                                : <img className="img" alt={deviceName} src={`http://localhost:3003/assets/images/${data && data.default}`} />
+                            {loadingImage
+                                ? <SubSpinner />
+                                : (
+                                    <>
+                                        {selectedSkin 
+                                            ? <LazyLoadImage 
+                                                src={`http://localhost:3003/assets/images/${selectedSkin.image}`}
+                                                alt={selectedSkin.name}
+                                                className="Main__img"
+                                                width="100%"
+                                                height="100%"
+                                                placeholder={<SubSpinner />} />
+                                            : <img className="Main__img" src={data && `http://localhost:3003/assets/images/${data.default}`} alt={data && data.device} />
+                                        }
+                                    </>
+                                )
                             }
                         </figure>
                         {selectedSkin && 
@@ -201,7 +236,8 @@ const state = (state) => ({
 
 const dispatch = dispatch => ({
     onAddToFav: (id) => dispatch(actions.addToFavorites(id)),
-    onAddToCart: (id) => dispatch(actions.addToCart(id))
+    onAddToCart: (id) => dispatch(actions.addToCart(id)),
+    onSetData: (name, val) => dispatch(actions.setData(name, val))
 });
 
 export default connect(state, dispatch)(React.memo(Main));
