@@ -113,3 +113,44 @@
         height: 5.5rem;
     }
 }
+
+.notifier {
+    position: fixed;
+    top: 8.5rem;
+    left: 0;
+    z-index: 110;
+    width: 100%;
+    
+    &__wrapper {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        @include respond(xs) { justify-content: center; }
+    }
+    
+    &__content {
+        background: $bg;
+        padding: 1.5rem 2.5rem;
+        width: 40rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: .55rem;
+        box-shadow: 0 0 .5rem rgba($pitch, .7);
+        animation: slideLeft .3s ease !important;
+        animation-fill-mode: backwards;
+    }
+    
+    &__message {
+        color: $light;
+        font-size: 1.4rem;
+        font-weight: 300;
+        width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    @include respond(sm) { top: 8rem; }
+}

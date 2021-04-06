@@ -49,7 +49,7 @@ const Header = () => {
                                     </div>
                                     <div className="flex">
                                         <Link to="/categories/skins" className="btn btn__primary mr-15">
-                                            {t('main.customize')}
+                                            {t('main.explore')}
                                         </Link>
                                         <Link to="/180degrees/about" className="btn btn__secondary">
                                             {t('nav.about')}

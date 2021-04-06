@@ -135,11 +135,11 @@ const Header = () => {
                                 </div>
                                 <div className="Header__textbox">
                                     <h1 className="Header__heading fdc flex">
-                                        Recreate your phone
-                                        <span className="Header__heading--sub">Best choice for you and your device</span>
+                                        {t('main.hero text.p1')}
+                                        <span className="Header__heading--sub">{t('main.hero text.p2')}</span>
                                     </h1>
                                     <div className="flex">
-                                        <Link to="/categories/skins" className="Header__btn btn btn__primary mr-15">{t('main.customize')}</Link>
+                                        <Link to="/categories/skins" className="Header__btn btn btn__primary mr-15">{t('main.explore')}</Link>
                                         <Link to="/180degrees/about" href="/" className="Header__btn btn btn__secondary btn__secondary--fill">{t('nav.about')}</Link>
                                     </div>
                                 </div>

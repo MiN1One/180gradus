@@ -4,7 +4,8 @@ const actionTypes = {
     ON_SET_MEDIA: 'ON_SET_MEDIA',
     ON_REMOVE_FROM_CART: 'ON_REMOVE_FROM_CART',
     ON_ADD_TO_CART: 'ON_ADD_TO_CART',
-    ON_SET_DATA: 'ON_SET_DATA'
+    ON_SET_DATA: 'ON_SET_DATA',
+    // ON_CREATE_NOTIFICATION: 'ON_CREATE_NOTIFICATION'
 };
 
 export default actionTypes;

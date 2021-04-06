@@ -9,15 +9,6 @@ import * as actions from '../store/actions';
 import Spinner from '../UI/Spinner/Spinner';
 import Er from './Error/Error';
 import Layout from './Layout/Layout';
-// import asyncComponent from '../hoc/asyncComponent';
-
-// const AsyncMain = asyncComponent(() => import('./Main/Main'));
-// const AsyncCategories = asyncComponent(() => import('./Categories/Categories'));
-// const AsyncInfo = asyncComponent(() => import('./Info/Info'));
-// const AsyncSummary = asyncComponent(() => import('./Summary/Summary'));
-// const AsyncHeader = asyncComponent(() => import('./Header/Header'));
-// const AsyncHeaderMobile = asyncComponent(() => import('../mobile/containers/Header/Header'));
-// const AsyncMainMobile = asyncComponent(() => import('../mobile/containers/Main/Main'));
 
 const AsyncMain = React.lazy(() => import('./Main/Main'));
 const AsyncCategories = React.lazy(() => import('./Categories/Categories'));
@@ -26,12 +17,14 @@ const AsyncSummary = React.lazy(() => import('./Summary/Summary'));
 const AsyncHeader = React.lazy(() => import('./Header/Header'));
 const AsyncHeaderMobile = React.lazy(() => import('../mobile/containers/Header/Header'));
 const AsyncMainMobile = React.lazy(() => import('../mobile/containers/Main/Main'));
+const AsyncAdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'));
 
 function App({ onSetMedia, media, onSetData, categories }) {
     const { i18n } = useTranslation();
-    const [mounted, setMounted] = useState(false);
     const [error, setError] = useState(null);
     const location = useLocation();
+    
+    const [mounted, setMounted] = useState(false);
 
     const mediaMid = window.matchMedia('(max-width: 59.375em)');
     const mediaSm = window.matchMedia('(max-width: 48em)');
@@ -65,9 +58,9 @@ function App({ onSetMedia, media, onSetData, categories }) {
     
         const responseInterceptor = axiosInstance.interceptors.response.use(
             (res) => {
-                const { data } = res.data;
-                console.log(data);
-                return data;
+                // const { data } = res.data;
+                console.log(res);
+                return res;
             },
             (er) => {
                 console.log('res error' + er);
@@ -108,9 +101,9 @@ function App({ onSetMedia, media, onSetData, categories }) {
     useEffect(() => {
         Promise.all([axiosInstance('/categories'), axiosInstance('/skins/popular')])
             .then(([categories, popular]) => {
-                console.log(categories, popular);
-                onSetData('categories', categories.data);
-                onSetData('popular', popular.data);
+                console.log(categories.data.data.data, popular);
+                onSetData('categories', categories.data.data.data);
+                onSetData('popular', popular.data.data.data);
             });
     }, [onSetData]);
 
@@ -147,6 +140,7 @@ function App({ onSetMedia, media, onSetData, categories }) {
                 {error
                     ? <Er er={error} clean={() => setError(null)} />
                     : <Switch>
+                        <Route path="/admin"><AsyncAdminPanel /></Route>
                         <Route path="/categories/:type" exact>{categoriesView}</Route>
                         <Route path="/categories/:type/:category" exact>{categoriesView}</Route>
                         <Route path="/categories/:type/:category/:id" exact>{main}</Route>

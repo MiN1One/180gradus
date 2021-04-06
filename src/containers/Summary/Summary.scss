@@ -2,14 +2,13 @@
 
 .Summary {
     @include moveDown;
+
     display: grid;
     grid-template-columns: 35rem 1fr;
     grid-template-rows: max-content;
 
-    @include respond(xs) {
-        grid-template-columns: 100vw;
-    }
-
+    @include respond(xs) { grid-template-columns: 100vw; }
+    
     &__left {
         position: relative;
         z-index: 2;

@@ -12,7 +12,6 @@ import SubSpinner from '../../UI/SubSpinner/SubSpinner';
 const Categories = ({ categories }) => {
 
     const mounted = useRef();
-
     useEffect(() => {
         mounted.current = true;
         return () => mounted.current = false;
@@ -28,21 +27,26 @@ const Categories = ({ categories }) => {
     const [data, setData] = useState(null);
 
     const fetchData = useCallback(() => {
-        if (params.category) {
-            const categoryId = categories && categories.find(el => el.name === params.category);
-            categoryId && axiosInstance(`/categories/${categoryId._id}?project=devices`)
-                .then((res) => {
-                    console.log(res);
-                    setData(res.data.devices);
-                });
-        } else {
-            axiosInstance('/skins').then((res) => setData(res.data));
+        if (mounted.current) {
+            if (params.category) {
+                const categoryId = categories && categories.find(el => el.name === params.category);
+                categoryId && axiosInstance(`/categories/${categoryId._id}?project=devices`)
+                    .then(({ data }) => setData(data.data.data.devices));
+            } else axiosInstance('/skins').then(({ data }) => setData(data.data.data));
         }
     }, [categories, params.category]);
     
     useEffect(() => {
-        if (mounted.current) fetchData();
+        fetchData();
     }, [params.category, categories, fetchData]);
+
+    const handleScroll = (e) => {
+        console.log('dfv')
+        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+        if (bottom) {
+            alert('Hehe boay')
+        }
+    };
 
     const onInputSearch = (search, e) => {
 
@@ -53,17 +57,17 @@ const Categories = ({ categories }) => {
 
         if (search !== '' && mounted.current) {
             axiosInstance(`/skins?search=${search}`)
-                .then((res) => {
+                .then(({ data }) => {
                     if (e) {
-                        setData(res.data);
+                        setData(data.data.data);
                         setSearchResults(null);
-                    } else setSearchResults(res.data);
+                    } else setSearchResults(data.data.data);
                     setSearchLoading(false);
                 });
         }
     };
 
-    const cards = (data && data.length !== 0) && data.map((el, i) => (
+    const cards = (data && data.length > 0) && data.map((el, i) => (
         <Card data={el} key={i} />
     ));
 
@@ -77,7 +81,7 @@ const Categories = ({ categories }) => {
         return (
             <div className="input__drop-item" key={i} onMouseDown={() => history.push(`/categories/skins/${category && category.name}/${el._id}`)}>
                 <figure className="input__figure">
-                    <img className="img" src={`http://localhost:3003/assets/images/${el.default}`} alt={el.device} />
+                    <img className="img" src={`/images/${el.default}`} alt={el.device} />
                 </figure>
                 <div className="flex fdc">
                     <span className="text--sm c-black">{el.device}</span>
@@ -91,11 +95,14 @@ const Categories = ({ categories }) => {
     if (!catExists && mounted.current && params.category) return <Error notFound />;
 
     return (
-        <section className="Categories">
+        <section className="Categories" onScroll={handleScroll}>
             <div className="container">
                 <div className="Categories__head Categories__head--main">
                     <h1 className="heading heading--1 Categories__heading--main">
-                        {params.category ? t(`nav.${params.category}`) : t('nav.categories')}
+                        {params.category 
+                            ? ((data && data.length > 0) && t(`nav.${params.category}`) )
+                            : t('nav.categories')
+                        }
                     </h1>
                     <form className="Categories__form" onSubmit={(e) => onInputSearch(searchInput, e)}>
                         <input 
@@ -111,7 +118,7 @@ const Categories = ({ categories }) => {
                             <div className="input__dropdown">
                                 {searchLoading 
                                     ? <SubSpinner className="loading--sm" />
-                                    : <>{(searchItems && searchItems.length) ? searchItems : t('main.no results')}</>
+                                    : (searchItems && searchItems.length) ? searchItems : t('main.no results')
                                 }
                             </div>
                         }
@@ -133,12 +140,27 @@ const Categories = ({ categories }) => {
                             {categoryItems}
                         </section>
                     }
-                    <div className="Categories__head" id="popular">
-                        <h2 className="heading heading--main mr-1">{params.category ? t('nav.popular') : t('nav.all skins')}</h2>
+                    <div className="Categories__head">
+                        <h2 className="heading heading--main mr-1">
+                            {params.category 
+                                ? ((data && data.length > 0) && t('nav.popular'))
+                                : t(`nav.all ${params.type}`)
+                            }
+                        </h2>
                     </div>
-                    <section className="Categories__group">
-                        {cards}
-                    </section>
+                    {data && data.length > 0
+                        ? <section className="Categories__group pos-rel">
+                            {cards}
+                        </section>
+                        : <div className="Categories__empty">
+                            <h1 className="Categories__heading--grace">
+                                {t(`nav.${params.category}`)}
+                            </h1>
+                            <h5 className="Categories__heading--sub">
+                                {t('main.coming soon')}
+                            </h5>
+                        </div>
+                    }
                 </div>
                 <div className="Categories__footer">
                     

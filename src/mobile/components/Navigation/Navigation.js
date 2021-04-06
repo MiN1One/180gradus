@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineStar } from 'react-icons/ai';
 import { BiCart, BiMenuAltLeft, BiMenuAltRight } from 'react-icons/bi';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import Cart from '../../../components/Cart/Cart';
 import Favorites from '../../../components/Favorites/Favorites';
 import Backdrop from '../../../UI/Backdrop/Backdrop';
 import Logo from '../../../UI/Logo/Logo';
+import Notifier from '../../../UI/Notifier/Notifier';
 import './Navigation.scss';
 
 const Navigation = () => {
@@ -57,6 +58,7 @@ const Navigation = () => {
 
     return (
         <>  
+            <Notifier />
             {favView && <Favorites t={t} close={() => setFavView(false)} />}
             {cartView && <Cart t={t} close={() => setCartView(false)} />}
             {menu &&

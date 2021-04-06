@@ -20,7 +20,7 @@ const Card = ({ data }) => {
                 <div className="Card__head">
                     <figure className="Card__figure">
                         <LazyLoadImage
-                            src={`http://localhost:3003/assets/images/${data.image || data.default}`}
+                            src={`/images/${data.image || data.default}`}
                             alt={data.name || data.device}
                             width="100%"
                             height="100%"

@@ -3,7 +3,7 @@
 .Categories {
     @include moveDown;
     @include gradienty;
-    padding-top: 8.5rem;
+    padding-top: 7rem;
     padding-bottom: 11.5rem;
 
     @include respond(mid) {
@@ -14,26 +14,51 @@
     &__head {
         display: flex;
         align-items: flex-end;
-        margin-bottom: 3.5rem;
+        margin-bottom: 2.5rem;
         position: relative;
         z-index: 2;
         
         &--main {
             justify-content: space-between;
-            margin-bottom: 4rem;
-            
+            margin-bottom: 3rem;
+
             @include respond(ss) {
                 margin-bottom: 3rem;
                 flex-direction: column;
                 align-items: center;
             }
         }
-    }
 
+    }
+    
     &__heading {
+
+        &--grace {
+            font-size: 3.65rem;
+            font-weight: 300;
+            width: max-content;
+        }
+
+        &--grace,
+        &--main,
+        &--sub {
+            background: linear-gradient(130deg, #e2e2e2 40%, rgba(#fff, .3));
+            background-clip: text;
+            color: transparent;
+        }
+        
         &--main {
-            overflow: initial;
+            overflow: visible;
+            white-space: initial;
+            height: max-content;
+            line-height: initial;
+
             @include respond(ss) { margin-bottom: 1.5rem; }
+        }
+
+        &--sub {
+            font-size: 2.25rem;
+            font-weight: 300;
         }
     }
 
@@ -41,6 +66,15 @@
         width: 100%;
         position: relative;
         z-index: 1;
+        min-height: 60rem;
+    }
+
+    &__empty {
+        position: absolute;
+        top: 12.5%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
     }
     
     &__group {

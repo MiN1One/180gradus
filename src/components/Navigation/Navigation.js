@@ -10,6 +10,7 @@ import Tooltip from '../../UI/Tooltip/Tooltip';
 import Logo from '../../UI/Logo/Logo';
 import Cart from '../Cart/Cart';
 import Favorites from '../Favorites/Favorites';
+import Notifier from '../../UI/Notifier/Notifier';
 
 const Navigation = ({ className }) => {
     const { t } = useTranslation();
@@ -38,6 +39,7 @@ const Navigation = ({ className }) => {
             
     return (
         <>
+            <Notifier />
             {favView && <Favorites t={t} close={setFavView} />}
             {cartView && <Cart t={t} close={setCartView} />}
             <nav className={`Navigation ${className || ''}`}>

@@ -26,3 +26,8 @@ export const setData = (name, value) => ({
     name, 
     value
 });
+
+// export const createNotification = (message) => ({
+//     type: actionTypes.ON_CREATE_NOTIFICATION,
+//     message
+// });

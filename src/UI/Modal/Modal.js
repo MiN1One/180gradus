@@ -76,7 +76,7 @@ export const ModalFavItem = ({ data, edit, add, remove, media }) => {
                     <figure className="Modal__figure">
                         <LazyLoadImage
                             className="img"
-                            src={`http://localhost:3003/assets/images/${data.image}`}
+                            src={`/images/${data.image}`}
                             alt={data.name}
                             width="100%"
                             height="100%"
@@ -118,7 +118,7 @@ export const ModalCartItem = ({ data, edit, remove }) => {
                 <figure className="Modal__figure">
                     <LazyLoadImage
                         className="img"
-                        src={`http://localhost:3003/assets/images/${data.image}`}
+                        src={`/images/${data.image}`}
                         alt={data.name}
                         width="100%"
                         height="100%"

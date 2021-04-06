@@ -1,17 +1,20 @@
 {
     "main": {
-        "search": "Search",
+        "search": "Search...",
         "reserved": "All rights reserved",
         "find us": "Find us on social media",
         "contact us": "Contact us",
-        "customize": "Customize",
+        "explore": "Explore",
         "hero text": {
             "p1": "Reacreate your phone",
             "p2": "Best choice for you and your device"
         },
+        "added cart": "Item added to cart",
+        "added fav": "Item added to favorites",
         "edit": "Edit",
         "save": "Save",
         "total": "Total",
+        "categories": "Categories",
         "proceed": "Proceed",
         "to cart": "Add to cart",
         "cancel": "Cancel",
@@ -33,7 +36,8 @@
             "p1": "Thank you for choosing us. Your order has been sent for processing and will be delivered  within 2 hours You can read more about delivery proccess ",
             "p2": "here."
         },
-        "telegram text": "You need to go to telegram to complete your order. Send us delivery address."
+        "telegram text": "You need to go to telegram to complete your order. Send us delivery address.",
+        "coming soon": "Coming soon!"
     },
     "nav": {
         "set": "Set",

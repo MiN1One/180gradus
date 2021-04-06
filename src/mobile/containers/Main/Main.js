@@ -40,10 +40,10 @@ const Main = (props) => {
     useEffect(() => {
         if (mounted.current) {
             axiosInstance(`/skins/${params.id}`)
-                .then((res) => {
-                    setData(res.data);
-                    props.onSetData('data', res.data.device);
-                    console.log(res);
+                .then(({ data }) => {
+                    setData(data.data.data);
+                    props.onSetData('data', data.data.data.device);
+                    console.log(data);
                 });
         }
     }, [params.category, params.id]);
@@ -54,7 +54,7 @@ const Main = (props) => {
             setLoadingImage(true);
             const imagePreloader = new Image();
       
-            imagePreloader.src = `http://localhost:3003/assets/images/${selectedSkin.image}`;
+            imagePreloader.src = `/images/${selectedSkin.image}`;
 
             if (imagePreloader.complete) {
                 setLoadingImage(false);
@@ -69,7 +69,7 @@ const Main = (props) => {
     }, [image]);
 
     const isFavorite = selectedSkin && props.favorites.findIndex(el => el === selectedSkin) !== -1;
-    const inTheCart = selectedSkin && props.cart.findIndex(el => el._id === selectedSkin._id);
+    const inTheCart = selectedSkin && props.cart.findIndex(el => el._id === selectedSkin._id) !== -1;
 
     let skins = null, deviceName = null;
 
@@ -91,7 +91,7 @@ const Main = (props) => {
                         <LazyLoadImage 
                             className="img" 
                             alt={el.name} 
-                            src={`localhost:3003/asstes/images/placeholders/${el.placeholder}`} 
+                            src={`/images/placeholders/${el.placeholder}`} 
                             width="100%" 
                             height="100%"
                             effect="opacity" />
@@ -124,20 +124,23 @@ const Main = (props) => {
                                     <>
                                         {selectedSkin 
                                             ? <LazyLoadImage 
-                                                src={`http://localhost:3003/assets/images/${selectedSkin.image}`}
+                                                src={`/images/${selectedSkin.image}`}
                                                 alt={selectedSkin.name}
                                                 className="Main__img"
                                                 width="100%"
                                                 height="100%"
                                                 placeholder={<SubSpinner />} />
-                                            : <img className="Main__img" src={data && `http://localhost:3003/assets/images/${data.default}`} alt={data && data.device} />
+                                            : <img 
+                                                className="Main__img" 
+                                                src={data && `/images/${data.default}`} 
+                                                alt={data && data.device} />
                                         }
                                     </>
                                 )
                             }
                         </figure>
                         {selectedSkin && 
-                            <div className="flex fdc aic m-main__panel">
+                            <div className="flex fdc aic">
                                 <span className="m-main__title text text--mid mb-1">
                                     {t(`${deviceName}:${selectedSkin.name}`)}
                                 </span>
@@ -206,7 +209,9 @@ const Main = (props) => {
                     <div className="container">
                         <div className="flex jce">
                             <div className="flex">
-                                {selectedSkin && <span className="price-tag m-main__price mr-5">${selectedSkin.price}</span>}
+                                {selectedSkin && <span className="price-tag m-main__price mr-5">
+                                    ${parseFloat(selectedSkin.price).toFixed(2)}
+                                </span>}
                                 <button 
                                     className={`m-main__btn ${inTheCart ? 'm-main__btn--active' : ''}`} 
                                     disabled={selectedSkin ? false : true}

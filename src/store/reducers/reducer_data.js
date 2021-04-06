@@ -33,6 +33,7 @@ const reducer = (state = initialState, action) => {
 
         case actionTypes.ON_REMOVE_FROM_CART:
             const freshArr = state.cart.filter(el => el._id !== action.skinId);
+            sessionStorage.setItem('cart', JSON.stringify(freshArr));
             return { ...state, cart: freshArr };
 
         case actionTypes.ON_SET_MEDIA: 
@@ -46,6 +47,11 @@ const reducer = (state = initialState, action) => {
 
         case actionTypes.ON_SET_DATA: 
             return { ...state, [action.name]: action.value }
+
+        // case actionTypes.ON_CREATE_NOTIFICATION:
+        //     if (state.notificationQue.length === 5) return { ...state };
+        //     const messages = [...state.notificationQue, action.message];
+        //     return { ...state, notificationQue: messages };
 
         default: return state;
     }

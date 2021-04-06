@@ -44,7 +44,7 @@ const Main = (props) => {
             setLoadingImage(true);
             const imagePreloader = new Image();
       
-            imagePreloader.src = `http://localhost:3003/assets/images/${selectedSkin.image}`;
+            imagePreloader.src = `/images/${selectedSkin.image}`;
 
             if (imagePreloader.complete) {
                 setLoadingImage(false);
@@ -61,10 +61,10 @@ const Main = (props) => {
     useEffect(() => {
         if (mounted.current) {
             axiosInstance(`/skins/${params.id}`)
-                .then((res) => {
-                    setData(res.data);
-                    props.onSetData('data', res.data.device);
-                    console.log(res.data.skins);
+                .then(({ data }) => {
+                    setData(data.data.data);
+                    props.onSetData('data', data.data.data.device);
+                    console.log(data);
                 });
         }
     }, [params.category, params.id, props.error]);
@@ -102,7 +102,7 @@ const Main = (props) => {
                                 <LazyLoadImage 
                                     className="img" 
                                     alt={skin.name} 
-                                    src={`localhost:3003/asstes/images/placeholders/${skin.placeholder}`} 
+                                    src={`/asstes/images/placeholders/${skin.placeholder}`} 
                                     width="100%"
                                     height="100%"
                                     effect="opacity" />
@@ -150,13 +150,13 @@ const Main = (props) => {
                                             <>
                                                 {selectedSkin 
                                                     ? <LazyLoadImage 
-                                                        src={`http://localhost:3003/assets/images/${selectedSkin.image}`}
+                                                        src={`/images/${selectedSkin.image}`}
                                                         alt={selectedSkin.name}
                                                         className="Main__img"
                                                         width="100%"
                                                         height="100%"
                                                         placeholder={<SubSpinner />} />
-                                                    : <img className="Main__img" src={data && `http://localhost:3003/assets/images/${data.default}`} alt={data && data.device} />
+                                                    : <img className="Main__img" src={data && `/images/${data.default}`} alt={data && data.device} />
                                                 }
                                             </>
                                         )
@@ -187,7 +187,7 @@ const Main = (props) => {
                                 <div className="Main__sets">
                                     <div className="w-100 pos-rel">
                                         {selectedSkin &&
-                                            <div className="flex aic mb-3">
+                                            <div className="flex aic mb-2"> 
                                                 <h5 className="heading heading--sm c-white mr-1">{t(`${deviceName}:${selectedSkin.name}`)}</h5>
                                                 <span className="mr-1">&bull;</span>
                                                 <span className="heading heading--sub c-light">{t('translation:main.basic')}</span>

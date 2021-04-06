@@ -7,6 +7,7 @@ import { BiChevronRight, BiChevronLeft, BiPalette, BiChevronDown, BiX } from 're
 import ShadowScrollbars from "../../UI/ShadowScrollbars/ShadowScrollbars";
 import { Link, useHistory } from "react-router-dom";
 import * as emailValidator from 'email-validator';
+import { useDispatch, useSelector } from "react-redux";
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
@@ -15,14 +16,15 @@ import 'swiper/components/pagination/pagination.scss';
 import * as actions from '../../store/actions';
 import './Summary.scss';
 import axios from '../../axios';
-import { connect } from "react-redux";
 
 const AsynSuccess = React.lazy(() => import('../Success/Success'));
 
 SwiperCore.use([Navigation, Pagination]);
 
-const Summary = ({ onRemoveFromCart, cart }) => {
+const Summary = () => {
     const history = useHistory();
+    const { cart } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const mounted = useRef();
     mounted.current = false;
@@ -64,7 +66,7 @@ const Summary = ({ onRemoveFromCart, cart }) => {
     };
 
     const onApplyChanges = () => {
-        itemsToRemove.forEach(el => onRemoveFromCart(el));
+        itemsToRemove.forEach(el => dispatch(actions.removeFromCart(el)));
         setEditMode(false);
     };
 
@@ -103,7 +105,7 @@ const Summary = ({ onRemoveFromCart, cart }) => {
             name: fnameRef.current.value,
             last_name: lnameRef.current.value,
             phone_number: phoneRef.current.value,
-            email: emailRef.current.value !== '' ? emailRef.current.value : '',
+            email: emailRef.current.value || '',
             address: (!geoMode && addressInputRef.current.value) ? addressInputRef.current.value : '',
             device_ids: ids,
             order: {
@@ -289,13 +291,4 @@ const Summary = ({ onRemoveFromCart, cart }) => {
     );
 };
 
-const state = state => ({
-    cart: state.cart
-});
-
-const dispatch = dispatch => ({
-    onRemoveFromCart: (id) => dispatch(actions.removeFromCart(id)),
-    onAddToCart: (id) => dispatch(actions.addToCart(id))
-});
-
-export default React.memo(connect(state, dispatch)(Summary));
+export default React.memo(Summary);

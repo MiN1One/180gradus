@@ -7,7 +7,6 @@ const axiosInstance = axios.create({
         'Content-Type': 'application/json'
     },
     // timeout: 15000,
-    timeoutErrorMessage: 'Time out, check your connection'
 });
 
 export default axiosInstance;
