@@ -63,8 +63,7 @@ function App({ onSetMedia, media, onSetData, categories }) {
                 return res;
             },
             (er) => {
-                console.log('res error' + er);
-                setError(er.message);
+                if (!er.request.responseURL.includes('/users')) setError(er.message);
                 return Promise.reject(er);
             }
         );
@@ -75,7 +74,10 @@ function App({ onSetMedia, media, onSetData, categories }) {
         };
     }, [i18n.language]);
 
-    useEffect(() => document.documentElement.scrollTop = 0, [location.pathname]);
+    useEffect(() => {
+        if (!location.pathname.includes('admin')) 
+            document.documentElement.scrollTop = 0
+    }, [location.pathname]);
 
     useEffect(() => setMounted(true), []);
 

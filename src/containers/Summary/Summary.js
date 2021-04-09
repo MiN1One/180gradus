@@ -125,7 +125,7 @@ const Summary = () => {
         <SwiperSlide className="Summary__item" key={i}>
             <figure className="Summary__figure">
                 <LazyLoadImage 
-                    src={`http://localhost:3003/assets/images/${el.image}`}
+                    src={`/images/${el.image}`}
                     alt={el.name}
                     width="100%"
                     height="100%"

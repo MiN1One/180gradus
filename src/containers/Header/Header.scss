@@ -82,7 +82,6 @@
 
     &__textbox {
         transition: all .65s ease;
-        // transform: translateY(-6rem);
         transform: translateY(-4.5vw);
     }
 
@@ -153,6 +152,7 @@
         color: transparent;
         background-image: $gradient-jumbo;
         background-clip: text;
+        -webkit-background-clip: text;
 
         &--sub {
             // font-size: 2rem;

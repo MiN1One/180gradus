@@ -122,19 +122,10 @@ const Main = (props) => {
                                 ? <SubSpinner />
                                 : (
                                     <>
-                                        {selectedSkin 
-                                            ? <LazyLoadImage 
-                                                src={`/images/${selectedSkin.image}`}
-                                                alt={selectedSkin.name}
-                                                className="Main__img"
-                                                width="100%"
-                                                height="100%"
-                                                placeholder={<SubSpinner />} />
-                                            : <img 
-                                                className="Main__img" 
-                                                src={data && `/images/${data.default}`} 
-                                                alt={data && data.device} />
-                                        }
+                                        <img 
+                                            className="Main__img" 
+                                            src={data ? `/images/${data.default}` : `/images/${selectedSkin && selectedSkin.image}`} 
+                                            alt={data ? data.device : (selectedSkin && selectedSkin.name)} />
                                     </>
                                 )
                             }

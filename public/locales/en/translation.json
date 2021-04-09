@@ -27,7 +27,7 @@
         "basic": "Basic",
         "nothing here": "Nothing here",
         "not found": "Reqested page is not found",
-        "error": "Error 404",
+        "error": "Error",
         "go back": "Go back",
         "wrong address": "Make sure you have right address",
         "error reason": "This might be due to poor internet connection or server error.",
@@ -37,7 +37,9 @@
             "p2": "here."
         },
         "telegram text": "You need to go to telegram to complete your order. Send us delivery address.",
-        "coming soon": "Coming soon!"
+        "coming soon": "Coming soon!",
+        "confirm": "Are you sure to continue?",
+        "to delete": "Items to delete"
     },
     "nav": {
         "set": "Set",

@@ -90,8 +90,6 @@
         }
         
         @include respond(sm) { row-gap: 4.5rem; }
-
-        @include respond(xs) { row-gap: 2.5rem; }
     }
 
     &__btn-control {

@@ -154,3 +154,28 @@
 
     @include respond(sm) { top: 8rem; }
 }
+
+.confirm {
+    width: 50rem;
+    padding: 3rem;
+    position: fixed;
+    box-shadow: 0 0 1.5rem rgba($pitch, .8);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    background: $bg;
+    border-radius: .55rem;
+
+    &__text {
+        font-size: 1.6rem;
+        color: $light;
+        margin-bottom: .5rem;
+        
+        &--sub {
+            color: $grey-light;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+    }
+}

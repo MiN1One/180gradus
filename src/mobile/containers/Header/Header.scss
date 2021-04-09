@@ -74,6 +74,7 @@
         font-size: 4.5rem;
         background: $gradient-jumbo;
         background-clip: text;
+        -webkit-background-clip: text;
         color: transparent;
         font-weight: 400;
         line-height: 1.15;
