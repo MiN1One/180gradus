@@ -6,18 +6,12 @@
     display: flex;
     align-items: center;
 
-    &--fill {
-        background: $pitch;
-        box-shadow: 0 0 .75rem rgba($pitch, .35);
-        height: 7.5rem;
-    }
-
     &__bar {
         position: fixed;
         top: 0;
         right: 0;
         width: 60%;
-        height: 100vh;
+        height: 100%;
         z-index: 110;
         background: $pitch;
         transform: translateX(60vw); 
@@ -34,9 +28,7 @@
         grid-auto-rows: max-content;
         gap: 1rem;
         
-        &:nth-child(2) {
-            grid-template-columns: repeat(2, 1fr);
-        }
+        &:nth-child(2) { grid-template-columns: repeat(2, 1fr); }
     }
 
     &__title { grid-column: 1 / -1; }

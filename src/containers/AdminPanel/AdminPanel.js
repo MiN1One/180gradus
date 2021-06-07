@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, Route, Switch, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { BiMinus, BiPencil, BiPlug, BiPlus, BiX } from 'react-icons/bi';
+import { BiCheck, BiMinus, BiPencil, BiPlug, BiPlus, BiScreenshot, BiX } from 'react-icons/bi';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import './AdminPanel.scss';
@@ -106,12 +106,14 @@ const Skins = () => {
     const [panelLoading, setPanelLoading] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const fileInputRef = useRef();
+
     const [addMode, setAddMode] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [viewMode, setViewMode] = useState(false);
     const [selectedSkin, setSelectedSkin] = useState(null);
-    const [confirm, setConfirm] = useState(false);
-    const [newSkinList, setNewSkinList] = useState([]);
+    const [confirm, setConfirm] = useState(null);
+    const [newSkin, setNewSkin] = useState(null);
 
     // modes: add, remove, edit, view
 
@@ -124,6 +126,9 @@ const Skins = () => {
                 setData(data.data.data);
             });
     }, []);
+
+    const devId = viewMode && viewMode._id;
+    useEffect(() => setNewSkin(null), [devId]);
 
     const getSkins = (device) => {
         setPanelLoading(true)
@@ -140,20 +145,51 @@ const Skins = () => {
     };
 
     const onRemoveSkin = (id) => {
-        const newSkinList = viewMode.skins.filter(el => el._id !== id);
-        axiosInstance.patch(`/skins/${viewMode._id}`, { skins: newSkinList })
+        const newSkinsList = viewMode.skins.filter(el => el._id !== id);
+
+        axiosInstance
+            .patch(`/skins/${viewMode._id}`, { skins: newSkinsList })
             .then(res => {
                 setViewMode({
                     ...viewMode,
-                    skins: newSkinList
+                    skins: newSkinsList
                 });
                 setConfirm(false);
                 console.log(res);
             });
     };
 
-    const onAddSkin = () => {
+    const onSubmitSkin = () => {
+        const formData = new FormData();
+        const { files } = fileInputRef.current;
+        console.log(files);
+
+        Array.from(files).forEach(el => {
+            formData.append("skinImage", el);
+        });
         
+        axiosInstance
+            .patch(
+                `/skins/${viewMode._id}`, 
+                {
+                    // skins: [...viewMode.skins, newSkin],
+                    images: formData
+                }
+            )
+            .then((res) => {
+                console.log(res);
+            });
+    };
+
+    const onRemoveDevice = () => {
+        axiosInstance
+            .delete(`/skins/${viewMode._id}`)
+            .then((res) => {
+                const newList = data.filter(el => el._id !== viewMode._id);
+                setData(newList);
+                setViewMode(null);
+                setConfirm(null);
+            });
     };
         
     const skins = (viewMode && viewMode.skins) && viewMode.skins.map((el, i) => (
@@ -177,25 +213,6 @@ const Skins = () => {
                 <span className="admin__panel-itemprice">${parseFloat(el.price).toFixed(2)}</span>
         </div>
     ));
-    
-    let panelView = null;
-    if (editMode) {
-        panelView = (
-            <>
-                <div className="admin__panel-head flex aic jcsb">
-                    <h1 className="heading heaing--main">{t('main.edit')}</h1>
-                    <button 
-                        className="btn btn__circle" 
-                        onClick={() => setEditMode(null)}>
-                            <BiX className="icon" />
-                    </button>
-                </div>
-                <div className="admin__panel-body">
-
-                </div>
-            </>
-        );
-    }
 
     const devices = (data && data.length > 0) && data.map((el, i) => (
         <li 
@@ -205,9 +222,8 @@ const Skins = () => {
                     className={`admin__card ${(viewMode && el._id === viewMode._id) ? 'admin__card--active' : ''}`} 
                     onClick={() => {
                         setEditMode(false);
-                        setAddMode(false);
                         getSkins(el);
-                    }} 
+                    }}
                     tabIndex="0">
                         <div className="flex fdc mr-15">
                             <span className="admin__card-title">{el.device}</span>
@@ -219,18 +235,11 @@ const Skins = () => {
                         </div>
                 </div>
                 <div className="admin__card-sets">
-                    <button 
-                        className="mr-1 admin__card-btn" 
-                        onClick={() => {
-                            setEditMode(true);
-                            setAddMode(false);
-                            setViewMode(null);
-                        }}>
-                            <BiPencil className="icon--sm" />
-                    </button>
-                    <button className="admin__card-btn" onClick={() => {}}>
-                        <BiX className="icon--sm" />
-                    </button>
+                    {(viewMode && viewMode._id === el._id) && 
+                        <button className="admin__card-btn" onClick={() => setConfirm('device')}>
+                            <BiX className="icon--sm" />
+                        </button>
+                    }
                 </div>
         </li>
     ));
@@ -241,20 +250,99 @@ const Skins = () => {
     return (
         <>
             <div className="flex w-100 jce mb-15">
+                {viewMode &&
+                    <button 
+                        className="btn btn__ghost btn__ghost--active mr-1" 
+                        onClick={() => 
+                            !newSkin 
+                                ? setNewSkin({
+                                    name: '',
+                                    price: '',
+                                    image: null
+                                })
+                                : onSubmitSkin()
+                        }>
+                            {newSkin ? t('main.save') : t('main.add skin')}
+                    </button>
+                }
                 <button 
                     className="btn btn__ghost btn__ghost--active" 
                     onClick={() => {
                         setAddMode(!addMode);
-                        setViewMode(null);
                         setEditMode(false);
                     }}>
                         {addMode ? t('main.save') : t('main.add')}
                 </button>
             </div>
             <div className="flex w-100">
-                <ul className="admin__list">
-                    {devices}
-                </ul>
+                {(confirm && confirm === 'device') &&
+                    <ConfirmationModel 
+                        click={onRemoveDevice} 
+                        close={() => setConfirm(null)}
+                        items={viewMode.device} />
+                }
+                {(data && data.length > 0)
+                    ? <div className="flex fdc w-100">
+                        <Scrollbars className="fgr" style={{ height: '25rem', width: '100%' }}>
+                            <ul className="admin__list">{devices}</ul>
+                        </Scrollbars>
+                        {newSkin &&
+                            <div className="admin__form">
+                                <div className="admin__panel-head">
+                                    <div className="flex aic jcsb">
+                                        <h1 className="heading heaing--main">{t('main.add')}</h1>
+                                        <button 
+                                            className="btn btn__circle" 
+                                            onClick={() => setNewSkin(null)}>
+                                                <BiX className="icon" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="flex w-100">
+                                    <div className="w-100">
+                                        <label className="admin__card-feature w-100">
+                                            {t('main.name')}
+                                            <input 
+                                                className="admin__input"
+                                                type="text"
+                                                placeholder={t('main.name')}
+                                                value={newSkin.name}
+                                                onChange={(e) => 
+                                                    setNewSkin(prev => ({ ...prev, name: e.target.value }))
+                                                } />
+                                        </label>
+                                        <label className="admin__card-feature w-100">
+                                            {t('main.price')}
+                                            <input 
+                                                className="admin__input"
+                                                type="text"
+                                                placeholder={t('main.price')}
+                                                value={newSkin.price}
+                                                onChange={(e) => 
+                                                    setNewSkin(prev => ({ ...prev, price: e.target.value }))
+                                                } />
+                                        </label>
+                                        <input 
+                                            className="none"
+                                            type="file"
+                                            accept="image/*"
+                                            ref={fileInputRef} />
+                                    </div>
+                                    <div className="admin__images">
+                                        <span className="admin__card-feature">Images:</span>
+                                        <button 
+                                            className="btn btn__ghost btn__ghost--active" 
+                                            type="button"
+                                            onClick={() => fileInputRef.current.click()}>
+                                                <BiScreenshot className="icon" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    : <div className="admin__list text text--mid tc">{t('main.nothing here')}</div>
+                }
                 {addMode && 
                     <div className="admin__panel">
                         <div className="admin__panel-head flex aic jcsb">
@@ -270,20 +358,20 @@ const Skins = () => {
                         </div>
                     </div>
                 }
-                {viewMode
+                {viewMode 
                     ? <div className="admin__panel">
                         {panelLoading
                             ? <div className="wh-100 flex aic jcc">
                                 <SubSpinner />
                             </div>
                             : <>
-                                {confirm && 
+                                {(confirm && confirm === 'skin') &&
                                     <ConfirmationModel 
                                         click={() => onRemoveSkin(selectedSkin._id)} 
-                                        close={() => setConfirm(false)}
+                                        close={() => setConfirm(null)}
                                         items={`${viewMode.device}, ${selectedSkin.name}`} />
                                 }
-                                <div className="admin__panel-head flex fdc">
+                                <div className="admin__panel-head">
                                     <div className="flex jcsb aic">
                                         <h1 className="heading heaing--main">{viewMode.device}</h1>
                                         <button 
@@ -301,18 +389,23 @@ const Skins = () => {
                                         {skins}
                                     </Scrollbars>
                                 </div>
-                                    <div className="admin__panel-footer">
-                                        <button className="admin__card-btn mr-5">
-                                            <BiPlus className="icon--sm" />
-                                        </button>
+                                <div className="admin__panel-footer">
                                     {selectedSkin && 
-                                        <button 
-                                            className="admin__card-btn" 
-                                            onClick={() => setConfirm(true)}>
-                                                <BiMinus className="icon--sm" />
-                                        </button>
+                                        <>
+                                            <button 
+                                                className="admin__card-btn mr-5" 
+                                                onClick={() => {}}>
+                                                    <BiPencil className="icon--sm" />
+                                            </button>
+                                            <button 
+                                                className="admin__card-btn" 
+                                                onClick={() => setConfirm('skin')}>
+                                                    <BiMinus className="icon--sm" />
+                                            </button>
+                                        </>
                                     }
                                 </div>
+                                
                             </>
                         }
                     </div>

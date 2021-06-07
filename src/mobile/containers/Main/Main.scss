@@ -17,12 +17,10 @@
     &__bottom {
         width: 100%;
         background: $pitch;
-        // box-shadow: 0 1rem 1.5rem rgba($pitch, .7), 0 -.75rem 1.5rem rgba($pitch, .7);
         padding: 2.25rem 2.5rem;
         padding-bottom: 3.5rem;
         position: relative;
         z-index: 1;
-        // height: 50rem;
     }
 
     &__figure {

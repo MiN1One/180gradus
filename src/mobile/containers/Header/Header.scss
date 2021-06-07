@@ -2,6 +2,9 @@
 
 .m-header {
     @include gradienty;
+    background: $pitch;
+
+    &::after { background-image: linear-gradient(130deg, transparent 80%, rgba($yellow, .2)); }
 
     &__list {
         width: 100vw;
@@ -24,23 +27,56 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: contain;
+            background-size: 50% auto;
             background-repeat: no-repeat;
-            background-position: right;
+            background-position: center;
+
+            @include respond(xs) { background-size: 70%; }
+
+            @include respond(ss) {
+                background-size: contain;
+                background-position: right;
+            }
         }
         
         &:first-child::after {
             background-position: bottom right;
-            background-image: url('../../../assets/images/Project\ 1.png');
+            background-image: url('../../../assets/images/Project\ 1-tiny.png');
         }
 
         &:nth-child(2)::after {
-            background-image: url('../../../assets/images/Samsung+Galaxy+S10+5G+stock.png');
+            background-image: url('../../../assets/images/P30\ Pro-1.png');
         }
 
-        &:last-child::after {
-            background-image: url('../../../assets/images/Samsung_galaxya51_black_back\ stock.png')
+        &:nth-child(3)::after {
+            background-image: url('../../../assets/images/P30\ Pro-2.png');
         }
+
+        &:nth-child(4)::after {
+            background-image: url('../../../assets/images/P30\ Pro-1.png');
+        }
+
+        &:nth-child(5)::after {
+            background-image: url('../../../assets/images/P30\ Pro-2.png');
+        }
+
+        &:nth-child(6)::after {
+            background-image: url('../../../assets/images/P30\ Pro-1.png');
+        }
+
+        &:nth-child(7)::after {
+            background-image: url('../../../assets/images/P30\ Pro-2.png');
+        }
+
+        &:nth-child(8)::after {
+            background-image: url('../../../assets/images/P30\ Pro-1.png');
+        }
+
+        &:nth-child(9)::after {
+            background-image: url('../../../assets/images/P30\ Pro-2.png');
+        }
+
+        &:not(:first-child) { animation: none; }
     }
 
     &__jumbo {
@@ -56,8 +92,21 @@
     }
 
     &__hero {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 50%);
         font-size: 2rem;
         color: $white;
+        width: 30rem;
+        text-align: center;
+        
+        p { line-height: 1.4 !important; }
+        
+        @include respond(xs) {
+            top: 7%;
+            transform: translateX(-50%);
+        }
     }
 
     &__figure {
@@ -78,6 +127,12 @@
         color: transparent;
         font-weight: 400;
         line-height: 1.15;
+
+        &--secondary {
+            font-size: 3rem;
+            color: $yellow;
+            font-weight: 400;
+        }
         
         &--sub {
             font-size: 1.9rem;

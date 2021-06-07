@@ -43,6 +43,7 @@
         &--main,
         &--sub {
             background: linear-gradient(130deg, #e2e2e2 40%, rgba(#fff, .3));
+            -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }

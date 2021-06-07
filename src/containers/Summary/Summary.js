@@ -7,12 +7,13 @@ import { BiChevronRight, BiChevronLeft, BiPalette, BiChevronDown, BiX } from 're
 import ShadowScrollbars from "../../UI/ShadowScrollbars/ShadowScrollbars";
 import { Link, useHistory } from "react-router-dom";
 import * as emailValidator from 'email-validator';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 
+import useEditCart from '../../hooks/useEditCart';
 import * as actions from '../../store/actions';
 import './Summary.scss';
 import axios from '../../axios';
@@ -23,11 +24,12 @@ SwiperCore.use([Navigation, Pagination]);
 
 const Summary = () => {
     const history = useHistory();
-    const { cart } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const mounted = useRef();
     mounted.current = false;
+
+    const { editCart, cart } = useEditCart();
 
     if (!mounted.current && cart.length === 0) history.push('/');
 
@@ -59,14 +61,15 @@ const Summary = () => {
     }, [error]);
 
     const onRemoveCartItem = (id) => {
-        const item = cart.find(el => el._id !== id)._id;
+        const item = cart.find(el => el._id !== id);
         const newList = cartItems.filter(el => el._id !== id);
+
         setCartItems(newList);
         setItemsToRemove(prevState => [...prevState, item && item]);
     };
 
     const onApplyChanges = () => {
-        itemsToRemove.forEach(el => dispatch(actions.removeFromCart(el)));
+        itemsToRemove.forEach(el => editCart(el));
         setEditMode(false);
     };
 
@@ -122,7 +125,7 @@ const Summary = () => {
     };
 
     const previewSlides = cartItems.map((el, i) => (
-        <SwiperSlide className="Summary__item" key={i}>
+        <SwiperSlide className="Summary__item" key={el.name+Date.now}>
             <figure className="Summary__figure">
                 <LazyLoadImage 
                     src={`/images/${el.image}`}
@@ -137,7 +140,7 @@ const Summary = () => {
 
     const cards = cartItems.map((el, i) => (
         <div 
-            key={i}
+            key={el.name+Date.now}
             className="Summary__card" 
             tabIndex="0" 
             onClick={() => !editMode && swiper.slideTo(i, 300)}>

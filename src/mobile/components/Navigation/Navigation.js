@@ -95,7 +95,7 @@ const Navigation = () => {
                     </nav>
                 </>
             }
-            <nav role="navigation" className={`m-nav ${isHome ? '' : 'm-nav--fill'}`}>
+            <nav role="navigation" className="m-nav">
                 <div className="container w-100">
                     <div className={`flex aic ${isHome ? 'jce' : 'jcsb'}`}>
                         {!isHome && <Logo />}

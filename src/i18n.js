@@ -12,7 +12,8 @@ i18n
         load: 'currentOnly',
         whitelist: ['ru', 'en', 'uz'],
         react: { useSuspense: false },
-        debug: true 
+        // debug: true 
+        debug: false
     });
 
 export default i18n;

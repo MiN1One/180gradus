@@ -8,8 +8,10 @@ const ConfirmationModel = ({ click, close, message, items }) => {
         <>
             <Backdrop z={100} close={close} />
             <div className="confirm">
-                <p className="confirm__text">{t('main.confirm')}</p>
-                {items && <p className="confirm__text--sub">{t('main.to delete')}: {items}</p>}
+                <div>
+                    <p className="confirm__text">{t('main.confirm')}</p>
+                    {items && <p className="confirm__text--sub">{t('main.to delete')}: {items}</p>}
+                </div>
                 <div className="flex w-100 jce">
                     <button className="btn btn__ghost btn__ghost--active mr-1" onClick={click}>
                         {t('main.apply')}

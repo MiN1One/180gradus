@@ -128,13 +128,15 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="Footer__body">
-                        <div className="flex fdc aic mb-lg">
-                            <div className="flex aic fdc mb-3">
-                                <span className="text text--mid text--cap">{t('nav.popular')}:</span>
-                                <ul className="flex mt-2 fwrap fwrap--sm">
-                                    {popularDevices}
-                                </ul>
-                            </div>
+                        <div className="flex fdc aic mb-3">
+                            {popularDevices && popularDevices.length > 0 &&
+                                <div className="flex aic fdc mb-3">
+                                    <span className="text text--mid text--cap">{t('nav.popular')}:</span>
+                                    <ul className="flex mt-2 fwrap fwrap--sm">
+                                        {popularDevices}
+                                    </ul>
+                                </div>
+                            }
                             <p className="text text--main c-grey-l Footer__text">
                                 {t('text.contact')}
                             </p>

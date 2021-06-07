@@ -60,12 +60,82 @@ const Header = () => {
                         </SwiperSlide>
                         <SwiperSlide className="m-header__section">
                             <div className="m-header__hero">
-                                Hehe boay
+                                <h2 className="m-header__heading--secondary">
+                                    Maximum Wear
+                                </h2>
+                                <p className="m-header__heading--sub">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                </p>
                             </div>
                         </SwiperSlide>
                         <SwiperSlide className="m-header__section">
                             <div className="m-header__hero">
-                                Hehe boay
+                                <h2 className="m-header__heading--secondary">
+                                    Maximum Wear
+                                </h2>
+                                <p className="m-header__heading--sub">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                </p>
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide className="m-header__section">
+                            <div className="m-header__hero">
+                                <h2 className="m-header__heading--secondary">
+                                    Protective material
+                                </h2>
+                                <p className="m-header__heading--sub">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                </p>
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide className="m-header__section">
+                            <div className="m-header__hero">
+                                <h2 className="m-header__heading--secondary">
+                                    Protective material
+                                </h2>
+                                <p className="m-header__heading--sub">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                </p>
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide className="m-header__section">
+                            <div className="m-header__hero">
+                                <h2 className="m-header__heading--secondary">
+                                    Super accurate cut
+                                </h2>
+                                <p className="m-header__heading--sub">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                </p>
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide className="m-header__section">
+                            <div className="m-header__hero">
+                                <h2 className="m-header__heading--secondary">
+                                    Super accurate cut
+                                </h2>
+                                <p className="m-header__heading--sub">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                </p>
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide className="m-header__section">
+                            <div className="m-header__hero">
+                                <h2 className="m-header__heading--secondary"> 
+                                    Rich skin set
+                                </h2>
+                                <p className="m-header__heading--sub">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                </p>
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide className="m-header__section">
+                            <div className="m-header__hero">
+                                <h2 className="m-header__heading--secondary">
+                                    Rich skin set
+                                </h2>
+                                <p className="m-header__heading--sub">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                </p>
                             </div>
                         </SwiperSlide>
                 </Swiper>

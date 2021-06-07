@@ -1,10 +1,5 @@
 import actionTypes from './actionTypes';
 
-export const addToFavorites = (skin) => ({
-    type: actionTypes.ON_ADD_TO_FAVORITES,
-    skin
-});
-
 export const addToCart = (skin) => ({
     type: actionTypes.ON_ADD_TO_CART,
     skin

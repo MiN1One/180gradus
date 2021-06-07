@@ -14,7 +14,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.ON_ADD_TO_FAVORITES:
+        case actionTypes.ON_EDIT_FAVORITES:
             let newList = [...state.favorites];
             const existing = state.favorites.length && state.favorites.find(el => el._id === action.skin._id);    
             if (existing) newList = newList.filter(el => el !== existing);

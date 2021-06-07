@@ -152,10 +152,14 @@
         text-overflow: ellipsis;
     }
 
-    @include respond(sm) { top: 8rem; }
+    @include respond(sm) { top: .75rem; }
 }
 
 .confirm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 18rem;
     width: 50rem;
     padding: 3rem;
     position: fixed;

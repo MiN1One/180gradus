@@ -8,6 +8,12 @@ const Er = ({ er, clean, notFound }) => {
     const { t } = useTranslation();
     const history = useHistory();
 
+    let errorSub = t('main.server er');
+    let errorMain = t('main.error');
+    // if (er.response.status.toString().startsWith('4')) {
+        errorSub = t('main.request er');
+    // }
+
     return (
         <div className="Er">
             <div className="main-head">

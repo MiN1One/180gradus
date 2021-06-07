@@ -3,6 +3,7 @@
 .Header {
     position: relative;
     z-index: 95;
+    background: $pitch;
     
     &__section {
         display: flex;
@@ -16,6 +17,42 @@
         
         &:not(:first-child) { justify-content: flex-end; }
     }
+
+    // FIRST BLOCK
+    &__section:first-child &__popper {
+        background-image: url('../../assets/images/P30\ Pro-1.png');
+    }
+    
+    &__section:first-child &__popperbg {
+        background-image: url('../../assets/images/P30\ Pro-2.png');
+    }
+    
+    // 2ND BLOCK
+    &__section:nth-child(2) &__popper {
+        background-image: url('../../assets/images/P30\ Pro-1.png');
+    }
+    
+    &__section:nth-child(2) &__popperbg {
+        background-image: url('../../assets/images/P30\ Pro-2.png');
+    }
+    
+    // 3RD BLOCK
+    &__section:nth-child(3) &__popper {
+        background-image: url('../../assets/images/P30\ Pro-1.png');
+    }
+    
+    &__section:nth-child(3) &__popperbg {
+        background-image: url('../../assets/images/P30\ Pro-2.png');
+    }
+    
+    // 4TH BLOCK
+    &__section:last-child &__popper {
+        background-image: url('../../assets/images/P30\ Pro-1.png');
+    }
+
+    &__section:last-child &__popperbg {
+        background-image: url('../../assets/images/P30\ Pro-2.png');
+    }
     
     &__jumbotron {
         height: 100vh;
@@ -24,10 +61,7 @@
         z-index: 1;
         transition: all .7s ease;
 
-        &--slideBack {
-            width: 15vw;
-            background-image: none;
-        }
+        &--slideBack { width: 15vw; }
     }
 
     &__hero {
@@ -45,10 +79,10 @@
         width: 100%;
         height: 100%;
         transition: all .3s ease;
-
+        
         &::after {
             animation-delay: .6s;
-            background: linear-gradient(130deg, $bg 80%, rgba($yellow, .35));
+            background: linear-gradient(130deg, $pitch 80%, rgba($yellow, .35));
             z-index: -1;
         }
 
@@ -65,8 +99,20 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: right;
-            background-image: url('../../assets/images/Project\ 1.png');
+            background-image: url('../../assets/images/Project\ 1-tiny.png');
         }
+    }
+
+    &__bg-gradient {
+        width: 15vw;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        background: linear-gradient(135deg, rgba($yellow, .3) 0%, transparent 40%, transparent);
+        z-index: 1;
+        animation-delay: .7s !important;
     }
 
     &__logobox {
@@ -91,29 +137,46 @@
         top: 0;
         height: 100vh;
         width: 0;
+        overflow: hidden;
         position: relative;
         transition: all .7s ease;
-        background: #dfdfdf;
         z-index: 2;
-        box-shadow: -1rem 0 2.5rem rgba($pitch, .25);
-        background: rgba(#161616, .7);
-        
         font-size: 3rem;
         color: #fff;
-
+        
         &--expand { width: 85vw; }
     }
+
+    &__heading--secondary {
+        font-size: 3vw;
+        font-weight: 400;
+        color: $yellow;
+
+        p { line-height: 1.4 !important; }
+    }
+
+    &__poppercase--expand &__popper-text { display: inline-block; }
+    &__poppercase--expand &__popper::after { content: ""; }
 
     &__popper {
         height: 100%;
         width: 100%;
-        overflow: hidden;
         transition: height .15s ease;
         position: relative;
         z-index: 9;
-        background-image: url('../../assets/images/Samsung+Galaxy+S10+5G+stock.png');
+        background: #252525;
+
+        &::after {
+            content: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation-delay: .5s;
+            // background-image: linear-gradient(130deg, transparent 20%, rgba(#fff, .7), transparent 30%, transparent);
+        }
     }
-    
     
     &__popperbg {
         position: absolute;
@@ -121,8 +184,18 @@
         left: 0;
         width: 100%;
         z-index: 10;
-        // background-color: #3c7ff3;
-        background-image: url('../../assets/images/Samsung_galaxya51_black_back\ stock.png');
+        background-color: #141414;
+    }
+
+    &__popper-text {
+        position: absolute;
+        top: 40%;
+        left: 30%;
+        display: none;
+        transform: translate(-30%, -30%);
+        z-index: 11;
+        animation-delay: .2s;
+        max-width: 50rem;
     }
     
     &__popper,
@@ -175,9 +248,9 @@
     &__jumbotron--slideBack &__bg::after,
     &__jumbotron--slideBack &__bg::before { content: none; }
 
+    // &__jumbotron--slideBack &__bg-gradient { display: inline-block; }
+
     &__jumbotron--slideBack &__hero {
-        background: none;
-        backdrop-filter: blur(0);
         padding: 0;
         left: 0;
         transform: translateY(-50%) translateX(0);

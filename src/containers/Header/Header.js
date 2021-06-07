@@ -33,9 +33,8 @@ const Header = () => {
 
             // Fix delay
             setTransformUp(0);
-        } else {
-            setViewOne(inHeight);
-        }
+        } 
+        else setViewOne(inHeight);
         
         // If passed block #1
         if (scrollTop > inHeight) {
@@ -126,7 +125,9 @@ const Header = () => {
                 <header className="Header">
                     <section className="Header__section">
                         <div className={jumboClass.join(' ')}>
-                            <div className="Header__bg"></div>
+                            {/* <div className="Header__bg-gradient"></div> */}
+                            <div className="Header__bg">
+                            </div>
                             <div className="Header__hero">
                                 <div className="Header__logobox">
                                     <figure className="Header__fig">
@@ -147,34 +148,92 @@ const Header = () => {
                         </div>
                         <div className={poppercaseClass.join(' ')}>
                             <div className="Header__popper">
-                                Dark Carbon
+                                
                             </div>
-                            <div className="Header__popperbg" style={{height: viewOne + 'px'}}>
+                            <div 
+                                className="Header__popperbg" 
+                                style={{
+                                    height: `${viewOne}px`,
+                                    opacity: `${viewOne / window.innerHeight}`
+                                }}>
 
                             </div>
-                        </div>
-                    </section>
-                    <section className="Header__section">
-                        <div className={poppercaseClass.join(' ')}>
-                            <div className="Header__popper">
-                                Dark Carbon
-                                <div className="Header__popperbg" style={{height: viewTwo + 'px'}}></div>
+                            <div className="Header__popper-text">
+                                <h2 className="Header__heading--secondary">
+                                    Maxmimum wear
+                                    <p className="Header__heading--sub">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                    </p>
+                                </h2>
                             </div>
                         </div>
                     </section>
                     <section className="Header__section">
                         <div className={poppercaseClass.join(' ')}>
                             <div className="Header__popper">
-                                Dark Carbon
-                                <div className="Header__popperbg" style={{height: viewThree + 'px'}}></div>
+
+                            </div>
+                            <div 
+                                className="Header__popperbg" 
+                                style={{
+                                    height: `${viewTwo}px`,
+                                    opacity: `${viewTwo / window.innerHeight}`
+                                }}>
+
+                            </div>
+                            <div className="Header__popper-text">
+                                <h2 className="Header__heading--secondary">
+                                    Protective material
+                                    <p className="Header__heading--sub">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                    </p>
+                                </h2>
                             </div>
                         </div>
                     </section>
                     <section className="Header__section">
                         <div className={poppercaseClass.join(' ')}>
                             <div className="Header__popper">
-                                Dark Carbon
-                                <div className="Header__popperbg" style={{height: viewFour + 'px'}}></div>
+                                
+                            </div>
+                            <div 
+                                className="Header__popperbg" 
+                                style={{
+                                    height: `${viewThree}px`,
+                                    opacity: `${viewThree / window.innerHeight}`
+                                }}>
+                                    
+                            </div>
+                            <div className="Header__popper-text">
+                                <h2 className="Header__heading--secondary">
+                                    Rich skin set
+                                    <p className="Header__heading--sub">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                    </p>
+                                </h2>
+                            </div>
+                        </div>
+                    </section>
+                    <section className="Header__section">
+                        <div className={poppercaseClass.join(' ')}>
+                            <div className="Header__popper">
+                                
+                            </div>
+                            <div 
+                                className="Header__popperbg" 
+                                style={{
+                                    height: `${viewFour}px`,
+                                    opacity: `${viewFour / window.innerHeight}`
+                                }}>
+
+                            </div>
+                            <div className="Header__popper-text">
+                                <h2 className="Header__heading--secondary">
+                                    Super accurate cut
+                                    <p className="Header__heading--sub">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
+                                    </p>
+                                </h2>
                             </div>
                         </div>
                     </section>

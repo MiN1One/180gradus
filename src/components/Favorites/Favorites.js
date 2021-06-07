@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import useEditCart from '../../hooks/useEditCart';
+import useEditFavorites from '../../hooks/useEditFavorites';
 
 import * as actions from '../../store/actions';
 import Modal, { ModalFavItem } from '../../UI/Modal/Modal';
 
-const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }) => {
+const Favorites = ({ t, close, media }) => {
+    const dispatch = useDispatch();
+
+    const { editFavorites, favorites } = useEditFavorites();
+    const { editCart } = useEditCart();
+
     const [editMode, setEditMode] = useState(false);
     const [favItems, setFavItems] = useState([ ...favorites ]);
     const [removedItems, setRemovedItems] = useState([]);
@@ -18,7 +25,12 @@ const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }
     };
 
     const onApplyChanges = () => {
-        removedItems.forEach(el => onRemoveAddToFav(el));
+        removedItems.forEach(el => editFavorites(el));
+        let newFavorites = [...favorites];
+        removedItems.forEach(r => {
+            newFavorites = newFavorites.filter(el => el._id !== r._id);
+        });
+        dispatch(actions.setData('favorites', newFavorites));
         setEditMode(false);
         setRemovedItems([]);
     };
@@ -26,17 +38,17 @@ const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }
     const removeFromFav = (id) => {
         const removed = favItems.find(el => el._id === id);
         const newList = favItems.filter(el => el._id !== id);
-        setFavItems(newList);
         setRemovedItems(prevState => [...prevState, removed && removed]);
+        setFavItems(newList);
     };
 
     const favoriteItems = favItems.map((el, i) => (
         <ModalFavItem
-            key={i}
+            key={el._id}
             media={media} 
             data={el}
             edit={editMode}
-            add={() => onAddToCart(el)}
+            add={() => editCart(el)}
             remove={() => removeFromFav(el._id)} />
     ));
 
@@ -51,7 +63,7 @@ const Favorites = ({ t, close, onRemoveAddToFav, onAddToCart, favorites, media }
                 close(false);
                 setEditMode(false);
             }}>
-                {favorites.length !== 0 && favoriteItems}
+                {favorites.length > 0 && favoriteItems}
         </Modal>
     );
 };
@@ -61,9 +73,4 @@ const state = state => ({
     media: state.media.mid
 });
 
-const dispatch = (dispatch) => ({
-    onAddToCart: (skin) => dispatch(actions.addToCart(skin)),
-    onRemoveAddToFav: (skin) => dispatch(actions.addToFavorites(skin))
-});
-
-export default React.memo(connect(state, dispatch)(Favorites));
+export default React.memo(connect(state)(Favorites));

@@ -10,6 +10,7 @@
     &__primary {
         background-image: $gradient-main;
         transition: all .4s ease-out;
+        color: #000 !important;
         
         &::after {
             content: "";

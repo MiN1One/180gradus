@@ -16,6 +16,8 @@ import './Main.scss';
 import axiosInstance from '../../../axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import SubSpinner from '../../../UI/SubSpinner/SubSpinner';
+import useEditFavorites from '../../../hooks/useEditFavorites';
+import useEditCart from '../../../hooks/useEditCart';
 
 SwiperCore.use([Navigation]);
 
@@ -26,6 +28,9 @@ const Main = (props) => {
     const [loadingImage, setLoadingImage] = useState(false);
     const [selectedSkin, setSelectedSkin] = useState(null);
     const [data, setData] = useState(null);
+
+    const { isFavorite, editFavorites } = useEditFavorites();
+    const { inTheCart, editCart } = useEditCart(); 
     
     const { t } = useTranslation(['translation', data && data.device]);
 
@@ -68,9 +73,6 @@ const Main = (props) => {
         }
     }, [image]);
 
-    const isFavorite = selectedSkin && props.favorites.findIndex(el => el === selectedSkin) !== -1;
-    const inTheCart = selectedSkin && props.cart.findIndex(el => el._id === selectedSkin._id) !== -1;
-
     let skins = null, deviceName = null;
 
     if (data) {
@@ -105,7 +107,7 @@ const Main = (props) => {
             <div className="main-head">
                 <div className="container">
                     <div className="flex aic">
-                        <button className="btn btn__square mr-2" onClick={() => history.push(`/categories/skins/${params.category}`)}>
+                        <button className="btn btn__square mr-2" onClick={() => history.push(`/categories/${data && data.type}/${params.category}`)}>
                             <BiChevronLeft className="icon--lg icon--dark" />
                         </button>
                         <h2 className="heading heading--1 heading--black">
@@ -143,8 +145,8 @@ const Main = (props) => {
                                     </button>
                                     <button 
                                         className="btn btn__ghost btn__ghost--active"
-                                        onClick={() => props.onAddToFav(selectedSkin)}>
-                                            {isFavorite
+                                        onClick={() => editFavorites(selectedSkin)}>
+                                            {isFavorite(selectedSkin._id)
                                                 ? <AiFillStar className="icon" />
                                                 : <AiOutlineStar className="m-main__icon" />
                                             }
@@ -200,14 +202,18 @@ const Main = (props) => {
                     <div className="container">
                         <div className="flex jce">
                             <div className="flex">
-                                {selectedSkin && <span className="price-tag m-main__price mr-5">
-                                    ${parseFloat(selectedSkin.price).toFixed(2)}
-                                </span>}
+                                {selectedSkin && (
+                                    <span className="price-tag m-main__price mr-5">
+                                        ${parseFloat(selectedSkin.price).toFixed(2)}
+                                    </span>
+                                )}
                                 <button 
-                                    className={`m-main__btn ${inTheCart ? 'm-main__btn--active' : ''}`} 
+                                    className={`m-main__btn ${inTheCart(selectedSkin?._id) ? 'm-main__btn--active' : ''}`} 
                                     disabled={selectedSkin ? false : true}
-                                    onClick={() => props.onAddToCart(selectedSkin)}>
-                                        {!inTheCart
+                                    onClick={() => 
+                                        !inTheCart(selectedSkin._id) && editCart(selectedSkin)
+                                    }>
+                                        {!inTheCart(selectedSkin?._id)
                                             ? <>
                                                 {t('translation:main.to cart')}
                                                 <BiCart className="icon ml-5" />
@@ -231,7 +237,6 @@ const state = (state) => ({
 });
 
 const dispatch = dispatch => ({
-    onAddToFav: (id) => dispatch(actions.addToFavorites(id)),
     onAddToCart: (id) => dispatch(actions.addToCart(id)),
     onSetData: (name, val) => dispatch(actions.setData(name, val))
 });
