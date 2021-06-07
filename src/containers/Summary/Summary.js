@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
@@ -8,6 +8,7 @@ import ShadowScrollbars from "../../UI/ShadowScrollbars/ShadowScrollbars";
 import { Link, useHistory } from "react-router-dom";
 import * as emailValidator from 'email-validator';
 import { useDispatch } from "react-redux";
+import { nanoid } from 'nanoid';
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
@@ -29,7 +30,7 @@ const Summary = () => {
     const mounted = useRef();
     mounted.current = false;
 
-    const { editCart, cart } = useEditCart();
+    const { cart } = useEditCart();
 
     if (!mounted.current && cart.length === 0) history.push('/');
 
@@ -60,20 +61,27 @@ const Summary = () => {
         if (error) document.documentElement.scrollTop = 0;
     }, [error]);
 
-    const onRemoveCartItem = (id) => {
-        const item = cart.find(el => el._id !== id);
+    const onRemoveCartItem = useCallback((id) => {
+        const item = cartItems.find(el => el._id === id);
         const newList = cartItems.filter(el => el._id !== id);
 
         setCartItems(newList);
         setItemsToRemove(prevState => [...prevState, item && item]);
-    };
+    }, [cartItems]);
 
-    const onApplyChanges = () => {
-        itemsToRemove.forEach(el => editCart(el));
+    const onApplyChanges = useCallback(() => {
+        let newCart = [...cart];
+        itemsToRemove.forEach(r => {
+            newCart = newCart.filter(el => el._id !== r._id);
+        });
+        dispatch(actions.setData('cart', newCart));
+        sessionStorage.setItem('cart', JSON.stringify(newCart));
         setEditMode(false);
-    };
+    }, [cart, itemsToRemove, dispatch]);
 
-    const onSubmit = () => {
+    console.log(itemsToRemove);
+
+    const onSubmit = useCallback(() => {
         if (
             fnameRef.current.value.length < 2 || 
             lnameRef.current.value.length < 2
@@ -122,10 +130,10 @@ const Summary = () => {
                 if (geoMode) window.open('https://www.t.me/he_go_bot', '_blank');
                 setSuccess(true);
             });
-    };
+    }, [cart, geoMode, t]);
 
     const previewSlides = cartItems.map((el, i) => (
-        <SwiperSlide className="Summary__item" key={el.name+Date.now}>
+        <SwiperSlide className="Summary__item" key={nanoid()}>
             <figure className="Summary__figure">
                 <LazyLoadImage 
                     src={`/images/${el.image}`}
@@ -140,7 +148,7 @@ const Summary = () => {
 
     const cards = cartItems.map((el, i) => (
         <div 
-            key={el.name+Date.now}
+            key={nanoid()}
             className="Summary__card" 
             tabIndex="0" 
             onClick={() => !editMode && swiper.slideTo(i, 300)}>

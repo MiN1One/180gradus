@@ -5,6 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { BiChevronLeft, BiCartAlt, BiChevronRight, BiX } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
+import { nanoid } from 'nanoid';
 
 import "swiper/components/navigation/navigation.scss";
 import "swiper/components/pagination/pagination.scss";
@@ -103,7 +104,7 @@ const Main = (props) => {
 
         return (
           <div
-            key={skin.name+Date.now}
+            key={nanoid()}
             className="Main__item-wrapper"
             onClick={() => setSelectedSkin(skin)}
             tabIndex="0"

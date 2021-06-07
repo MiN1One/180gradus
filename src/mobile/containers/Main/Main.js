@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import { BiCart, BiChevronLeft, BiChevronRight, BiX } from 'react-icons/bi';
 import { connect } from 'react-redux';
+import { nanoid } from 'nanoid';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 import 'swiper/swiper.scss';
@@ -87,7 +88,7 @@ const Main = (props) => {
 
             return (
                 <SwiperSlide 
-                    key={i}
+                    key={nanoid()}
                     className={`m-main__sets-item ${(selectedSkin && selectedSkin._id === el._id) ? 'm-main__sets-item--active' : ''}`} 
                     onClick={() => setSelectedSkin(el)}>
                         <LazyLoadImage 

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import useEditCart from '../../hooks/useEditCart';
 import * as actions from '../../store/actions';
+import { nanoid } from 'nanoid';
 
 import Modal, { ModalCartItem } from '../../UI/Modal/Modal';
 
 const Cart = ({ t, close }) => {
-    const { editCart, cart } = useEditCart();
+    const { cart } = useEditCart();
 
     const [editMode, setEditMode] = useState(false);
     const [cartItems, setCartItems] = useState([ ...cart ]);
@@ -34,6 +35,7 @@ const Cart = ({ t, close }) => {
             newCart = newCart.filter(el => el._id !== r._id);
         });
         dispatch(actions.setData('cart', newCart));
+        sessionStorage.setItem('cart', JSON.stringify(newCart));
         setEditMode(false);
         setRemovedItems([]);
     };
@@ -48,7 +50,7 @@ const Cart = ({ t, close }) => {
 
     const items = cartItems.map((el) => (
         <ModalCartItem 
-            key={el._id}
+            key={nanoid()}
             data={el}
             edit={editMode}
             remove={() => removeItem(el._id)} />

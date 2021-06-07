@@ -12,16 +12,18 @@ class ShadowScrollbars extends Component {
             clientHeight: 0
         };
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.scrollbarsRef = React.createRef();
+        this.topRef = React.createRef();
+        this.bottomRef = React.createRef();
     }
 
     handleUpdate(values) {
-        const { shadowTop, shadowBottom } = this.refs;
         const { scrollTop, scrollHeight, clientHeight } = values;
         const shadowTopOpacity = 1 / 20 * Math.min(scrollTop, 20);
         const bottomScrollTop = scrollHeight - clientHeight;
         const shadowBottomOpacity = 1 / 20 * (bottomScrollTop - Math.max(scrollTop, bottomScrollTop - 20));
-        css(shadowTop, { opacity: shadowTopOpacity });
-        css(shadowBottom, { opacity: shadowBottomOpacity });
+        css(this.topRef.current, { opacity: shadowTopOpacity });
+        css(this.bottomRef.current, { opacity: shadowBottomOpacity });
     }
 
     render() {
@@ -52,14 +54,14 @@ class ShadowScrollbars extends Component {
         return (
             <div style={containerStyle}>
                 <Scrollbars
-                    ref="scrollbars"
+                    ref={this.scrollbarsRef}
                     onUpdate={this.handleUpdate}
                     {...props}/>
                 <div
-                    ref="shadowTop"
+                    ref={this.topRef}
                     style={shadowTopStyle}/>
                 <div
-                    ref="shadowBottom"
+                    ref={this.bottomRef}
                     style={shadowBottomStyle}/>
             </div>
         );

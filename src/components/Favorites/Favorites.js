@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import useEditCart from '../../hooks/useEditCart';
 import useEditFavorites from '../../hooks/useEditFavorites';
+import { nanoid } from 'nanoid';
 
 import * as actions from '../../store/actions';
 import Modal, { ModalFavItem } from '../../UI/Modal/Modal';
@@ -31,6 +32,7 @@ const Favorites = ({ t, close, media }) => {
             newFavorites = newFavorites.filter(el => el._id !== r._id);
         });
         dispatch(actions.setData('favorites', newFavorites));
+        localStorage.setItem('favorites', JSON.stringify(newFavorites));
         setEditMode(false);
         setRemovedItems([]);
     };
@@ -44,7 +46,7 @@ const Favorites = ({ t, close, media }) => {
 
     const favoriteItems = favItems.map((el, i) => (
         <ModalFavItem
-            key={el._id}
+            key={nanoid()}
             media={media} 
             data={el}
             edit={editMode}

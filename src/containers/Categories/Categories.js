@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiSearch, BiX } from 'react-icons/bi';
 import { useHistory, useParams } from 'react-router-dom';
+import { nanoid } from 'nanoid';
 
 import Card from '../../components/Card/Card';
 import axiosInstance from '../../axios';
@@ -68,18 +69,18 @@ const Categories = ({ categories }) => {
     };
 
     const cards = (data && data.length > 0) && data.map((el, i) => (
-        <Card data={el} key={i} />
+        <Card data={el} key={nanoid()} />
     ));
 
     const categoryItems = (categories && !params.category) && categories.map((el, i) => (
-        <Card data={el} key={i} />
+        <Card data={el} key={nanoid()} />
     ));
     
     const searchItems = searchResults && searchResults.map((el, i) => {
         const category = categories && categories.find(cat => cat._id === el.category);
 
         return (
-            <div className="input__drop-item" key={i} onMouseDown={() => history.push(`/categories/skins/${category && category.name}/${el._id}`)}>
+            <div className="input__drop-item" key={nanoid()} onMouseDown={() => history.push(`/categories/skins/${category && category.name}/${el._id}`)}>
                 <figure className="input__figure">
                     <img className="img" src={`/images/${el.default}`} alt={el.device} />
                 </figure>
