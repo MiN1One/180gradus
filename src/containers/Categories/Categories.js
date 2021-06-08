@@ -9,6 +9,7 @@ import axiosInstance from '../../axios';
 import './Categories.scss';
 import Error from '../../containers/Error/Error';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
+import Spinner from '../../UI/Spinner/Spinner';
 
 const Categories = ({ categories }) => {
 
@@ -25,15 +26,26 @@ const Categories = ({ categories }) => {
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState(null);
     const [searchLoading, setSearchLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
 
     const fetchData = useCallback(() => {
         if (mounted.current) {
+            setLoading(true);
             if (params.category) {
                 const categoryId = categories && categories.find(el => el.name === params.category);
                 categoryId && axiosInstance(`/categories/${categoryId._id}?project=devices`)
-                    .then(({ data }) => setData(data.data.data.devices));
-            } else axiosInstance('/skins').then(({ data }) => setData(data.data.data));
+                    .then(({ data }) => {
+                        setData(data.data.data.devices);
+                        setLoading(false);
+                    });
+            } else {
+                axiosInstance('/skins')
+                    .then(({ data }) => {
+                        setData(data.data.data);
+                        setLoading(false);
+                    });
+            }
         }
     }, [categories, params.category]);
     
@@ -41,13 +53,9 @@ const Categories = ({ categories }) => {
         fetchData();
     }, [params.category, categories, fetchData]);
 
-    const handleScroll = (e) => {
-        console.log('dfv')
-        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-        if (bottom) {
-            alert('Hehe boay')
-        }
-    };
+    // const handleScroll = (e) => {
+    //     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    // };
 
     const onInputSearch = (search, e) => {
 
@@ -95,8 +103,11 @@ const Categories = ({ categories }) => {
     const catExists = (categories && params.category) && categories.findIndex((el) => el.name === params.category) !== -1;
     if (!catExists && mounted.current && params.category) return <Error notFound />;
 
+    if (loading)
+        return <Spinner />;
+
     return (
-        <section className="Categories" onScroll={handleScroll}>
+        <section className="Categories">
             <div className="container">
                 <div className="Categories__head Categories__head--main">
                     <h1 className="heading heading--1 Categories__heading--main">
@@ -163,9 +174,9 @@ const Categories = ({ categories }) => {
                         </div>
                     }
                 </div>
-                <div className="Categories__footer">
+                {/* <div className="Categories__footer">
                     
-                </div>
+                </div> */}
             </div>
         </section>
     );

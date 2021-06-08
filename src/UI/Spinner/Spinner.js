@@ -10,13 +10,14 @@ const Spinner = () => (
                 <div className="loader__circle loader__circle--2"></div>
             </div>
             <div className="loader__logo">
-                <object 
+                {/* <object 
                     type="image/svg+xml" 
                     data={logoSvg} 
                     width="100%" 
                     height="100%"
                     aria-labelledby="180logo">
-                </object>
+                </object> */}
+                <img src={logoSvg} alt="logo" width="100%" height="100%" />
             </div>
         </div>
         <a href="https://www.linkedin.com/in/nodirbek-ulashev-765a28201" target="_blank" rel="noopener noreferrer" className="loader__appdev tc">

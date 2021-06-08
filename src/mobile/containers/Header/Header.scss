@@ -4,7 +4,10 @@
     @include gradienty;
     background: $pitch;
 
-    &::after { background-image: linear-gradient(130deg, transparent 80%, rgba($yellow, .2)); }
+    &::after { 
+        background-image: 
+            linear-gradient(130deg, transparent 80%, rgba($yellow, .2)); 
+    }
 
     &__list {
         width: 100vw;
@@ -93,9 +96,9 @@
 
     &__hero {
         position: absolute;
-        top: 50%;
+        top: 25%;
         left: 50%;
-        transform: translate(-50%, 50%);
+        transform: translate(-50%, 25%);
         font-size: 2rem;
         color: $white;
         width: 30rem;
@@ -103,10 +106,10 @@
         
         p { line-height: 1.4 !important; }
         
-        @include respond(xs) {
-            top: 7%;
-            transform: translateX(-50%);
-        }
+        // @include respond(xs) {
+        //     top: 7%;
+        //     transform: translateX(-50%);
+        // }
     }
 
     &__figure {

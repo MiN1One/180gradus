@@ -5,6 +5,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { BiChevronLeft, BiCartAlt, BiChevronRight, BiX } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
+import { connect } from "react-redux";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { nanoid } from 'nanoid';
 
 import "swiper/components/navigation/navigation.scss";
@@ -13,9 +15,8 @@ import "swiper/swiper.scss";
 
 import * as actions from "../../store/actions";
 import "./Main.scss";
-import { connect } from "react-redux";
+import Spinner from '../../UI/Spinner/Spinner';
 import SubSpinner from "../../UI/SubSpinner/SubSpinner";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import axiosInstance from "../../axios";
 import useEditFavorites from "../../hooks/useEditFavorites";
 import useEditCart from "../../hooks/useEditCart";
@@ -30,6 +31,7 @@ const Main = (props) => {
   const [swiper, setSwiper] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
   const [selectedSkin, setSelectedSkin] = useState(null);
+  const [loading, setLoading] = useState(false);
   const mounted = useRef();
 
   const { isFavorite, editFavorites } = useEditFavorites();
@@ -44,7 +46,6 @@ const Main = (props) => {
     return () => (mounted.current = false);
   }, []);
 
-  const image = selectedSkin && selectedSkin.image;
   useEffect(() => {
     if (selectedSkin) {
       setLoadingImage(true);
@@ -62,18 +63,20 @@ const Main = (props) => {
         };
       }
     }
-  }, [image, selectedSkin]);
+  }, [selectedSkin]);
 
+  const { onSetData } = props;
   useEffect(() => {
     if (mounted.current) {
+      setLoading(true)
       axiosInstance(`/skins/${params.id}`)
         .then(({ data }) => {
           setData(data.data.data);
-          props.onSetData("data", data.data.data.device);
-          console.log(data);
+          onSetData("data", data.data.data.device);
+          setLoading(false);
         });
     }
-  }, [params.category, params.id, props.error, props.onSetData]);
+  }, [params.id, onSetData]);
 
   let 
     skinsSlide = null,
@@ -93,34 +96,32 @@ const Main = (props) => {
 
     skinsSlide = skinsArr.map((el, i) => {
       const skins = el.map((skin, index) => {
-        const category =
-          props.categories &&
-          props.categories.find((cat) => cat._id === data.category);
+        const category = props.categories?.find((cat) => cat._id === data.category);
 
         skin.device = deviceName;
-        skin.category = category && category.name;
+        skin.category = category?.name;
         skin.deviceId = data._id;
         skin.type = data.type;
 
         return (
           <div
-            key={nanoid()}
+            key={skin._id}
             className="Main__item-wrapper"
             onClick={() => setSelectedSkin(skin)}
             tabIndex="0"
           >
             <div
               key={index}
-              className={`Main__sets-item ${(selectedSkin && selectedSkin.name) === skin.name ? "Main__sets-item--active" : ""}`}
+              className={`Main__sets-item ${selectedSkin?.name === skin.name ? "Main__sets-item--active" : ""}`}
             >
-              <LazyLoadImage
+              {/* <LazyLoadImage
                 className="img"
                 alt={skin.name}
-                src={`/asstes/images/placeholders/${skin.placeholder}`}
+                src={`/assets/images/placeholders/${skin.placeholder}`}
                 width="100%"
                 height="100%"
                 effect="opacity"
-              />
+              /> */}
             </div>
             <div className="Main__tooltip">
               {t(`${deviceName}:${skin.name}`)}
@@ -130,12 +131,15 @@ const Main = (props) => {
       });
 
       return (
-        <SwiperSlide className="Main__sets-wrapper" key={i+Date.now}>
+        <SwiperSlide className="Main__sets-wrapper" key={i}>
           {skins}
         </SwiperSlide>
       );
     });
   }
+
+  if (loading) 
+    return <Spinner />
 
   return (
     <header className="Main">
@@ -164,20 +168,21 @@ const Main = (props) => {
             <div className="Main__content-wrapper">
               <div className="Main__right">
                 <figure className="Main__figure">
-                  {loadingImage ? (
-                    <SubSpinner />
-                  ) : (
-                    <>
-                      <img
-                        className="Main__img"
-                        src={
-                          data
-                            ? `/images/${data.default}`
-                            : `/images/${selectedSkin && selectedSkin.image}`
-                        }
-                        alt={data ? data.device : (selectedSkin && selectedSkin.name)}
-                      />
-                    </>
+                  {loadingImage 
+                    ? <SubSpinner /> 
+                    : (
+                      <>
+                        <img
+                          className="Main__img"
+                          border="0"
+                          src={
+                            !selectedSkin
+                              ? `/images/${data?.default}`
+                              : `/images/${selectedSkin && selectedSkin.image}`
+                          }
+                          alt={data ? data.device : (selectedSkin && selectedSkin.name)}
+                        />
+                      </>
                   )}
                 </figure>
                 {selectedSkin && (
@@ -230,6 +235,7 @@ const Main = (props) => {
                         <BiChevronRight className="icon--sm" />
                       </button>
                       <Swiper
+                        simulateTouch={false}
                         slidesPerView={1}
                         className="Main__sets-body"
                         navigation={{
@@ -238,7 +244,6 @@ const Main = (props) => {
                           disabledClass: "btn__control--disabled",
                         }}
                         spaceBetween={30}
-                        updateOnWindowResize={true}
                         onInit={(sw) => setSwiper(sw)}
                       >
                         {skinsSlide}
@@ -252,9 +257,7 @@ const Main = (props) => {
                       </div>
                     )}
                     <button
-                      className={`Main__btn ${
-                        inTheCart(selectedSkin?._id) ? "Main__btn--active" : ""
-                      }`}
+                      className={`Main__btn ${inTheCart(selectedSkin?._id) ? "Main__btn--active" : ""}`}
                       disabled={selectedSkin ? false : true}
                       onClick={() =>
                         !inTheCart(selectedSkin?._id) && editCart(selectedSkin)

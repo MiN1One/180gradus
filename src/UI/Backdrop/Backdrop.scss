@@ -7,7 +7,7 @@
     width: 100vw;
     height: 100vh;
     background: rgba($pitch, .7);
-    backdrop-filter: blur(3px);
+    // backdrop-filter: blur(3px);
 
     // @include respond(sm) { backdrop-filter: initial; }
     @include respond(sm) { backdrop-filter: blur(2.5px); }

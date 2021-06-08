@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import useEditCart from '../../hooks/useEditCart';
 import * as actions from '../../store/actions';
-import { nanoid } from 'nanoid';
 
 import Modal, { ModalCartItem } from '../../UI/Modal/Modal';
 
@@ -50,7 +49,7 @@ const Cart = ({ t, close }) => {
 
     const items = cartItems.map((el) => (
         <ModalCartItem 
-            key={nanoid()}
+            key={el._id}
             data={el}
             edit={editMode}
             remove={() => removeItem(el._id)} />

@@ -108,6 +108,11 @@
     height: 6rem;
     display: inline-block;
 
+    // &__icon {
+    //     width: 100%;
+    //     height: 100%;
+    // }
+
     @include respond(mid) {
         width: 7rem;
         height: 5.5rem;

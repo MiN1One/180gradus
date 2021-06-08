@@ -5,13 +5,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import { BiCart, BiChevronLeft, BiChevronRight, BiX } from 'react-icons/bi';
 import { connect } from 'react-redux';
-import { nanoid } from 'nanoid';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 
+import Spinner from '../../../UI/Spinner/Spinner';
 import * as actions from '../../../store/actions';
 import './Main.scss';
 import axiosInstance from '../../../axios';
@@ -29,6 +29,7 @@ const Main = (props) => {
     const [loadingImage, setLoadingImage] = useState(false);
     const [selectedSkin, setSelectedSkin] = useState(null);
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const { isFavorite, editFavorites } = useEditFavorites();
     const { inTheCart, editCart } = useEditCart(); 
@@ -43,18 +44,20 @@ const Main = (props) => {
         return () => mounted.current = false;
     }, []);
 
+    const { onSetData } = props;
     useEffect(() => {
         if (mounted.current) {
+            setLoading(true);
             axiosInstance(`/skins/${params.id}`)
                 .then(({ data }) => {
                     setData(data.data.data);
-                    props.onSetData('data', data.data.data.device);
+                    onSetData('data', data.data.data.device);
                     console.log(data);
+                    setLoading(false);
                 });
         }
-    }, [params.category, params.id]);
+    }, [params.category, params.id, onSetData]);
 
-    const image = selectedSkin && selectedSkin.image;
     useEffect(() => {
         if (selectedSkin) {
             setLoadingImage(true);
@@ -72,7 +75,7 @@ const Main = (props) => {
                 };
             }
         }
-    }, [image]);
+    }, [selectedSkin]);
 
     let skins = null, deviceName = null;
 
@@ -88,7 +91,7 @@ const Main = (props) => {
 
             return (
                 <SwiperSlide 
-                    key={nanoid()}
+                    key={el._id}
                     className={`m-main__sets-item ${(selectedSkin && selectedSkin._id === el._id) ? 'm-main__sets-item--active' : ''}`} 
                     onClick={() => setSelectedSkin(el)}>
                         <LazyLoadImage 
@@ -102,6 +105,9 @@ const Main = (props) => {
             )
         });
     }
+
+    if (loading)
+        return <Spinner />;
 
     return (
         <section className="m-main">
@@ -126,6 +132,7 @@ const Main = (props) => {
                                 : (
                                     <>
                                         <img 
+                                            border="0"
                                             className="Main__img" 
                                             src={data ? `/images/${data.default}` : `/images/${selectedSkin && selectedSkin.image}`} 
                                             alt={data ? data.device : (selectedSkin && selectedSkin.name)} />

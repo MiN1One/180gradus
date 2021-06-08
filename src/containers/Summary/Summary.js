@@ -79,8 +79,6 @@ const Summary = () => {
         setEditMode(false);
     }, [cart, itemsToRemove, dispatch]);
 
-    console.log(itemsToRemove);
-
     const onSubmit = useCallback(() => {
         if (
             fnameRef.current.value.length < 2 || 
@@ -119,9 +117,7 @@ const Summary = () => {
             email: emailRef.current.value || '',
             address: (!geoMode && addressInputRef.current.value) ? addressInputRef.current.value : '',
             device_ids: ids,
-            order: {
-                items
-            }
+            order: { items }
         };
 
         axios.post('/order', body)
@@ -133,7 +129,7 @@ const Summary = () => {
     }, [cart, geoMode, t]);
 
     const previewSlides = cartItems.map((el, i) => (
-        <SwiperSlide className="Summary__item" key={nanoid()}>
+        <SwiperSlide className="Summary__item" key={el._id}>
             <figure className="Summary__figure">
                 <LazyLoadImage 
                     src={`/images/${el.image}`}
@@ -148,7 +144,7 @@ const Summary = () => {
 
     const cards = cartItems.map((el, i) => (
         <div 
-            key={nanoid()}
+            key={el._id}
             className="Summary__card" 
             tabIndex="0" 
             onClick={() => !editMode && swiper.slideTo(i, 300)}>

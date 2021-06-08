@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import useEditCart from '../../hooks/useEditCart';
 import useEditFavorites from '../../hooks/useEditFavorites';
-import { nanoid } from 'nanoid';
 
 import * as actions from '../../store/actions';
 import Modal, { ModalFavItem } from '../../UI/Modal/Modal';
@@ -46,7 +45,7 @@ const Favorites = ({ t, close, media }) => {
 
     const favoriteItems = favItems.map((el, i) => (
         <ModalFavItem
-            key={nanoid()}
+            key={el._id}
             media={media} 
             data={el}
             edit={editMode}

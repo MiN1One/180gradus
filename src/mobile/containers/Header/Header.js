@@ -17,7 +17,6 @@ SwiperCore.use([Pagination, EffectFade, Mousewheel]);
 const Header = () => {
     const { t } = useTranslation();
     const [swiper, setSwiper] = useState(null);
-    const [reachEnd, setReachEnd] = useState(false);
 
     useEffect(() => swiper && swiper.update());
 
@@ -31,7 +30,6 @@ const Header = () => {
                     fadeEffect={{ crossFade: true }}
                     direction="vertical"
                     onInit={(sw) => setSwiper(sw)}
-                    onReachEnd={() => setReachEnd(true)}
                     mousewheel={true}>
                         <SwiperSlide className="m-header__section">
                             <div className="m-header__jumbo">
