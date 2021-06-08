@@ -4,7 +4,8 @@ import useEditCart from '../../hooks/useEditCart';
 import useEditFavorites from '../../hooks/useEditFavorites';
 
 import * as actions from '../../store/actions';
-import Modal, { ModalFavItem } from '../../UI/Modal/Modal';
+import Modal from '../../UI/Modal/Modal';
+import FavoriteItem from './FavoriteItem';
 
 const Favorites = ({ t, close, media }) => {
     const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const Favorites = ({ t, close, media }) => {
     };
 
     const favoriteItems = favItems.map((el, i) => (
-        <ModalFavItem
+        <FavoriteItem
             key={el._id}
             media={media} 
             data={el}

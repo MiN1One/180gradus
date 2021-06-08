@@ -72,6 +72,14 @@
         border-bottom: 1px solid rgba($pitch, .3);
         padding: .85rem;
     }
+
+    &__btn-group {
+        position: absolute;
+        top: 50%;
+        right: .85rem;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
     
     &__name {
         color: $light;

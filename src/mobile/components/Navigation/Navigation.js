@@ -74,11 +74,11 @@ const Navigation = () => {
                         </div>
                         <div className="m-nav__group">
                             <button 
+                                className="btn btn__ghost btn__ghost--active"
                                 onClick={() => {
                                     setMenu(false);
                                     setFavView(true);
-                                }} 
-                                className="btn btn__ghost btn__ghost--active">
+                                }}>
                                     {/* {t('nav.favorites')} */}
                                     <AiOutlineStar className="icon" />
                             </button>
@@ -99,18 +99,19 @@ const Navigation = () => {
                 <div className="container w-100">
                     <div className={`flex aic ${isHome ? 'jce' : 'jcsb'}`}>
                         {!isHome && <Logo />}
-                        <button className={`m-nav__menu ${menu ? 'm-nav__menu--active' : ''}`} onClick={() => setMenu(true)}>
-                            {menu
-                                ? <>
-                                    <BiMenuAltLeft className="icon mr-5" />
-                                    {t('main.close')}
-                                </>
-                                : <>
-                                    <BiMenuAltRight className="icon mr-5" />
-                                    {t('nav.menu')}
-                                </>
-                            }
-                            
+                        <button 
+                            className={`m-nav__menu ${menu ? 'm-nav__menu--active' : ''}`} 
+                            onClick={() => setMenu(true)}>
+                                {menu
+                                    ? <>
+                                        <BiMenuAltLeft className="icon mr-5" />
+                                        {t('main.close')}
+                                    </>
+                                    : <>
+                                        <BiMenuAltRight className="icon mr-5" />
+                                        {t('nav.menu')}
+                                    </>
+                                }
                         </button>
                     </div>
                 </div>

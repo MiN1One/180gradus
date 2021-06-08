@@ -10,7 +10,7 @@
     // backdrop-filter: blur(3px);
 
     // @include respond(sm) { backdrop-filter: initial; }
-    @include respond(sm) { backdrop-filter: blur(2.5px); }
+    // @include respond(sm) { backdrop-filter: blur(1px); }
 
     &--transparent { background: transparent; }
 }

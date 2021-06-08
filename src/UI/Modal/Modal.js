@@ -1,8 +1,6 @@
 import { Scrollbars } from 'react-custom-scrollbars';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from 'react-i18next';
-import { BiX, BiPlus } from 'react-icons/bi';
-import { Link, useHistory } from 'react-router-dom';
+import { BiX } from 'react-icons/bi';
 
 import './Modal.scss';
 import Backdrop from '../Backdrop/Backdrop';
@@ -62,79 +60,3 @@ const Modal = (props) => {
 
 export default Modal;
 
-export const ModalFavItem = ({ data, edit, add, remove, media }) => {
-    const { t } = useTranslation();
-    const history = useHistory();
-
-    return (
-        <div 
-            className="Modal__item" 
-            onClick={() => {
-                if (media) history.push(`/categories/${data.type}/${data.category}/${data.deviceId}`);
-            }}>
-                <div className="flex aic">
-                    <figure className="Modal__figure">
-                        <LazyLoadImage
-                            className="img"
-                            src={`/images/${data.image}`}
-                            alt={data.name}
-                            width="100%"
-                            height="100%"
-                            effect="opacity" />
-                    </figure>
-                    <div className="flex fdc">
-                        <span className="Modal__name">{data.name}</span>
-                        <span className="Modal__name--sub">{data.device}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{t(`nav.${data.type}`)}</span>
-                    </div>
-                </div>
-                {edit 
-                    ? <button className="btn btn__pill btn__pill--red" onClick={remove}>
-                        {t('main.remove')}
-                    </button>
-                    : (
-                        <div className="flex">
-                            {!media && 
-                                <Link to={`/categories/${data.type}/${data.category}/${data.deviceId}`} className="btn btn__pill btn__pill--yellow mr-1">
-                                    {t('nav.collection')}
-                                </Link>
-                            }
-                            <button className="btn btn__pill" onClick={add}>
-                                {t('main.to cart')}
-                                <BiPlus className="ml-5 icon--sm" />
-                            </button>
-                        </div>
-                    )
-                }
-        </div>
-    )
-};
-
-export const ModalCartItem = ({ data, edit, remove }) => {
-    const { t } = useTranslation();
-
-    return (
-        <div className="Modal__item" >
-            <div className="flex aic">
-                <figure className="Modal__figure">
-                    <LazyLoadImage
-                        className="img"
-                        src={`/images/${data.image}`}
-                        alt={data.name}
-                        width="100%"
-                        height="100%"
-                        effect="opacity" />
-                </figure>
-                <div className="flex fdc">
-                    <span className="Modal__name">{data.name}</span>
-                    <span className="Modal__name--sub">{data.device}&nbsp;&nbsp;&bull;&nbsp;&nbsp;{t('nav.skins')}</span>
-                </div>
-            </div>
-            {edit 
-                ? <button className="btn btn__pill btn__pill--red" onClick={remove}>
-                    {t('main.remove')}
-                </button>
-                : <span className="price-tag">${parseFloat(data.price).toFixed(2)}</span>
-            }
-        </div>
-    )
-};

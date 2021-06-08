@@ -77,25 +77,27 @@ const Categories = ({ categories }) => {
     };
 
     const cards = (data && data.length > 0) && data.map((el, i) => (
-        <Card data={el} key={nanoid()} />
+        <Card data={el} key={el._id} />
     ));
 
     const categoryItems = (categories && !params.category) && categories.map((el, i) => (
-        <Card data={el} key={nanoid()} />
+        <Card data={el} key={el._id} />
     ));
     
     const searchItems = searchResults && searchResults.map((el, i) => {
         const category = categories && categories.find(cat => cat._id === el.category);
 
         return (
-            <div className="input__drop-item" key={nanoid()} onMouseDown={() => history.push(`/categories/skins/${category && category.name}/${el._id}`)}>
-                <figure className="input__figure">
-                    <img className="img" src={`/images/${el.default}`} alt={el.device} />
-                </figure>
-                <div className="flex fdc">
-                    <span className="text--sm c-black">{el.device}</span>
-                    <span className="text--xs c-grey">{t(`nav.${el.type}`)}</span>
-                </div>
+            <div 
+                className="input__drop-item" key={el._id} 
+                onMouseDown={() => history.push(`/categories/skins/${category && category.name}/${el._id}`)}>
+                    <figure className="input__figure">
+                        <img className="img" src={`/images/${el.default}`} alt={el.device} />
+                    </figure>
+                    <div className="flex fdc">
+                        <span className="text--sm c-black">{el.device}</span>
+                        <span className="text--xs c-grey">{t(`nav.${el.type}`)}</span>
+                    </div>
             </div>
         )
     });

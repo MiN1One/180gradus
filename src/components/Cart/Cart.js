@@ -4,7 +4,8 @@ import { useHistory } from 'react-router';
 import useEditCart from '../../hooks/useEditCart';
 import * as actions from '../../store/actions';
 
-import Modal, { ModalCartItem } from '../../UI/Modal/Modal';
+import Modal from '../../UI/Modal/Modal';
+import CartItem from './CartItem';
 
 const Cart = ({ t, close }) => {
     const { cart } = useEditCart();
@@ -25,10 +26,6 @@ const Cart = ({ t, close }) => {
     };
 
     const onApplyChanges = () => {
-        // removedItems.forEach(el => {
-        //     editCart(el);
-        //     console.log(el);
-        // });
         let newCart = [...cart];
         removedItems.forEach(r => {
             newCart = newCart.filter(el => el._id !== r._id);
@@ -48,7 +45,7 @@ const Cart = ({ t, close }) => {
     };
 
     const items = cartItems.map((el) => (
-        <ModalCartItem 
+        <CartItem 
             key={el._id}
             data={el}
             edit={editMode}
