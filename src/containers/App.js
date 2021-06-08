@@ -43,6 +43,9 @@ function App({ onSetMedia, media, onSetData, categories }) {
     }
 
     useEffect(() => {
+        // THE APP IS ONLY TRANSLATED INTO ENGLISH
+        i18n.changeLanguage('en');
+
         const requestInterceptor = axiosInstance.interceptors.request.use(
             (req) => {
                 req.headers.language = i18n.language;
@@ -72,7 +75,7 @@ function App({ onSetMedia, media, onSetData, categories }) {
             axiosInstance.interceptors.request.eject(requestInterceptor);
             axiosInstance.interceptors.response.eject(responseInterceptor);
         };
-    }, [i18n.language]);
+    }, [i18n]);
 
     useEffect(() => {
         if (!location.pathname.includes('admin')) 

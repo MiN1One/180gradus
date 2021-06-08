@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, Route, Switch, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { BiCheck, BiMinus, BiPencil, BiPlug, BiPlus, BiScreenshot, BiX } from 'react-icons/bi';
+import { BiMinus, BiPencil, BiScreenshot, BiX } from 'react-icons/bi';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import './AdminPanel.scss';
 import axiosInstance from '../../axios';
 import Spinner from '../../UI/Spinner/Spinner';
 import SubSpinner from '../../UI/SubSpinner/SubSpinner';
-import Backdrop from '../../UI/Backdrop/Backdrop';
 import ConfirmationModel from '../../UI/Confirm/Confirm';
 
 const AdminPanel = () => {

@@ -15,7 +15,6 @@ import Spinner from '../../../UI/Spinner/Spinner';
 import * as actions from '../../../store/actions';
 import './Main.scss';
 import axiosInstance from '../../../axios';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import SubSpinner from '../../../UI/SubSpinner/SubSpinner';
 import useEditFavorites from '../../../hooks/useEditFavorites';
 import useEditCart from '../../../hooks/useEditCart';
@@ -94,13 +93,13 @@ const Main = (props) => {
                     key={el._id}
                     className={`m-main__sets-item ${(selectedSkin && selectedSkin._id === el._id) ? 'm-main__sets-item--active' : ''}`} 
                     onClick={() => setSelectedSkin(el)}>
-                        <LazyLoadImage 
+                        {/* <LazyLoadImage 
                             className="img" 
                             alt={el.name} 
                             src={`/images/placeholders/${el.placeholder}`} 
                             width="100%" 
                             height="100%"
-                            effect="opacity" />
+                            effect="opacity" /> */}
                 </SwiperSlide>
             )
         });
@@ -130,13 +129,17 @@ const Main = (props) => {
                             {loadingImage
                                 ? <SubSpinner />
                                 : (
-                                    <>
-                                        <img 
-                                            border="0"
-                                            className="Main__img" 
-                                            src={data ? `/images/${data.default}` : `/images/${selectedSkin && selectedSkin.image}`} 
-                                            alt={data ? data.device : (selectedSkin && selectedSkin.name)} />
-                                    </>
+                                    <img 
+                                        border="0"
+                                        width="100%"
+                                        height="100%"
+                                        className="m-main__img" 
+                                        src={
+                                            !selectedSkin
+                                                ? `/images/${data?.default}`
+                                                : `/images/${selectedSkin && selectedSkin.image}`
+                                        }
+                                        alt={data ? data.device : (selectedSkin && selectedSkin.name)} />
                                 )
                             }
                         </figure>

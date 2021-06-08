@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
-import MonitorScroll from '../../UI/MonitorScroll/MonitorScroll';
+// import MonitorScroll from '../../UI/MonitorScroll/MonitorScroll';
 import './Header.scss';
 import Navigation from '../../components/Navigation/Navigation';
 import logo from '../../assets/logo.png';

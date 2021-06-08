@@ -8,7 +8,6 @@ import ShadowScrollbars from "../../UI/ShadowScrollbars/ShadowScrollbars";
 import { Link, useHistory } from "react-router-dom";
 import * as emailValidator from 'email-validator';
 import { useDispatch } from "react-redux";
-import { nanoid } from 'nanoid';
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';

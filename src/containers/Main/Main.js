@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { BiChevronLeft, BiCartAlt, BiChevronRight, BiX } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import { connect } from "react-redux";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { nanoid } from 'nanoid';
 
 import "swiper/components/navigation/navigation.scss";
 import "swiper/components/pagination/pagination.scss";
@@ -171,18 +169,16 @@ const Main = (props) => {
                   {loadingImage 
                     ? <SubSpinner /> 
                     : (
-                      <>
-                        <img
-                          className="Main__img"
-                          border="0"
-                          src={
-                            !selectedSkin
-                              ? `/images/${data?.default}`
-                              : `/images/${selectedSkin && selectedSkin.image}`
-                          }
-                          alt={data ? data.device : (selectedSkin && selectedSkin.name)}
-                        />
-                      </>
+                      <img
+                        className="Main__img"
+                        border="0"
+                        src={
+                          !selectedSkin
+                            ? `/images/${data?.default}`
+                            : `/images/${selectedSkin && selectedSkin.image}`
+                        }
+                        alt={data ? data.device : (selectedSkin && selectedSkin.name)}
+                      />
                   )}
                 </figure>
                 {selectedSkin && (
