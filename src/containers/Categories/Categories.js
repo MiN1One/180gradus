@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiSearch, BiX } from 'react-icons/bi';
 import { useHistory, useParams } from 'react-router-dom';
-import { nanoid } from 'nanoid';
 
 import Card from '../../components/Card/Card';
 import axiosInstance from '../../axios';
