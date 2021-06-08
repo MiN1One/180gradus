@@ -4,4 +4,4 @@
 #### EN | RU | UZ
 
 
-## NOTE! This project does not work without running [backend](http://github.com). You need to run backend.
+## NOTE! This project does not work without running [backend](http://github.com).
