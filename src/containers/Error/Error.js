@@ -1,3 +1,4 @@
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { BiChevronLeft } from 'react-icons/bi';
 import { Link, useHistory } from "react-router-dom";
@@ -64,4 +65,4 @@ const Er = ({ er, clean, notFound }) => {
     );
 };
 
-export default Er;
+export default React.memo(Er);

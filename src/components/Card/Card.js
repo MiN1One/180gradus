@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useSelector } from 'react-redux';
@@ -35,4 +36,4 @@ const Card = ({ data }) => {
     );
 };
 
-export default Card;
+export default React.memo(Card);
