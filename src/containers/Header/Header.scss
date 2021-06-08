@@ -18,42 +18,6 @@
         &:not(:first-child) { justify-content: flex-end; }
     }
 
-    // FIRST BLOCK
-    &__section:first-child &__popper {
-        background-image: url('../../assets/images/P30\ Pro-1.png');
-    }
-    
-    &__section:first-child &__popperbg {
-        background-image: url('../../assets/images/P30\ Pro-2.png');
-    }
-    
-    // 2ND BLOCK
-    &__section:nth-child(2) &__popper {
-        background-image: url('../../assets/images/P30\ Pro-1.png');
-    }
-    
-    &__section:nth-child(2) &__popperbg {
-        background-image: url('../../assets/images/P30\ Pro-2.png');
-    }
-    
-    // 3RD BLOCK
-    &__section:nth-child(3) &__popper {
-        background-image: url('../../assets/images/P30\ Pro-1.png');
-    }
-    
-    &__section:nth-child(3) &__popperbg {
-        background-image: url('../../assets/images/P30\ Pro-2.png');
-    }
-    
-    // 4TH BLOCK
-    &__section:last-child &__popper {
-        background-image: url('../../assets/images/P30\ Pro-1.png');
-    }
-
-    &__section:last-child &__popperbg {
-        background-image: url('../../assets/images/P30\ Pro-2.png');
-    }
-    
     &__jumbotron {
         height: 100vh;
         width: 100vw;
@@ -61,7 +25,8 @@
         z-index: 1;
         transition: all .7s ease;
 
-        &--slideBack { width: 15vw; }
+        // &--slideBack { width: 15vw; }
+        &--slideBack { width: 21rem; }
     }
 
     &__hero {
@@ -116,19 +81,19 @@
     }
 
     &__logobox {
-        transform: translateX(4.75vw) rotate(-90deg);
+        transform: translateX(5rem) rotate(-90deg);
         width: max-content;
         transition: all .4s ease;
     }
     
     &__fig {
-        width: 8.5vw;
+        width: 11.5rem;
         height: auto;
     }
 
     &__textbox {
         transition: all .65s ease;
-        transform: translateY(-4.5vw);
+        transform: translateY(-6rem);
     }
 
     &__poppercase {
@@ -144,7 +109,8 @@
         font-size: 3rem;
         color: #fff;
         
-        &--expand { width: 85vw; }
+        // &--expand { width: 85vw; }
+        &--expand { width: calc(100vw - 21rem); }
     }
 
     &__heading--secondary {
@@ -174,7 +140,6 @@
             width: 100%;
             height: 100%;
             animation-delay: .5s;
-            // background-image: linear-gradient(130deg, transparent 20%, rgba(#fff, .7), transparent 30%, transparent);
         }
     }
     
@@ -207,19 +172,20 @@
     }
 
     &__btn {
-        font-size: .95vw;
-        padding: .85vw 3.35vw;
+        font-size: 1.35rem;
+        padding: 1rem 4.25rem;
 
-        @include respond(xl) {
-            font-size: 1.75rem;
-            padding: 1.75rem 5rem;
-        }
+        // @include respond(xl) {
+        //     font-size: 1.75rem;
+        //     padding: 1.75rem 5rem;
+        // }
     }
 
     &__heading {
-        // font-size: 5.5rem;
-        font-size: 4vw;
-        margin-bottom: 2.5vw;
+        font-size: 5rem;
+        // font-size: 4vw;
+        // margin-bottom: 2.5vw;
+        margin-bottom: 3.25rem;
         letter-spacing: .05px;
         font-weight: 400;
         color: transparent;
@@ -228,27 +194,25 @@
         -webkit-background-clip: text;
 
         &--sub {
-            // font-size: 2rem;
-            font-size: 1.5vw;
+            font-size: 1.95rem;
+            // font-size: 1.5vw;
             line-height: .5;
             font-weight: 300;
             color: $grey-light;
         }
 
-        @include respond(xl) {
-            font-size: 5.5rem;
-            margin-bottom: 4rem;
+        // @include respond(xl) {
+        //     font-size: 5.5rem;
+        //     margin-bottom: 4rem;
 
-            &--sub {
-                font-size: 2.5rem;
-            }
-        }
+        //     &--sub {
+        //         font-size: 2.5rem;
+        //     }
+        // }
     }
 
     &__jumbotron--slideBack &__bg::after,
     &__jumbotron--slideBack &__bg::before { content: none; }
-
-    // &__jumbotron--slideBack &__bg-gradient { display: inline-block; }
 
     &__jumbotron--slideBack &__hero {
         padding: 0;
@@ -257,12 +221,13 @@
     }
 
     &__jumbotron--slideBack &__logobox {
-        transform: rotate(0) translateX(0) translateY(12vh);
-        padding-left: 3.5vw;
+        // transform: rotate(0) translateX(0) translateY(12vh);
+        transform: rotate(0) translateX(0) translateY(9.5rem);
+        padding-left: 4.55rem;
     }
 
     &__jumbotron--slideBack &__textbox {
-        transform: translateY(9vh);
+        transform: translateY(10rem);
         opacity: 0;
         visibility: hidden;
     }

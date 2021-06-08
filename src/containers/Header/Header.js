@@ -1,16 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // import MonitorScroll from '../../UI/MonitorScroll/MonitorScroll';
 import './Header.scss';
 import Navigation from '../../components/Navigation/Navigation';
 import logo from '../../assets/logo.png';
 import Footer from '../../components/Footer/Footer';
-import { Link } from 'react-router-dom';
+import Spinner from '../../UI/Spinner/Spinner';
+
+const container = window.innerHeight * 8;
 
 const Header = () => {
     const { t } = useTranslation();
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        axios('/data/home.json')
+            .then(({ data }) => {
+                setData(data);
+                setLoading(false);
+            });
+    }, []);
 
     const [transformUp, setTransformUp] = useState(0);
     const [viewOne, setViewOne] = useState(0);
@@ -18,11 +33,9 @@ const Header = () => {
     const [viewThree, setViewThree] = useState(0);
     const [viewFour, setViewFour] = useState(0);
 
-    const container = window.innerHeight * 8;
-
     const [hideElements, setHideElements] = useState(false);
 
-    const onScroll = () => {
+    const onScroll = useCallback(() => {
         const inHeight = window.innerHeight;
         const scrollTop = document.documentElement.scrollTop;
 
@@ -95,12 +108,12 @@ const Header = () => {
 
         if (scrollTop > 0) setHideElements(true);
         else setHideElements(false);
-    }
+    }, []);
 
     useEffect(() => {
         document.addEventListener('scroll', onScroll);
         return () => document.removeEventListener('scroll', onScroll);
-    }, []);
+    }, [onScroll]);
 
     const jumboClass = ['Header__jumbotron'];
     const poppercaseClass = ['Header__poppercase'];
@@ -108,6 +121,9 @@ const Header = () => {
         jumboClass.push('Header__jumbotron--slideBack');
         poppercaseClass.push('Header__poppercase--expand');
     }
+
+    if (loading || !data)
+        return <Spinner />;
 
     return (
         <>
@@ -125,7 +141,6 @@ const Header = () => {
                 <header className="Header">
                     <section className="Header__section">
                         <div className={jumboClass.join(' ')}>
-                            {/* <div className="Header__bg-gradient"></div> */}
                             <div className="Header__bg">
                             </div>
                             <div className="Header__hero">
@@ -147,92 +162,80 @@ const Header = () => {
                             </div>
                         </div>
                         <div className={poppercaseClass.join(' ')}>
-                            <div className="Header__popper">
-                                
-                            </div>
                             <div 
+                                className="Header__popper"
+                                style={{ backgroundImage: `url(/images/home/${data[0].popper})` }} />
+                            <div
                                 className="Header__popperbg" 
                                 style={{
+                                    backgroundImage: `url(/images/home/${data[0].cover})`,
                                     height: `${viewOne}px`,
                                     opacity: `${viewOne / window.innerHeight}`
-                                }}>
-
-                            </div>
+                                }} />
                             <div className="Header__popper-text">
                                 <h2 className="Header__heading--secondary">
-                                    Maxmimum wear
-                                    <p className="Header__heading--sub">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
-                                    </p>
+                                    {data[0].text.main}
+                                    <p className="Header__heading--sub">{data[0].text.sub}</p>
                                 </h2>
                             </div>
                         </div>
                     </section>
                     <section className="Header__section">
                         <div className={poppercaseClass.join(' ')}>
-                            <div className="Header__popper">
-
-                            </div>
+                            <div
+                                style={{ backgroundImage: `url(/images/home/${data[1].popper})` }} 
+                                className="Header__popper" />
                             <div 
                                 className="Header__popperbg" 
                                 style={{
+                                    backgroundImage: `url(/images/home/${data[1].cover})`,
                                     height: `${viewTwo}px`,
                                     opacity: `${viewTwo / window.innerHeight}`
-                                }}>
-
-                            </div>
+                                }} />
                             <div className="Header__popper-text">
                                 <h2 className="Header__heading--secondary">
-                                    Protective material
-                                    <p className="Header__heading--sub">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
-                                    </p>
+                                    {data[1].text.main}
+                                    <p className="Header__heading--sub">{data[1].text.sub}</p>
                                 </h2>
                             </div>
                         </div>
                     </section>
                     <section className="Header__section">
                         <div className={poppercaseClass.join(' ')}>
-                            <div className="Header__popper">
-                                
-                            </div>
+                            <div
+                                style={{ backgroundImage: `url(/images/home/${data[2].popper})` }} 
+                                className="Header__popper" />
                             <div 
                                 className="Header__popperbg" 
                                 style={{
+                                    backgroundImage: `url(/images/home/${data[2].cover})`,
                                     height: `${viewThree}px`,
                                     opacity: `${viewThree / window.innerHeight}`
-                                }}>
-                                    
-                            </div>
+                                }} />
                             <div className="Header__popper-text">
                                 <h2 className="Header__heading--secondary">
-                                    Rich skin set
-                                    <p className="Header__heading--sub">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
-                                    </p>
+                                    {data[2].text.main}
+                                    <p className="Header__heading--sub">{data[2].text.sub}</p>
                                 </h2>
                             </div>
                         </div>
                     </section>
                     <section className="Header__section">
                         <div className={poppercaseClass.join(' ')}>
-                            <div className="Header__popper">
-                                
-                            </div>
+                            <div
+                                style={{ backgroundImage: `url(/images/home/${data[3].popper})` }} 
+                                className="Header__popper" />
                             <div 
                                 className="Header__popperbg" 
                                 style={{
+                                    backgroundImage: `url(/images/home/${data[3].cover})`,
                                     height: `${viewFour}px`,
                                     opacity: `${viewFour / window.innerHeight}`
-                                }}>
-
-                            </div>
+                                }} />
                             <div className="Header__popper-text">
                                 <h2 className="Header__heading--secondary">
-                                    Super accurate cut
-                                    <p className="Header__heading--sub">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus.
-                                    </p>
+                                    {data[3].text.main}
+                                    <p className="Header__heading--sub">{data[3].text.sub}</p>
                                 </h2>
                             </div>
                         </div>
