@@ -434,10 +434,12 @@ const ActiveItemPanel = ({ close, data }) => {
     );
 };
 
+
+// admin, he
 const Auth = ({ onAuth }) => {
     const { t } = useTranslation();
-    const [login, setLogin] = useState('admin');
-    const [password, setPassword] = useState('hehe boay');
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
