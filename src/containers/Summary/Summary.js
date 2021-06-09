@@ -31,8 +31,6 @@ const Summary = () => {
 
     const { cart } = useEditCart();
 
-    if (!mounted.current && cart.length === 0) history.push('/');
-
     const [swiper, setSwiper] = useState(null);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
@@ -41,6 +39,10 @@ const Summary = () => {
     const [cartItems, setCartItems] = useState([ ...cart ]);
     const [activeSlide, setActiveSlide] = useState(0);
     const [itemsToRemove, setItemsToRemove] = useState([]);
+
+    if (cart.length === 0) {
+        history.push('/categories/skins');
+    }
 
     const devices = cart.map(el => el.device);
     const { t } = useTranslation(['translation', 'input', ...devices]);
@@ -166,7 +168,11 @@ const Summary = () => {
     const sets = cartItems.map(el => t(`${el.device}:${el.name}`));
     const totalPrice = cartItems.reduce((a, el) => a + parseFloat(el.price), 0).toFixed(2);
 
-    if (success) return <AsynSuccess geoMode={geoMode} />;
+    if (success) 
+        return <AsynSuccess geoMode={geoMode} />;
+
+    if (cart.length === 0)
+        return null;
 
     return (
         <section className="Summary">

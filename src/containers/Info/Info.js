@@ -4,7 +4,7 @@ import { BiChevronLeft } from 'react-icons/bi';
 
 import logo from '../../assets/logo.png';
 import './Info.scss';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Info = () => {
     const { t } = useTranslation();
